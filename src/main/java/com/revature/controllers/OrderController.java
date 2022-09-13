@@ -2,7 +2,6 @@ package com.revature.controllers;
 import com.revature.annotations.Authorized;
 import com.revature.dtos.OrderInfo;
 import com.revature.models.Order;
-import com.revature.models.Product;
 import com.revature.services.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
