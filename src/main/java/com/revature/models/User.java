@@ -24,15 +24,13 @@ public class User {
     private boolean isAdmin;
     private boolean isActive;
 
-    public User(RegisterRequest registerRequest){
+
+    public User(RegisterRequest registerRequest) {
         this.email = registerRequest.getEmail();
-        this.password = registerRequest.getPassword();
         this.firstName = registerRequest.getFirstName();
         this.lastName = registerRequest.getLastName();
+        this.password = registerRequest.getPassword();
         this.isAdmin = false;
         this.isActive = true;
-        
-        
     }
-
 }
