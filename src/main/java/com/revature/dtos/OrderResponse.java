@@ -17,7 +17,7 @@ public class OrderResponse {
 
     public OrderResponse(Order order) {
         this.userEmail = order.getUserId().getEmail();
-        this.paymentId = order.getPaymentId();
+        this.paymentId = order.getPaymentId().getId();
         this.orderDate = order.getOrderDate();
         this.shipmentAddress = order.getShipmentAddress();
         this.orderFulfilled = order.isOrderFulfilled();

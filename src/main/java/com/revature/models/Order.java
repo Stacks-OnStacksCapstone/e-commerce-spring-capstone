@@ -19,7 +19,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User userId;
-    private String paymentId;
+    @ManyToOne
+    @JoinColumn(name = "payment_id")
+    private Payment paymentId;
     private Date orderDate;
     private String shipmentAddress;
     private boolean orderFulfilled;

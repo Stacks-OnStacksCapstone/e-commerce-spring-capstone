@@ -6,9 +6,11 @@ import com.revature.models.Order;
 import com.revature.models.Payment;
 import com.revature.models.User;
 import com.revature.repositories.OrderRepository;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,9 +32,19 @@ public class OrderService {
 
     public OrderResponse createOrder(CreateOrderRequest createOrderRequest) {
         Order newOrder = new Order();
-        //User foundUser = userService.findById(createOrderRequest.getUserId());
+        User foundUser = userService.findUserById(createOrderRequest.getUserId());
         Payment foundPayment = paymentService.findById(createOrderRequest.getPaymentId());
-        return new OrderResponse();
+        newOrder.setUserId(foundUser);
+        newOrder.setPaymentId(foundPayment);
+        newOrder.setOrderDate(new Date(System.currentTimeMillis()));
+        newOrder.setOrderFulfilled(false);
+        newOrder.setShipmentAddress(createOrderRequest.getShipmentAddress());
+
+        orderRepository.save(newOrder);
+
+        OrderResponse orderResponse = new OrderResponse(newOrder);
+
+        return orderResponse;
     }
 
     public List<OrderResponse> findAll() {
