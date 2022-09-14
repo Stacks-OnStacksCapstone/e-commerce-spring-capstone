@@ -33,7 +33,8 @@ public class PaymentController {
 
     @Authorized
     @PutMapping
-    public ResponseEntity<PaymentResponse> updatedPayment(@RequestBody EditPaymentRequest editPaymentRequest) {
-        return ResponseEntity.ok(paymentService.updatePayment(editPaymentRequest));
+    public ResponseEntity<PaymentResponse> updatedPayment(@RequestBody EditPaymentRequest editPaymentRequest, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        return ResponseEntity.ok(paymentService.updatePayment(editPaymentRequest, user));
     }
 }

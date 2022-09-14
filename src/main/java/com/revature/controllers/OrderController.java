@@ -5,6 +5,7 @@ import com.revature.dtos.OrderResponse;
 import com.revature.models.Order;
 import com.revature.services.OrderService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class OrderController {
     }
     @Authorized
     @PostMapping
-    public ResponseEntity<OrderResponse> createOrder(@RequestBody  CreateOrderRequest createOrderRequest) {
+    public ResponseEntity<OrderResponse> createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
         return ResponseEntity.ok(orderService.createOrder(createOrderRequest));
     }
     @Authorized

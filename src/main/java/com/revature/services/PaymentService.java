@@ -5,6 +5,7 @@ import com.revature.dtos.EditPaymentRequest;
 import com.revature.dtos.PaymentResponse;
 import com.revature.exceptions.InvalidUserInputException;
 import com.revature.exceptions.ResourceNotFoundException;
+import com.revature.exceptions.UnauthorizedException;
 import com.revature.models.Payment;
 import com.revature.models.User;
 import com.revature.repositories.PaymentRepository;
@@ -43,8 +44,11 @@ public class PaymentService {
         return foundPayment;
     }
 
-    public PaymentResponse updatePayment(EditPaymentRequest editPaymentRequest) {
+    public PaymentResponse updatePayment(EditPaymentRequest editPaymentRequest, User user) {
         Payment foundPayment = paymentRepository.findById(editPaymentRequest.getPaymentId()).orElseThrow(() -> new ResourceNotFoundException("Payment not found."));
+        if (foundPayment.getUserId().getId() != user.getId()) {
+            throw new UnauthorizedException("Unauthorized update payment request.");
+        }
         foundPayment.setCcv(editPaymentRequest.getCcv());
         foundPayment.setZip(editPaymentRequest.getZip());
         foundPayment.setExpDate(editPaymentRequest.getExpDate());
