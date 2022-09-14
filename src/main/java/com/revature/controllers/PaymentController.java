@@ -2,6 +2,7 @@ package com.revature.controllers;
 
 import com.revature.annotations.Authorized;
 import com.revature.dtos.CreatePaymentRequest;
+import com.revature.dtos.EditPaymentRequest;
 import com.revature.dtos.PaymentResponse;
 import com.revature.models.Payment;
 import com.revature.models.User;
@@ -28,5 +29,11 @@ public class PaymentController {
         User authUser = (User) httpSession.getAttribute("user");
         PaymentResponse newPayment = paymentService.createPayment(createPaymentRequest, authUser);
         return ResponseEntity.ok(newPayment);
+    }
+
+    @Authorized
+    @PutMapping
+    public ResponseEntity<PaymentResponse> updatedPayment(@RequestBody EditPaymentRequest editPaymentRequest) {
+        return ResponseEntity.ok(paymentService.updatePayment(editPaymentRequest));
     }
 }

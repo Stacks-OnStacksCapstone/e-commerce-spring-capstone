@@ -1,8 +1,10 @@
 package com.revature.services;
 
 import com.revature.dtos.CreatePaymentRequest;
+import com.revature.dtos.EditPaymentRequest;
 import com.revature.dtos.PaymentResponse;
 import com.revature.exceptions.InvalidUserInputException;
+import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.models.Payment;
 import com.revature.models.User;
 import com.revature.repositories.PaymentRepository;
@@ -39,5 +41,16 @@ public class PaymentService {
     public Payment findPaymentById(String id) {
         Payment foundPayment = paymentRepository.findById(id).orElseThrow(() -> new RuntimeException("No payment with this ID found."));
         return foundPayment;
+    }
+
+    public PaymentResponse updatePayment(EditPaymentRequest editPaymentRequest) {
+        Payment foundPayment = paymentRepository.findById(editPaymentRequest.getPaymentId()).orElseThrow(() -> new ResourceNotFoundException("Payment not found."));
+        foundPayment.setCcv(editPaymentRequest.getCcv());
+        foundPayment.setZip(editPaymentRequest.getZip());
+        foundPayment.setExpDate(editPaymentRequest.getExpDate());
+        paymentRepository.save(foundPayment);
+        PaymentResponse updatedPayment = new PaymentResponse(foundPayment);
+
+        return updatedPayment;
     }
 }
