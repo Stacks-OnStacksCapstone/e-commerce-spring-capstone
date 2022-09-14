@@ -58,7 +58,14 @@ public class UserService {
 
         }
     public User getUserSession(){return userSession;}
+
+    @Transactional(readOnly = true)
+    public UserResponse findById(int id){
+        User user = userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        UserResponse userResponse = new UserResponse(user);
+        return userResponse;
     }
+}
 
 
 
