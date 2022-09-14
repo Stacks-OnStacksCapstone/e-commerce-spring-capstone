@@ -3,6 +3,8 @@ package com.revature.services;
 import com.revature.dtos.CreateOrderRequest;
 import com.revature.dtos.OrderResponse;
 import com.revature.models.Order;
+import com.revature.models.Payment;
+import com.revature.models.User;
 import com.revature.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,16 +18,20 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final UserService userService;
+    private final PaymentService paymentService;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, UserService userService) {
+    public OrderService(OrderRepository orderRepository, UserService userService, PaymentService paymentService) {
 
         this.orderRepository = orderRepository;
         this.userService = userService;
+        this.paymentService = paymentService;
     }
 
     public OrderResponse createOrder(CreateOrderRequest createOrderRequest) {
         Order newOrder = new Order();
+        //User foundUser = userService.findById(createOrderRequest.getUserId());
+        Payment foundPayment = paymentService.findById(createOrderRequest.getPaymentId());
         return new OrderResponse();
     }
 

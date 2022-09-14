@@ -8,7 +8,7 @@ import java.sql.Date;
 @Data
 @NoArgsConstructor
 public class CreateOrderRequest {
-    private String userId;
+    private int userId;
     private String paymentId;
     private Date orderDate;
     private String shipmentAddress;
