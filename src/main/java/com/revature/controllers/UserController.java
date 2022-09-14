@@ -36,4 +36,11 @@ public class UserController {
         return "The user account is successfully updated!";
     }
 
+    @GetMapping // For user to use
+    public UserResponse getProfile(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        UserResponse userResponse = new UserResponse(user);
+        return userResponse;
+    }
+
 }
