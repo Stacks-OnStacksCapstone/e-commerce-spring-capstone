@@ -33,7 +33,7 @@ public class OrderService {
     public OrderResponse createOrder(CreateOrderRequest createOrderRequest) {
         Order newOrder = new Order();
         User foundUser = userService.findUserById(createOrderRequest.getUserId());
-        Payment foundPayment = paymentService.findById(createOrderRequest.getPaymentId());
+        Payment foundPayment = paymentService.findPaymentById(createOrderRequest.getPaymentId());
         newOrder.setUserId(foundUser);
         newOrder.setPaymentId(foundPayment);
         newOrder.setOrderDate(new Date(System.currentTimeMillis()));

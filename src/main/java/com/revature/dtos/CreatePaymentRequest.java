@@ -7,8 +7,8 @@ import java.sql.Date;
 
 @Data
 @NoArgsConstructor
-public class CreateOrderRequest {
-    private int userId;
-    private String paymentId;
-    private String shipmentAddress;
+public class CreatePaymentRequest {
+    private String ccv;
+    private Date expDate;
+    private String zip;
 }

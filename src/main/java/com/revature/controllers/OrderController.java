@@ -37,8 +37,8 @@ public class OrderController {
     }
     @Authorized
     @PostMapping
-    public ResponseEntity<Order> createOrder(Order order) {
-        return ResponseEntity.ok(orderService.save(order));
+    public ResponseEntity<OrderResponse> createOrder(@RequestBody  CreateOrderRequest createOrderRequest) {
+        return ResponseEntity.ok(orderService.createOrder(createOrderRequest));
     }
     @Authorized
     @PutMapping
