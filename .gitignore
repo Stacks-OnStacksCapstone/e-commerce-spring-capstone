@@ -2,9 +2,8 @@ HELP.md
 target/
 src/main/resources/application.yml
 src/main/resources/application.yaml
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+!src/main/**/target/
+!src/test/**/target/
 
 ### STS ###
 .apt_generated
@@ -28,8 +27,8 @@ src/main/resources/application.yaml
 /nbdist/
 /.nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+!src/main/**/build/
+!src/test/**/build/
 
 ### VS Code ###
 .vscode/
