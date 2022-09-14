@@ -71,6 +71,10 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
         return user;
     }
+
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 }
 
 
