@@ -1,5 +1,7 @@
 package com.revature.controllers;
 import com.revature.annotations.Authorized;
+import com.revature.dtos.CreateOrderRequest;
+import com.revature.dtos.OrderResponse;
 import com.revature.models.Order;
 import com.revature.services.OrderService;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ public class OrderController {
 
     @Authorized
     @GetMapping
-    public ResponseEntity<List<Order>> getAllOrders() {
+    public ResponseEntity<List<OrderResponse>> getAllOrders() {
         return ResponseEntity.ok(orderService.findAll());
     }
 
@@ -35,8 +37,9 @@ public class OrderController {
     }
     @Authorized
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        return ResponseEntity.ok(orderService.save(order));
+    public ResponseEntity<Order> createOrder(@RequestBody CreateOrderRequest order) {
+        Order newOrder = new Order();
+        return ResponseEntity.ok(orderService.save(newOrder));
     }
     @Authorized
     @PutMapping
