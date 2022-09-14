@@ -3,10 +3,13 @@ package com.revature.controllers;
 import com.revature.dtos.RegisterRequest;
 import com.revature.dtos.UpdateUserRequest;
 import com.revature.dtos.UserResponse;
+import com.revature.models.User;
 import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity; //TODO: What is that?
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 
 @CrossOrigin
@@ -27,8 +30,9 @@ public class UserController {
     }
 
     @PutMapping
-    public String update(@RequestBody UpdateUserRequest updateUserRequest) {
-        userService.update(updateUserRequest);
+    public String update(@RequestBody UpdateUserRequest updateUserRequest, HttpSession session) {
+
+        userService.update(updateUserRequest, (User) session.getAttribute("user"));
         return "The user account is successfully updated!";
     }
 
