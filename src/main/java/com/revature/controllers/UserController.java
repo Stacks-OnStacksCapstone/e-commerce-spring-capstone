@@ -21,7 +21,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/register")
+    @PostMapping
     public UserResponse register(@RequestBody RegisterRequest registerRequest) {
         return userService.registerUser(registerRequest);
     }
