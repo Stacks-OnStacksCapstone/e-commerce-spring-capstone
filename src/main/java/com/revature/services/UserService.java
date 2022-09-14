@@ -18,7 +18,6 @@ import java.util.function.Predicate;
 public class UserService {
 
     private final UserRepository userRepository;
-    private User userSession = null;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -43,8 +42,8 @@ public class UserService {
     }
 
     @Transactional
-    public void update(UpdateUserRequest updateUserRequest) throws InvalidUserInputException{
-        User foundUser = userRepository.findById(getUserSession().getId()).orElseThrow(ResourceNotFoundException::new);
+    public void update(UpdateUserRequest updateUserRequest, User currentUser) throws InvalidUserInputException{
+        User foundUser = userRepository.findById(currentUser.getId()).orElseThrow(ResourceNotFoundException::new);
         Predicate<String> notNullOrEmpty = (str) -> str != null && !str.trim().equals("");
 
         if(notNullOrEmpty.test(updateUserRequest.getFirstName()))
@@ -56,14 +55,21 @@ public class UserService {
         if(notNullOrEmpty.test(updateUserRequest.getPassword()))
             foundUser.setPassword(updateUserRequest.getPassword());
 
+
+
         }
-    public User getUserSession(){return userSession;}
 
     @Transactional(readOnly = true)
     public UserResponse findById(int id){
         User user = userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
         UserResponse userResponse = new UserResponse(user);
         return userResponse;
+    }
+
+    @Transactional(readOnly = true)
+    public User findUserById(int id) {
+        User user = userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        return user;
     }
 }
 

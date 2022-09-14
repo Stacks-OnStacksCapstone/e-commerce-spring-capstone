@@ -29,7 +29,6 @@ public class AuthController {
         if(!optional.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
-
         session.setAttribute("user", optional.get());
 
         return ResponseEntity.ok(optional.get());
