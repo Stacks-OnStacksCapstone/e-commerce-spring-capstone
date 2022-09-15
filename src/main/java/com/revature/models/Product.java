@@ -23,4 +23,5 @@ public class Product {
     private String description;
     private String image;
     private String name;
+    private boolean isActive;
 }
