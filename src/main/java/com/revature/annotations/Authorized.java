@@ -8,5 +8,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Authorized {
+
+    boolean isAdmin() default false;
+    boolean isActive() default true;
     public AuthRestriction value() default AuthRestriction.LoggedIn;
 }
