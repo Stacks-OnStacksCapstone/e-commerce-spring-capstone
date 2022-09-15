@@ -5,6 +5,7 @@ import com.revature.dtos.EditOrderRequest;
 import com.revature.dtos.OrderResponse;
 import com.revature.exceptions.InvalidUserInputException;
 import com.revature.exceptions.ResourceNotFoundException;
+import com.revature.exceptions.UnauthorizedException;
 import com.revature.models.Order;
 import com.revature.models.Payment;
 import com.revature.models.User;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -59,19 +61,24 @@ public class OrderService {
     }
 
     public List<OrderResponse> findAllUserOrders(User user) {
-        ArrayList<OrderResponse> orderResponses = new ArrayList<>();
-        //orderRepository
-        return null;
+        List<OrderResponse> orderResponses = new ArrayList<>();
+        List<Order> orders = orderRepository.findByUserId(user);
+        orderResponses = orders.stream().map(OrderResponse::new).collect(Collectors.toList());
+        return orderResponses;
     }
 
     public Optional<Order> findById(int id) {
         return orderRepository.findById(id);
     }
 
-    public OrderResponse updateOrder(EditOrderRequest editOrderRequest) {
+    public OrderResponse update(EditOrderRequest editOrderRequest, User user) throws UnauthorizedException {
         System.out.println(editOrderRequest.getOrderId());
         Order foundOrder = findById(editOrderRequest.getOrderId()).orElseThrow(() -> new ResourceNotFoundException("No order with this ID found."));
-        if (editOrderRequest.getPaymentId() != null && editOrderRequest.getPaymentId() != "") {
+        Predicate<String> notNullOrEmpty = (str) -> str != null && !str.trim().equals("");
+        if (foundOrder.getUserId().getId() != user.getId()) {
+            throw new UnauthorizedException("Not authorized to change this order.");
+        }
+        if (notNullOrEmpty.test(editOrderRequest.getPaymentId()) && notNullOrEmpty.test(editOrderRequest.getPaymentId())) {
             foundOrder.setPaymentId(paymentService.findPaymentById(editOrderRequest.getPaymentId()));
         }
         if (editOrderRequest.getShipmentAddress() != null && editOrderRequest.getShipmentAddress() != "") {
@@ -81,13 +88,5 @@ public class OrderService {
         return orderResponse;
     }
 
-    public void update(EditOrderRequest editOrderRequest, Order order) throws InvalidUserInputException{
-        Order foundOrder = orderRepository.findById(order.getId()).orElseThrow(ResourceNotFoundException::new);
-        Predicate<String> notNullOrEmpty = (str) -> str != null && !str.trim().equals("");
-
-        if(notNullOrEmpty.test(editOrderRequest.getShipmentAddress())){
-            foundOrder.setShipmentAddress(editOrderRequest.getShipmentAddress());
-        }
-    }
 
 }

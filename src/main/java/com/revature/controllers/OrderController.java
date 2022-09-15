@@ -3,15 +3,18 @@ import com.revature.annotations.Authorized;
 import com.revature.dtos.CreateOrderRequest;
 import com.revature.dtos.EditOrderRequest;
 import com.revature.dtos.OrderResponse;
+import com.revature.exceptions.UnauthorizedException;
 import com.revature.models.Order;
 import com.revature.models.User;
 import com.revature.services.OrderService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -34,8 +37,9 @@ public class OrderController {
 
     @Authorized
     @GetMapping("/history")
-    public ResponseEntity<List<OrderResponse>> getOrderHistory() {
-        return null;
+    public ResponseEntity<List<OrderResponse>> getOrderHistory(HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        return ResponseEntity.ok(orderService.findAllUserOrders(user));
     }
 
     @Authorized
@@ -55,10 +59,13 @@ public class OrderController {
     }
     @Authorized
     @PutMapping
-    public String updateOrder(@RequestBody EditOrderRequest editOrderRequest, HttpSession session) {
-
-        ResponseEntity.ok(orderService.update(editOrderRequest, (Order) session.getAttribute("order")));
-        return "Update Successful";
+    public ResponseEntity<String> update(@RequestBody EditOrderRequest editOrderRequest, HttpSession session) {
+        try {
+            ResponseEntity.ok(orderService.update(editOrderRequest, (User) session.getAttribute("user")));
+            return new ResponseEntity<>("Order changed successfully", HttpStatus.CREATED);
+        } catch (UnauthorizedException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
     }
 
     // Do we need a PatchMapping???
