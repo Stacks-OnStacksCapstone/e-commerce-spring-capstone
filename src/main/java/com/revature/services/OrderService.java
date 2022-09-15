@@ -3,12 +3,13 @@ package com.revature.services;
 import com.revature.dtos.CreateOrderRequest;
 import com.revature.dtos.EditOrderRequest;
 import com.revature.dtos.OrderResponse;
+import com.revature.exceptions.InvalidUserInputException;
 import com.revature.exceptions.ResourceNotFoundException;
+import com.revature.exceptions.UnauthorizedException;
 import com.revature.models.Order;
 import com.revature.models.Payment;
 import com.revature.models.User;
 import com.revature.repositories.OrderRepository;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -57,14 +60,25 @@ public class OrderService {
         return orderResponses;
     }
 
+    public List<OrderResponse> findAllUserOrders(User user) {
+        List<OrderResponse> orderResponses = new ArrayList<>();
+        List<Order> orders = orderRepository.findByUserId(user);
+        orderResponses = orders.stream().map(OrderResponse::new).collect(Collectors.toList());
+        return orderResponses;
+    }
+
     public Optional<Order> findById(int id) {
         return orderRepository.findById(id);
     }
 
-    public OrderResponse updateOrder(EditOrderRequest editOrderRequest) {
+    public OrderResponse update(EditOrderRequest editOrderRequest, User user) throws UnauthorizedException {
         System.out.println(editOrderRequest.getOrderId());
         Order foundOrder = findById(editOrderRequest.getOrderId()).orElseThrow(() -> new ResourceNotFoundException("No order with this ID found."));
-        if (editOrderRequest.getPaymentId() != null && editOrderRequest.getPaymentId() != "") {
+        Predicate<String> notNullOrEmpty = (str) -> str != null && !str.trim().equals("");
+        if (foundOrder.getUserId().getId() != user.getId()) {
+            throw new UnauthorizedException("Not authorized to change this order.");
+        }
+        if (notNullOrEmpty.test(editOrderRequest.getPaymentId()) && notNullOrEmpty.test(editOrderRequest.getPaymentId())) {
             foundOrder.setPaymentId(paymentService.findPaymentById(editOrderRequest.getPaymentId()));
         }
         if (editOrderRequest.getShipmentAddress() != null && editOrderRequest.getShipmentAddress() != "") {
@@ -74,13 +88,5 @@ public class OrderService {
         return orderResponse;
     }
 
-    public Order save(Order order) {
-        return orderRepository.save(order);
-    }
 
-    public boolean delete(int id) {
-        Order foundOrder = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order couldn't be deleted."));
-        orderRepository.delete(foundOrder);
-        return true;
-    }
 }

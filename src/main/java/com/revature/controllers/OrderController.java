@@ -3,15 +3,18 @@ import com.revature.annotations.Authorized;
 import com.revature.dtos.CreateOrderRequest;
 import com.revature.dtos.EditOrderRequest;
 import com.revature.dtos.OrderResponse;
+import com.revature.exceptions.UnauthorizedException;
 import com.revature.models.Order;
 import com.revature.models.User;
 import com.revature.services.OrderService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -33,6 +36,13 @@ public class OrderController {
     }
 
     @Authorized
+    @GetMapping("/history")
+    public ResponseEntity<List<OrderResponse>> getOrderHistory(HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        return ResponseEntity.ok(orderService.findAllUserOrders(user));
+    }
+
+    @Authorized
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable("id") int id) {
         Optional<Order> optional = orderService.findById(id);
@@ -43,29 +53,20 @@ public class OrderController {
     }
     @Authorized
     @PostMapping
-    public ResponseEntity<OrderResponse> createOrder(@RequestBody @Valid CreateOrderRequest createOrderRequest, HttpSession httpSession) {
+    public ResponseEntity<OrderResponse> createAnOrder(@RequestBody @Valid CreateOrderRequest createOrderRequest, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         return ResponseEntity.ok(orderService.createOrder(createOrderRequest, user));
     }
     @Authorized
     @PutMapping
-    public ResponseEntity<OrderResponse> updateOrder(@RequestBody EditOrderRequest editOrderRequest) {
-
-        return ResponseEntity.ok(orderService.updateOrder(editOrderRequest));
+    public ResponseEntity<String> update(@RequestBody EditOrderRequest editOrderRequest, HttpSession session) {
+        try {
+            ResponseEntity.ok(orderService.update(editOrderRequest, (User) session.getAttribute("user")));
+            return new ResponseEntity<>("Order changed successfully", HttpStatus.CREATED);
+        } catch (UnauthorizedException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
     }
 
     // Do we need a PatchMapping???
-
-    @Authorized
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Order> deleteOrder(@PathVariable("id") int id) {
-        Optional<Order> optional = orderService.findById(id);
-
-        if(!optional.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        orderService.delete(id);
-
-        return ResponseEntity.ok(optional.get());
-    }
 }
