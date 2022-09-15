@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import com.revature.annotations.Authorized;
 import com.revature.dtos.RegisterRequest;
 import com.revature.dtos.UpdateUserRequest;
 import com.revature.dtos.UserResponse;
@@ -43,4 +44,10 @@ public class UserController {
         return userResponse;
     }
 
+    @PutMapping("/deactivate")
+    public String deactivateAccount(@RequestBody UpdateUserRequest updateUserRequest, HttpSession session) {
+
+        userService.deactivate(updateUserRequest, (User) session.getAttribute("user"));
+        return "The user account is successfully deactivated!";
+    }
 }
