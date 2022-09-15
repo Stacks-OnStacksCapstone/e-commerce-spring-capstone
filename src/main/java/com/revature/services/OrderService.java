@@ -57,6 +57,12 @@ public class OrderService {
         return orderResponses;
     }
 
+    public List<OrderResponse> findAllUserOrders(User user) {
+        ArrayList<OrderResponse> orderResponses = new ArrayList<>();
+        //orderRepository
+        return null;
+    }
+
     public Optional<Order> findById(int id) {
         return orderRepository.findById(id);
     }
