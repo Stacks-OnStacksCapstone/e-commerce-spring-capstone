@@ -3,12 +3,12 @@ package com.revature.services;
 import com.revature.dtos.CreateOrderRequest;
 import com.revature.dtos.EditOrderRequest;
 import com.revature.dtos.OrderResponse;
+import com.revature.exceptions.InvalidUserInputException;
 import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.models.Order;
 import com.revature.models.Payment;
 import com.revature.models.User;
 import com.revature.repositories.OrderRepository;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +16,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @Service
 public class OrderService {
@@ -80,13 +81,13 @@ public class OrderService {
         return orderResponse;
     }
 
-    public Order save(Order order) {
-        return orderRepository.save(order);
+    public void update(EditOrderRequest editOrderRequest, Order order) throws InvalidUserInputException{
+        Order foundOrder = orderRepository.findById(order.getId()).orElseThrow(ResourceNotFoundException::new);
+        Predicate<String> notNullOrEmpty = (str) -> str != null && !str.trim().equals("");
+
+        if(notNullOrEmpty.test(editOrderRequest.getShipmentAddress())){
+            foundOrder.setShipmentAddress(editOrderRequest.getShipmentAddress());
+        }
     }
 
-    public boolean delete(int id) {
-        Order foundOrder = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order couldn't be deleted."));
-        orderRepository.delete(foundOrder);
-        return true;
-    }
 }
