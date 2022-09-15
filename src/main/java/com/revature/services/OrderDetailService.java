@@ -1,8 +1,12 @@
 package com.revature.services;
+import com.revature.dtos.OrderDetailResponse;
+import com.revature.dtos.OrderResponse;
+import com.revature.models.Order;
 import com.revature.models.OrderDetail;
 import com.revature.repositories.OrderDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -14,7 +18,8 @@ public class OrderDetailService {
         this.orderDetailRepository=orderDetailRepository;
     }
 
-    public List<OrderDetail> findAll(){
+    public List<OrderDetail> findAllById(int id){
+        List<OrderDetail> orderDetails = orderDetailRepository.findAllById(id);
         return orderDetailRepository.findAll();
     }
 
