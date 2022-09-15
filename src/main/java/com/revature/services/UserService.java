@@ -60,7 +60,7 @@ public class UserService {
         }
 
     @Transactional
-    public void deactivate(UpdateUserRequest updateUserRequest, User currentUser) throws InvalidUserInputException{
+    public void deactivate(User currentUser) throws InvalidUserInputException{
         User foundUser = userRepository.findById(currentUser.getId()).orElseThrow(ResourceNotFoundException::new);
         userRepository.deactivateUser(foundUser.getId());
     }

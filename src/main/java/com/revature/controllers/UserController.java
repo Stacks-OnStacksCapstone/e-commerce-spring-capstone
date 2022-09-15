@@ -45,9 +45,10 @@ public class UserController {
     }
 
     @PutMapping("/deactivate")
-    public String deactivateAccount(@RequestBody UpdateUserRequest updateUserRequest, HttpSession session) {
+    public String deactivateAccount(@RequestBody HttpSession session) {
 
-        userService.deactivate(updateUserRequest, (User) session.getAttribute("user"));
+        userService.deactivate( (User) session.getAttribute("user"));
         return "The user account is successfully deactivated!";
     }
 }
+
