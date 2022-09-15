@@ -43,29 +43,17 @@ public class OrderController {
     }
     @Authorized
     @PostMapping
-    public ResponseEntity<OrderResponse> createOrder(@RequestBody @Valid CreateOrderRequest createOrderRequest, HttpSession httpSession) {
+    public ResponseEntity<OrderResponse> createAnOrder(@RequestBody @Valid CreateOrderRequest createOrderRequest, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         return ResponseEntity.ok(orderService.createOrder(createOrderRequest, user));
     }
     @Authorized
     @PutMapping
-    public ResponseEntity<OrderResponse> updateOrder(@RequestBody EditOrderRequest editOrderRequest) {
+    public String updateOrder(@RequestBody EditOrderRequest editOrderRequest, HttpSession session) {
 
-        return ResponseEntity.ok(orderService.updateOrder(editOrderRequest));
+        ResponseEntity.ok(orderService.update(editOrderRequest, (Order) session.getAttribute("order")));
+        return "Update Successful";
     }
 
     // Do we need a PatchMapping???
-
-    @Authorized
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Order> deleteOrder(@PathVariable("id") int id) {
-        Optional<Order> optional = orderService.findById(id);
-
-        if(!optional.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        orderService.delete(id);
-
-        return ResponseEntity.ok(optional.get());
-    }
 }
