@@ -1,7 +1,9 @@
 package com.revature.services;
 
 import com.revature.dtos.CreateOrderRequest;
+import com.revature.dtos.EditOrderRequest;
 import com.revature.dtos.OrderResponse;
+import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.models.Order;
 import com.revature.models.Payment;
 import com.revature.models.User;
@@ -30,14 +32,12 @@ public class OrderService {
         this.paymentService = paymentService;
     }
 
-    public OrderResponse createOrder(CreateOrderRequest createOrderRequest) {
+    public OrderResponse createOrder(CreateOrderRequest createOrderRequest, User user) {
         Order newOrder = new Order();
-        User foundUser = userService.findUserById(createOrderRequest.getUserId());
         Payment foundPayment = paymentService.findPaymentById(createOrderRequest.getPaymentId());
-        newOrder.setUserId(foundUser);
+        newOrder.setUserId(user);
         newOrder.setPaymentId(foundPayment);
         newOrder.setOrderDate(new Date(System.currentTimeMillis()));
-        newOrder.setOrderFulfilled(false);
         newOrder.setShipmentAddress(createOrderRequest.getShipmentAddress());
 
         orderRepository.save(newOrder);
@@ -58,7 +58,20 @@ public class OrderService {
     }
 
     public Optional<Order> findById(int id) {
-        return findById(id);
+        return orderRepository.findById(id);
+    }
+
+    public OrderResponse updateOrder(EditOrderRequest editOrderRequest) {
+        System.out.println(editOrderRequest.getOrderId());
+        Order foundOrder = findById(editOrderRequest.getOrderId()).orElseThrow(() -> new ResourceNotFoundException("No order with this ID found."));
+        if (editOrderRequest.getPaymentId() != null && editOrderRequest.getPaymentId() != "") {
+            foundOrder.setPaymentId(paymentService.findPaymentById(editOrderRequest.getPaymentId()));
+        }
+        if (editOrderRequest.getShipmentAddress() != null && editOrderRequest.getShipmentAddress() != "") {
+            foundOrder.setShipmentAddress(editOrderRequest.getShipmentAddress());
+        }
+        OrderResponse orderResponse = new OrderResponse(foundOrder);
+        return orderResponse;
     }
 
     public Order save(Order order) {

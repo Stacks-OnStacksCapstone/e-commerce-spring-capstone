@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 @Data
@@ -16,10 +18,18 @@ import java.sql.Date;
 public class Payment {
     @Id
     private String id;
+    @NotEmpty
+    @NotNull
     private String ccv;
+    @NotEmpty
+    @NotNull
     @Column(name = "exp_date")
     private Date expDate;
+    @NotEmpty
+    @NotNull
     private String zip;
+    @NotEmpty
+    @NotNull
     private float balance;
 
     @ManyToOne

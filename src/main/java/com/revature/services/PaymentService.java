@@ -23,7 +23,6 @@ public class PaymentService {
     }
 
     public PaymentResponse createPayment(CreatePaymentRequest createPaymentRequest, User user) {
-        System.out.println(createPaymentRequest);
         Payment newPayment = new Payment();
         newPayment.setId(UUID.randomUUID().toString());
         newPayment.setBalance((float) 0.0);
@@ -56,5 +55,15 @@ public class PaymentService {
         PaymentResponse updatedPayment = new PaymentResponse(foundPayment);
 
         return updatedPayment;
+    }
+
+    public PaymentResponse deletePayment(String paymentId, User user) throws UnauthorizedException {
+        Payment foundPayment = paymentRepository.findById(paymentId).orElseThrow(() -> new ResourceNotFoundException("Payment not found"));
+        if (foundPayment.getUserId().getId() != user.getId()) {
+            throw new UnauthorizedException("Must be logged in as payment owner to delete payment.");
+        }
+        PaymentResponse paymentResponse = new PaymentResponse(foundPayment);
+        paymentRepository.delete(foundPayment);
+        return paymentResponse;
     }
 }

@@ -1,12 +1,17 @@
 package com.revature.controllers;
 import com.revature.annotations.Authorized;
 import com.revature.dtos.CreateOrderRequest;
+import com.revature.dtos.EditOrderRequest;
 import com.revature.dtos.OrderResponse;
 import com.revature.models.Order;
+import com.revature.models.User;
 import com.revature.services.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -38,13 +43,15 @@ public class OrderController {
     }
     @Authorized
     @PostMapping
-    public ResponseEntity<OrderResponse> createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
-        return ResponseEntity.ok(orderService.createOrder(createOrderRequest));
+    public ResponseEntity<OrderResponse> createOrder(@RequestBody @Valid CreateOrderRequest createOrderRequest, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        return ResponseEntity.ok(orderService.createOrder(createOrderRequest, user));
     }
     @Authorized
     @PutMapping
-    public ResponseEntity<Order> updateOrder(Order order) {
-        return ResponseEntity.ok(orderService.save(order));
+    public ResponseEntity<OrderResponse> updateOrder(@RequestBody EditOrderRequest editOrderRequest) {
+
+        return ResponseEntity.ok(orderService.updateOrder(editOrderRequest));
     }
 
     // Do we need a PatchMapping???

@@ -9,17 +9,17 @@ import java.sql.Date;
 @Data
 @NoArgsConstructor
 public class OrderResponse {
+    private int orderId;
     private String userEmail;
     private String paymentId;
     private Date orderDate;
     private String shipmentAddress;
-    private boolean orderFulfilled;
 
     public OrderResponse(Order order) {
+        this.orderId = order.getId();
         this.userEmail = order.getUserId().getEmail();
         this.paymentId = order.getPaymentId().getId();
         this.orderDate = order.getOrderDate();
         this.shipmentAddress = order.getShipmentAddress();
-        this.orderFulfilled = order.isOrderFulfilled();
     }
 }
