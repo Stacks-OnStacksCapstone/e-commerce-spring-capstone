@@ -20,15 +20,12 @@ public class Payment {
     @NotEmpty
     @NotNull
     private String ccv;
-    @NotEmpty
     @NotNull
     @Column(name = "exp_date")
     private Date expDate;
     @NotEmpty
     @NotNull
     private String zip;
-    @NotEmpty
-    @NotNull
     private float balance;
 
     @ManyToOne
