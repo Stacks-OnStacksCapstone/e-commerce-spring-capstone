@@ -42,6 +42,9 @@ public class ProductController {
     @Authorized
     @PutMapping
     public ResponseEntity<Product> upsert(@RequestBody Product product) {
+        if (product.getId() == 0)
+            product.setId(null);
+
         return ResponseEntity.ok(productService.save(product));
     }
 

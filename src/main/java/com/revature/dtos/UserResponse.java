@@ -25,4 +25,6 @@ public class UserResponse {
         this.isActive = user.isActive();
         this.isAdmin = user.isAdmin();
     }
+
+
 }
