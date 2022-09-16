@@ -39,6 +39,14 @@ public class ProductController {
         return ResponseEntity.ok(optional.get());
     }
 
+    //TODO: Should products be authorized?
+    @Authorized
+    @GetMapping
+    public ResponseEntity<List<Product>> getProductByKeyword(@RequestParam String keyword){
+        return ResponseEntity.ok(productService.findByKeyword(keyword));
+    }
+
+
     @Authorized
     @PutMapping
     public ResponseEntity<Product> upsert(@RequestBody Product product) {

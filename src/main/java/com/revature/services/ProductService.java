@@ -25,6 +25,8 @@ public class ProductService {
         return productRepository.findActiveById(id);
     }
 
+    public List<Product> findByKeyword(String keyword){return productRepository.findByKeyword(keyword);}
+
     public Product save(Product product) {
         return productRepository.save(product);
     }

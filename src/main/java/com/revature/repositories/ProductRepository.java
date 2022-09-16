@@ -14,4 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("FROM Product WHERE is_active = true and id = :id")
     Optional<Product> findActiveById(int id);
+
+    @Query("FROM Product WHERE name ILIKE '%:keyword%' OR description ILIKE '%:keyword%'")
+    List<Product> findByKeyword(String keyword);
 }
