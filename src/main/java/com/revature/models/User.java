@@ -1,4 +1,4 @@
-package com.revature.controllers.models;
+package com.revature.models;
 
 import com.revature.dtos.RegisterRequest;
 import com.revature.dtos.UserResponse;

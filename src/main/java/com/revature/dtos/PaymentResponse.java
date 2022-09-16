@@ -1,6 +1,6 @@
 package com.revature.dtos;
 
-import com.revature.controllers.models.Payment;
+import com.revature.models.Payment;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

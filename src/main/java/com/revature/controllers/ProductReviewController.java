@@ -1,10 +1,9 @@
 package com.revature.controllers;
 
 import com.revature.annotations.Authorized;
+import com.revature.models.User;
 import com.revature.dtos.ProductReviewRequest;
 import com.revature.dtos.ProductReviewResponse;
-import com.revature.models.ProductReview;
-import com.revature.models.User;
 import com.revature.services.ProductReviewService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

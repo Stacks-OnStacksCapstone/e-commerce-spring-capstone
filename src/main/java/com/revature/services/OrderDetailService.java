@@ -1,6 +1,6 @@
 package com.revature.services;
-import com.revature.controllers.models.Order;
-import com.revature.controllers.models.OrderDetail;
+import com.revature.models.Order;
+import com.revature.models.OrderDetail;
 import com.revature.repositories.OrderDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

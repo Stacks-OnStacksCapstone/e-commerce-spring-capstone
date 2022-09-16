@@ -3,7 +3,7 @@ package com.revature.controllers;
 import com.revature.dtos.RegisterRequest;
 import com.revature.dtos.UpdateUserRequest;
 import com.revature.dtos.UserResponse;
-import com.revature.controllers.models.User;
+import com.revature.models.User;
 import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

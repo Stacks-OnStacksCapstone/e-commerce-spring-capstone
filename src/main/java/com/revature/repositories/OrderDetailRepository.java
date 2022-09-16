@@ -1,6 +1,6 @@
 package com.revature.repositories;
-import com.revature.controllers.models.Order;
-import com.revature.controllers.models.OrderDetail;
+import com.revature.models.Order;
+import com.revature.models.OrderDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;

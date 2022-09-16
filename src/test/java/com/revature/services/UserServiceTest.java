@@ -2,7 +2,7 @@ package com.revature.services;
 
 import com.revature.dtos.RegisterRequest;
 import com.revature.dtos.UpdateUserRequest;
-import com.revature.controllers.models.User;
+import com.revature.models.User;
 import com.revature.repositories.UserRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;

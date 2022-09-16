@@ -5,7 +5,7 @@ import com.revature.dtos.CreatePaymentRequest;
 import com.revature.dtos.EditPaymentRequest;
 import com.revature.dtos.PaymentResponse;
 import com.revature.exceptions.UnauthorizedException;
-import com.revature.controllers.models.User;
+import com.revature.models.User;
 import com.revature.services.PaymentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

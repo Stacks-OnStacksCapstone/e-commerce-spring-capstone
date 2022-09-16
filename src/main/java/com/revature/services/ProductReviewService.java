@@ -1,9 +1,9 @@
 package com.revature.services;
 
+import com.revature.models.User;
 import com.revature.dtos.ProductReviewRequest;
 import com.revature.dtos.ProductReviewResponse;
 import com.revature.models.ProductReview;
-import com.revature.models.User;
 import com.revature.repositories.ProductReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

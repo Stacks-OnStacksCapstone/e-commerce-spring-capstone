@@ -1,6 +1,6 @@
 package com.revature.dtos;
 
-import com.revature.controllers.models.User;
+import com.revature.models.User;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
 package com.revature.repositories;
 
-import com.revature.controllers.models.Payment;
+import com.revature.models.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

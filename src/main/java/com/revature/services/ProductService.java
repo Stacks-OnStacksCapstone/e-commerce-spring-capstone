@@ -1,7 +1,7 @@
 package com.revature.services;
 
 import com.revature.dtos.ProductInfo;
-import com.revature.controllers.models.Product;
+import com.revature.models.Product;
 import com.revature.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
