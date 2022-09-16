@@ -39,6 +39,8 @@ class UserServiceTest {
     @AfterEach
     public void tearDown(){
         user1 = null;
+        registerRequest = null;
+        updateUserRequest = null;
     }
 
     //PASSES!

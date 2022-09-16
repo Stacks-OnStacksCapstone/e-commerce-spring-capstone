@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 
 
-@CrossOrigin
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://127.0.0.1:3000"},  allowCredentials = "true")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -27,6 +27,7 @@ public class UserController {
 
     @PostMapping
     public UserResponse register(@RequestBody RegisterRequest registerRequest) {
+        System.out.println(registerRequest);
         return userService.registerUser(registerRequest);
     }
 
@@ -37,6 +38,7 @@ public class UserController {
         return "The user account is successfully updated!";
     }
 
+    @Authorized
     @GetMapping // For user to use
     public UserResponse getProfile(HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -46,9 +48,20 @@ public class UserController {
 
     @PutMapping("/deactivate")
     public String deactivateAccount(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        userService.deactivate(user);
+        return "The user account is successfully deactivated!";
+    }
 
+<<<<<<< HEAD
         userService.deactivate( (User) session.getAttribute("user"));
         session.removeAttribute("user");
+=======
+    @PutMapping("/deactivateUser")
+    @Authorized(isAdmin = true)
+    public String deactivateUser(User user) {
+        userService.deactivate(user);
+>>>>>>> bc168325c652092991b9e2260b0d0fcd9f010152
         return "The user account is successfully deactivated!";
     }
 }

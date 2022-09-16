@@ -25,7 +25,6 @@ public class User {
     private boolean isAdmin;
     private boolean isActive;
 
-
     public User(RegisterRequest registerRequest) {
         this.email = registerRequest.getEmail();
         this.firstName = registerRequest.getFirstName();
@@ -34,11 +33,13 @@ public class User {
         this.isAdmin = false;
         this.isActive = true;
     }
-
+    
+    
     public User(UserResponse userResponse) {
         this.email = userResponse.getEmail();
         this.firstName = userResponse.getFirstName();
         this.lastName = userResponse.getLastName();
         this.isActive = userResponse.isActive();
     }
+
 }

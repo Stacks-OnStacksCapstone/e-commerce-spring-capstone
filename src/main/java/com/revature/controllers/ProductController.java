@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/product")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://127.0.0.1:3000"},  allowCredentials = "true")
 public class ProductController {
 
     private final ProductService productService;
@@ -42,6 +42,9 @@ public class ProductController {
     @Authorized
     @PutMapping
     public ResponseEntity<Product> upsert(@RequestBody Product product) {
+        if (product.getId() == 0)
+            product.setId(null);
+
         return ResponseEntity.ok(productService.save(product));
     }
 
