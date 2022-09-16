@@ -1,9 +1,6 @@
 package com.revature.controllers;
 
-import com.revature.dtos.LoginRequest;
-import com.revature.dtos.RegisterRequest;
-import com.revature.dtos.ResetPasswordRequest;
-import com.revature.dtos.UpdateUserRequest;
+import com.revature.dtos.*;
 import com.revature.models.User;
 import com.revature.services.AuthService;
 import org.springframework.http.HttpStatus;
@@ -49,6 +46,9 @@ public class AuthController {
 
     @PutMapping("/reset-password")
     public ResponseEntity<Void> resetPassword(@RequestBody UpdateUserRequest updateUserRequest){
+        if(updateUserRequest.getPassword() == null || updateUserRequest.getPassword().equals("")) {
+            return ResponseEntity.badRequest().build();
+        }
         authService.resetPassword(updateUserRequest);
         return ResponseEntity.ok().build();
     }
