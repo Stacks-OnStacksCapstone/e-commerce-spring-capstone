@@ -1,11 +1,13 @@
 package com.revature.advice;
 
-import com.revature.annotations.AuthRestriction;
 import com.revature.annotations.Authorized;
 import com.revature.exceptions.NotLoggedInException;
+import com.revature.exceptions.UnauthorizedException;
+import com.revature.models.User;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ public class AuthAspect {
     // the proxy will pass method calls to the real request
     private final HttpServletRequest req;
 
+    @Autowired
     public AuthAspect(HttpServletRequest req) {
         this.req = req;
     }
@@ -47,12 +50,15 @@ public class AuthAspect {
     @Around("@annotation(authorized)")
     public Object authenticate(ProceedingJoinPoint pjp, Authorized authorized) throws Throwable {
 
-        HttpSession session = req.getSession(); // Get the session (or create one)
+        HttpSession session = req.getSession(false); // Get the session (or create one)
+
+        if(session == null) throw new UnauthorizedException("No Session available");
 
         // If the user is not logged in
         if(session.getAttribute("user") == null) {
             throw new NotLoggedInException("Must be logged in to perform this action");
         }
+        User user = (User) session.getAttribute("user");
 
         return pjp.proceed(pjp.getArgs()); // Call the originally intended method
     }
