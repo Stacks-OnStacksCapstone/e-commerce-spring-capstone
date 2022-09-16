@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import com.revature.annotations.Authorized;
 import com.revature.dtos.LoginRequest;
 import com.revature.dtos.RegisterRequest;
 import com.revature.exceptions.NotLoggedInException;
@@ -41,7 +42,7 @@ public class AuthController {
         if(!optional.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
-        System.out.println(optional.get());
+
         session.setAttribute("user", optional.get());
 
         return ResponseEntity.ok(optional.get());

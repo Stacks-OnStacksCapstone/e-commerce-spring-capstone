@@ -66,6 +66,12 @@ public class UserService {
         userRepository.deactivateUser(foundUser.getId());
     }
 
+    @Transactional
+    public void deactivateUser(User user) throws InvalidUserInputException{
+        User foundUser = userRepository.findById(user.getId()).orElseThrow(ResourceNotFoundException::new);
+        userRepository.deactivateUser(foundUser.getId());
+    }
+
     @Transactional(readOnly = true)
     public UserResponse findById(int id){
         User user = userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
