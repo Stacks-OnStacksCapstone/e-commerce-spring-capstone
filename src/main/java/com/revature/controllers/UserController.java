@@ -48,6 +48,7 @@ public class UserController {
     public String deactivateAccount(HttpSession session) {
 
         userService.deactivate( (User) session.getAttribute("user"));
+        session.removeAttribute("user");
         return "The user account is successfully deactivated!";
     }
 }
