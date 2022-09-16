@@ -16,13 +16,13 @@ public class ProductReviewResponse {
     private int rating;
     private String comment;
     private int postId;
-    private int userId;
+    private UserResponse user;
 
     public ProductReviewResponse(ProductReview productReview) {
         this.id = productReview.getId();
         this.rating = productReview.getRating();
         this.comment = productReview.getComment();
         this.postId = productReview.getPostId().getId();
-        this.userId = productReview.getUserId().getId();
+        this.user = new UserResponse(productReview.getUserId());
     }
 }

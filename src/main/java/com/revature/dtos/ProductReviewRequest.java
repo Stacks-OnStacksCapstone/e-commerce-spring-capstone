@@ -12,4 +12,5 @@ public class ProductReviewRequest {
     private int id;
     private int rating;
     private String comment;
+    private int postId;
 }
