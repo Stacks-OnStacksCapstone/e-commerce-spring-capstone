@@ -35,7 +35,6 @@ public class UserService {
 
     @Transactional
     public UserResponse registerUser(RegisterRequest registerRequest) throws InvalidUserInputException, ResourcePersistanceException {
-
         User newUser = new User(registerRequest);
         isEmailAvailable(newUser.getEmail());
         return new UserResponse(userRepository.save(newUser));

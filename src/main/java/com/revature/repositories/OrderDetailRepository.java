@@ -1,4 +1,5 @@
 package com.revature.repositories;
+import com.revature.models.Order;
 import com.revature.models.OrderDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +11,5 @@ import java.util.Optional;
 @Repository
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Integer> {
 
-    @Query(value = "FROM order_details where order_id= :id")
-    List<OrderDetail> findAllById(int id);
+    List<OrderDetail> findByOrderId(Order order);
 }

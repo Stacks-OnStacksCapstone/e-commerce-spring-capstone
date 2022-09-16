@@ -17,9 +17,12 @@ public class OrderDetailService {
     public OrderDetailService(OrderDetailRepository orderDetailRepository){
         this.orderDetailRepository=orderDetailRepository;
     }
-
-    public List<OrderDetail> findAllById(int id){
-        List<OrderDetail> orderDetails = orderDetailRepository.findAllById(id);
+    public List<OrderDetail> findAll(){
+        List<OrderDetail> orderDetails = orderDetailRepository.findAll();
+        return orderDetailRepository.findAll();
+    }
+    public List<OrderDetail> findAllOrderDetailsByOrder(Order order){
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrderId(order);
         return orderDetailRepository.findAll();
     }
 
