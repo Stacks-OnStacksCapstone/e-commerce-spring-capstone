@@ -2,7 +2,7 @@ package com.revature.controllers;
 
 import com.revature.dtos.LoginRequest;
 import com.revature.dtos.RegisterRequest;
-import com.revature.exceptions.NotLoggedInException;
+import com.revature.dtos.ResetPasswordRequest;
 import com.revature.models.User;
 import com.revature.services.AuthService;
 import org.springframework.http.HttpStatus;
@@ -45,6 +45,13 @@ public class AuthController {
         session.setAttribute("user", optional.get());
 
         return ResponseEntity.ok(optional.get());
+    }
+
+    @PutMapping("/reset-password")
+    public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordRequest resetPasswordRequest){
+        Optional<User> optional = authService.resetPassword(resetPasswordRequest.getEmail(), resetPasswordRequest.getPassword());
+        resetPasswordRequest.setPassword(resetPasswordRequest.getPassword());
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/logout")

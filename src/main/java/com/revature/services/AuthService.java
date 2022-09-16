@@ -1,5 +1,6 @@
 package com.revature.services;
 
+import com.revature.dtos.ResetPasswordRequest;
 import com.revature.models.User;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,14 @@ public class AuthService {
 
     public Optional<User> findByCredentials(String email, String password) {
         return userService.findByCredentials(email, password);
+    }
+
+    public Optional<User> resetPassword(String email, String password){
+
+        Optional<User> user = userService.findByEmail(email);
+        if(user.isPresent()){
+
+        }
     }
 
     public User register(User user) {
