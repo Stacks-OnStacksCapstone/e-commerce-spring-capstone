@@ -41,7 +41,6 @@ public class AuthController {
         if(!optional.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
-
         session.setAttribute("user", optional.get());
 
         return ResponseEntity.ok(optional.get());
@@ -52,18 +51,5 @@ public class AuthController {
         session.removeAttribute("user");
 
         return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) {
-        User created = new User(0,
-                registerRequest.getEmail(),
-                registerRequest.getPassword(),
-                registerRequest.getFirstName(),
-                registerRequest.getLastName(),
-                false,
-                true);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(created));
     }
 }
