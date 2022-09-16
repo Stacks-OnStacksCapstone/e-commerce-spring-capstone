@@ -2,6 +2,7 @@ package com.revature.controllers;
 
 import com.revature.dtos.LoginRequest;
 import com.revature.dtos.RegisterRequest;
+import com.revature.exceptions.NotLoggedInException;
 import com.revature.models.User;
 import com.revature.services.AuthService;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,17 @@ public class AuthController {
         this.authService = authService;
     }
 
+    @GetMapping
+    public ResponseEntity<User> getCurrentUser(HttpSession session) {
+        // If the user is not logged in
+        System.out.println(session.getAttribute("user"));
+        if(session.getAttribute("user") == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok((User)session.getAttribute("user"));
+    }
+
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         Optional<User> optional = authService.findByCredentials(loginRequest.getEmail(), loginRequest.getPassword());
@@ -40,5 +52,4 @@ public class AuthController {
 
         return ResponseEntity.ok().build();
     }
-
 }

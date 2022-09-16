@@ -34,11 +34,13 @@ public class User {
         this.isAdmin = false;
         this.isActive = true;
     }
-
+    
+    
     public User(UserResponse userResponse) {
         this.email = userResponse.getEmail();
         this.firstName = userResponse.getFirstName();
         this.lastName = userResponse.getLastName();
         this.isActive = userResponse.isActive();
     }
+
 }
