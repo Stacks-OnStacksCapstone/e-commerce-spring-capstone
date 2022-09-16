@@ -1,6 +1,7 @@
 package com.revature.dtos;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,11 @@ import javax.validation.constraints.Pattern;
 
 @Data
 @NoArgsConstructor
+
+//For testing
+@AllArgsConstructor
+//////////////////
+
 public class UpdateUserRequest {
 
     private String firstName;

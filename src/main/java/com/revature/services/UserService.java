@@ -8,6 +8,7 @@ import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.exceptions.ResourcePersistanceException;
 import com.revature.models.User;
 import com.revature.repositories.UserRepository;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
