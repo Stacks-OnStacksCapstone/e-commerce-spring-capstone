@@ -1,10 +1,12 @@
 package com.revature.services;
 
 import com.revature.dtos.ResetPasswordRequest;
+import com.revature.dtos.UpdateUserRequest;
+import com.revature.exceptions.InvalidUserInputException;
 import com.revature.models.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.net.URI;
 import java.util.Optional;
 
 @Service
@@ -20,12 +22,10 @@ public class AuthService {
         return userService.findByCredentials(email, password);
     }
 
-    public Optional<User> resetPassword(String email, String password){
-
-        Optional<User> user = userService.findByEmail(email);
-        if(user.isPresent()){
-
-        }
+    @Transactional
+    public void resetPassword(UpdateUserRequest updateUserRequest) {
+        User user = userService.findByEmail(updateUserRequest.getEmail()).orElseThrow(InvalidUserInputException::new);
+        userService.update(updateUserRequest, user);
     }
 
     public User register(User user) {

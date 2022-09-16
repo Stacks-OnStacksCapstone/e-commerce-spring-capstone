@@ -3,6 +3,7 @@ package com.revature.controllers;
 import com.revature.dtos.LoginRequest;
 import com.revature.dtos.RegisterRequest;
 import com.revature.dtos.ResetPasswordRequest;
+import com.revature.dtos.UpdateUserRequest;
 import com.revature.models.User;
 import com.revature.services.AuthService;
 import org.springframework.http.HttpStatus;
@@ -41,16 +42,14 @@ public class AuthController {
         if(!optional.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
-
         session.setAttribute("user", optional.get());
 
         return ResponseEntity.ok(optional.get());
     }
 
     @PutMapping("/reset-password")
-    public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordRequest resetPasswordRequest){
-        Optional<User> optional = authService.resetPassword(resetPasswordRequest.getEmail(), resetPasswordRequest.getPassword());
-        resetPasswordRequest.setPassword(resetPasswordRequest.getPassword());
+    public ResponseEntity<Void> resetPassword(@RequestBody UpdateUserRequest updateUserRequest){
+        authService.resetPassword(updateUserRequest);
         return ResponseEntity.ok().build();
     }
 
@@ -59,18 +58,5 @@ public class AuthController {
         session.removeAttribute("user");
 
         return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) {
-        User created = new User(0,
-                registerRequest.getEmail(),
-                registerRequest.getPassword(),
-                registerRequest.getFirstName(),
-                registerRequest.getLastName(),
-                false,
-                true);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(created));
     }
 }
