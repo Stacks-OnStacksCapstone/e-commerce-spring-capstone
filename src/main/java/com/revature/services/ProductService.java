@@ -1,7 +1,7 @@
 package com.revature.services;
 
 import com.revature.dtos.ProductInfo;
-import com.revature.models.Product;
+import com.revature.controllers.models.Product;
 import com.revature.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,22 +18,28 @@ public class ProductService {
     }
 
     public List<Product> findAll() {
-        return productRepository.findAll();
+        return productRepository.findAllActive();
     }
 
     public Optional<Product> findById(int id) {
-        return productRepository.findById(id);
+        return productRepository.findActiveById(id);
     }
 
     public Product save(Product product) {
         return productRepository.save(product);
     }
-    
+
     public List<Product> saveAll(List<Product> productList, List<ProductInfo> metadata) {
-    	return productRepository.saveAll(productList);
+        return productRepository.saveAll(productList);
     }
 
     public void delete(int id) {
-        productRepository.deleteById(id);
+        Optional<Product> p = findById(id);
+
+        if (p.isPresent()) {
+            Product pr = p.get();
+            pr.setActive(false);
+            save(pr);
+        }
     }
 }

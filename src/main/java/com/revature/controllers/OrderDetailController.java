@@ -1,7 +1,7 @@
 package com.revature.controllers;
 
 import com.revature.annotations.Authorized;
-import com.revature.models.OrderDetail;
+import com.revature.controllers.models.OrderDetail;
 import com.revature.services.OrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

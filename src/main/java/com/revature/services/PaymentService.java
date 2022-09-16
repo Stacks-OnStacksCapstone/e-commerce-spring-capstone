@@ -6,12 +6,11 @@ import com.revature.dtos.PaymentResponse;
 import com.revature.exceptions.InvalidUserInputException;
 import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.exceptions.UnauthorizedException;
-import com.revature.models.Payment;
-import com.revature.models.User;
+import com.revature.controllers.models.Payment;
+import com.revature.controllers.models.User;
 import com.revature.repositories.PaymentRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

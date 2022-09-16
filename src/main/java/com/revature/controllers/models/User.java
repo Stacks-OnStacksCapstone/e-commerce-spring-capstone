@@ -1,6 +1,7 @@
-package com.revature.models;
+package com.revature.controllers.models;
 
 import com.revature.dtos.RegisterRequest;
+import com.revature.dtos.UserResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,4 +34,14 @@ public class User {
         this.isAdmin = false;
         this.isActive = true;
     }
+
+    
+    
+    public User(UserResponse userResponse) {
+        this.email = userResponse.getEmail();
+        this.firstName = userResponse.getFirstName();
+        this.lastName = userResponse.getLastName();
+        this.isActive = userResponse.isActive();
+    }
+
 }

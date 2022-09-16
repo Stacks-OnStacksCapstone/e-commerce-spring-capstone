@@ -1,6 +1,6 @@
 package com.revature.dtos;
 
-import com.revature.models.User;
+import com.revature.controllers.models.User;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +25,6 @@ public class UserResponse {
         this.isActive = user.isActive();
         this.isAdmin = user.isAdmin();
     }
+
+
 }

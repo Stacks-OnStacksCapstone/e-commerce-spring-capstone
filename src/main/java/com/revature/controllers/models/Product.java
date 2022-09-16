@@ -1,4 +1,4 @@
-package com.revature.models;
+package com.revature.controllers.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,4 +23,5 @@ public class Product {
     private String description;
     private String image;
     private String name;
+    private boolean isActive;
 }

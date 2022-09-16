@@ -6,7 +6,7 @@ import com.revature.dtos.UserResponse;
 import com.revature.exceptions.InvalidUserInputException;
 import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.exceptions.ResourcePersistanceException;
-import com.revature.models.User;
+import com.revature.controllers.models.User;
 import com.revature.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +57,12 @@ public class UserService {
 
 
         }
+
+    @Transactional
+    public void deactivate(User currentUser) throws InvalidUserInputException{
+        User foundUser = userRepository.findById(currentUser.getId()).orElseThrow(ResourceNotFoundException::new);
+        userRepository.deactivateUser(foundUser.getId());
+    }
 
     @Transactional(readOnly = true)
     public UserResponse findById(int id){

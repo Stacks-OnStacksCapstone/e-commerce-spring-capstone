@@ -1,6 +1,6 @@
 package com.revature.services;
 
-import com.revature.models.User;
+import com.revature.controllers.models.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

@@ -3,7 +3,7 @@ package com.revature.advice;
 import com.revature.annotations.Authorized;
 import com.revature.exceptions.NotLoggedInException;
 import com.revature.exceptions.UnauthorizedException;
-import com.revature.models.User;
+import com.revature.controllers.models.User;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

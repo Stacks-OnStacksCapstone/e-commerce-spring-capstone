@@ -1,6 +1,6 @@
 package com.revature.dtos;
 
-import com.revature.models.Order;
+import com.revature.controllers.models.Order;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
