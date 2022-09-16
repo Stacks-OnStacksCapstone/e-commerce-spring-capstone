@@ -1,6 +1,9 @@
 package com.revature.controllers;
 
 import com.revature.annotations.Authorized;
+import com.revature.dtos.OrderDetailRequest;
+import com.revature.dtos.OrderDetailResponse;
+import com.revature.models.Order;
 import com.revature.models.OrderDetail;
 import com.revature.services.OrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +39,16 @@ public class OrderDetailController {
     }
 
     @Authorized
+    @GetMapping("/order/{id}")
+    public ResponseEntity<List<OrderDetailResponse>> findAllByOrderId(@PathVariable("id") int id) {
+        List<OrderDetailResponse> orderDetailResponses = orderDetailService.findAllOrderDetailsByOrder(id);
+        return ResponseEntity.ok(orderDetailResponses);
+    }
+
+    @Authorized
     @PostMapping
-    public ResponseEntity<OrderDetail> createOrderDetail(OrderDetail orderDetail){
-        return ResponseEntity.ok(orderDetailService.save(orderDetail));
+    public ResponseEntity<OrderDetailResponse> createOrderDetail(@RequestBody OrderDetailRequest orderDetailRequest){
+        return ResponseEntity.ok(orderDetailService.createOrderDetail(orderDetailRequest));
     }
 
     @Authorized
