@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://127.0.0.1:3000"},  allowCredentials = "true")
 public class AuthController {
 
     private final AuthService authService;
@@ -41,6 +41,7 @@ public class AuthController {
         if(!optional.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
+        System.out.println(optional.get());
         session.setAttribute("user", optional.get());
 
         return ResponseEntity.ok(optional.get());

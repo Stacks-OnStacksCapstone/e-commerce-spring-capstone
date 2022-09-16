@@ -2,6 +2,7 @@ package com.revature.services;
 
 import com.revature.models.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ public class AuthService {
         this.userService = userService;
     }
 
+    @Transactional
     public Optional<User> findByCredentials(String email, String password) {
         return userService.findByCredentials(email, password);
     }
