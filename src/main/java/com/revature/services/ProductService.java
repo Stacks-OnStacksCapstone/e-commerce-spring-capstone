@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class ProductService {
 
@@ -25,7 +26,9 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public List<Product> findByKeyword(String keyword){return productRepository.findByKeyword(keyword);}
+    public List<Product> findByKeyword(String keyword){
+        return productRepository.findByKeyword("%" + keyword + "%");
+    }
 
     public Product save(Product product) {
         return productRepository.save(product);
