@@ -22,7 +22,7 @@ public class ProductService {
     }
 
     public Optional<Product> findById(int id) {
-        return productRepository.findActiveById(id);
+        return productRepository.findById(id);
     }
 
     public Product save(Product product) {
