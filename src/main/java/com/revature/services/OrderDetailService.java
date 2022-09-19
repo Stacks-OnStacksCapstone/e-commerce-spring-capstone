@@ -29,8 +29,8 @@ public class OrderDetailService {
 
     public OrderDetailResponse createOrderDetail(OrderDetailRequest orderDetailRequest) {
         OrderDetail orderDetail = new OrderDetail();
-        Order foundOrder = orderService.findById(orderDetailRequest.getOrderId()).orElseThrow(() -> new ResourceNotFoundException("No matching order."));
-        Product foundProduct = productService.findById(orderDetailRequest.getProductId()).orElseThrow(() -> new ResourceNotFoundException("No product found."));
+        Order foundOrder = orderService.findById(orderDetailRequest.getOrderId()).orElseThrow(() -> new ResourceNotFoundException("No matching order detail."));
+        Product foundProduct = productService.findById(orderDetailRequest.getProductId()).orElseThrow(() -> new ResourceNotFoundException("No product found ."));
         orderDetail.setOrderId(foundOrder);
         orderDetail.setProductId(foundProduct);
         orderDetail.setQuantity(orderDetailRequest.getQuantity());

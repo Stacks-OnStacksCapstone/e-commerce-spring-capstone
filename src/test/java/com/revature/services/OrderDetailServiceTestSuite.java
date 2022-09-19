@@ -2,6 +2,7 @@ package com.revature.services;
 
 import com.revature.dtos.OrderDetailRequest;
 import com.revature.dtos.OrderDetailResponse;
+import com.revature.dtos.PaymentResponse;
 import com.revature.models.*;
 import com.revature.repositories.OrderDetailRepository;
 import org.junit.jupiter.api.Assertions;
@@ -36,11 +37,10 @@ public class OrderDetailServiceTestSuite {
         Order validOrder = spy(new Order(1, validUser, validPayment, new Date(2000,12,12), "valid"));
         OrderDetail validOrderDetail = spy(new OrderDetail(1,validOrder,validProduct,1));
         OrderDetailRequest orderDetailRequest = spy(new OrderDetailRequest(1,1,1));
+        //orderDetailRepository.save(validOrderDetail);
+        OrderDetailResponse validOrderDetailResponse=sut.createOrderDetail(orderDetailRequest);
 
-        when(orderDetailRepository.existsById(validOrderDetail.getId())).thenReturn(false);
-       // doReturn(new OrderDetail(1,validOrder,validProduct,1)).when(orderDetailRepository).save(any(Order.class));
-
-        OrderDetailResponse orderDetailResponse = sut.createOrderDetail(orderDetailRequest);
-        Assertions.assertInstanceOf(OrderDetailResponse.class, orderDetailResponse);
+        //Assertions.assertFalse(orderDetailRepository.existsById(validOrderDetail.getId()));
+        Assertions.assertInstanceOf(OrderDetailResponse.class, validOrderDetailResponse);
     }
 }
