@@ -23,13 +23,11 @@ public class ProductReviewController {
         this.productReviewService = productReviewService;
     }
 
-    @Authorized
     @GetMapping
     public ResponseEntity<List<ProductReviewResponse>> getReviews() {
         return ResponseEntity.ok(productReviewService.findAll());
     }
 
-    @Authorized
     @GetMapping("/{id}")
     public ResponseEntity<List<ProductReviewResponse>> getReviewsByProductId(@PathVariable("id") int id) {
         return ResponseEntity.ok(productReviewService.findByProductId(id));
