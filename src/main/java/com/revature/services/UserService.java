@@ -8,7 +8,6 @@ import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.exceptions.ResourcePersistanceException;
 import com.revature.models.User;
 import com.revature.repositories.UserRepository;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +44,6 @@ public class UserService {
 
     @Transactional
     public UserResponse registerUser(RegisterRequest registerRequest) throws InvalidUserInputException, ResourcePersistanceException {
-
         User newUser = new User(registerRequest);
         isEmailAvailable(newUser.getEmail());
         return new UserResponse(userRepository.save(newUser));

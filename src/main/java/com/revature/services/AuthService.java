@@ -32,7 +32,6 @@ public class AuthService {
         }
         userService.update(updateUserRequest, user);
     }
-
     public User register(User user) {
         return userService.save(user);
     }
