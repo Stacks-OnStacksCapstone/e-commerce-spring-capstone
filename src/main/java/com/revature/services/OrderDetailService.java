@@ -5,6 +5,7 @@ import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.models.Order;
 import com.revature.models.OrderDetail;
 import com.revature.models.Product;
+import com.revature.models.User;
 import com.revature.repositories.OrderDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,7 @@ public class OrderDetailService {
     }
 
     public Optional<OrderDetail> findById(int id) {
-        return findById(id);
+        return orderDetailRepository.findById(id);
     }
     public OrderDetail save(OrderDetail orderDetail) {
         return orderDetailRepository.save(orderDetail);
