@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -46,9 +47,15 @@ public class ProductReviewService {
     }
 
     public ProductReview save(ProductReviewRequest productReview, User user) {
-        return productReviewRepository.save(new ProductReview(productReview,
-                productService.findById(productReview.getPostId()).get(),
-                user));
+        try {
+            return productReviewRepository.save(new ProductReview(productReview,
+                    productService.findById(productReview.getPostId()).get(),
+                    user));
+
+        }catch (NoSuchElementException e){
+
+            return null;
+        }
     }
 
     public void deleteById(int id){productReviewRepository.deleteById(id);}
