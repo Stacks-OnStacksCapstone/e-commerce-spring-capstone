@@ -27,7 +27,7 @@ public class ProductService {
     }
 
     public List<Product> findByKeyword(String keyword){
-        return productRepository.findByKeyword("%" + keyword + "%");1
+        return productRepository.findByKeyword("%" + keyword + "%");
     }
 
     public Product save(Product product) {

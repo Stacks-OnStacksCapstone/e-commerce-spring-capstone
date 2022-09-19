@@ -3,18 +3,20 @@ package com.revature.services;
 import com.revature.models.Product;
 import com.revature.repositories.ProductRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
 public class ProductServiceTestSuite {
 
-    ProductService sut;
-    ProductRepository mockProductRepository;
+    static ProductService sut;
+    static ProductRepository mockProductRepository;
 
-    @BeforeEach
-    public void testPrep(){
+    @BeforeAll
+    public static void testPrep(){
         mockProductRepository = mock(ProductRepository.class);
         sut = new ProductService(mockProductRepository);
     }
@@ -30,8 +32,26 @@ public class ProductServiceTestSuite {
         true);
 
         when(mockProductRepository.save(newProduct)).thenReturn(newProduct);
-
+        newProduct.setId(2);
         Product returnedProduct = sut.save(newProduct);
+
+        Assertions.assertInstanceOf(Product.class, returnedProduct);
+        verify(mockProductRepository, times(1));
+    }
+
+    @Test
+    public void test_findById_returnsProduct_givenValidId(){
+        Product newProduct = new Product(1,
+                10,
+                20.00,
+                "A nice pair of headphones",
+                "https://i.insider.com/54eb437f6bb3f7697f85da71?width=1000&format=jpeg&auto=webp",
+                "Headphones",
+                true);
+
+        when(mockProductRepository.findById(eq(1))).thenReturn(Optional.of(newProduct));
+
+        Product returnedProduct = sut.findById(1).get();
 
         Assertions.assertInstanceOf(Product.class, returnedProduct);
         verify(mockProductRepository, times(1));
