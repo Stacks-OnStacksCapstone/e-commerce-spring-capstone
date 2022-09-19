@@ -1,5 +1,7 @@
 package com.revature.models;
 
+import com.revature.dtos.CreateOrderRequest;
+import com.revature.dtos.OrderResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +26,15 @@ public class Order {
     private Payment paymentId;
     private Date orderDate;
     private String shipmentAddress;
+
+    public Order(CreateOrderRequest createOrderRequest, User user, Payment payment){
+        this.userId = user;
+        this.paymentId = payment;
+        this.shipmentAddress = createOrderRequest.getShipmentAddress();
+    }
+
+    public Order(OrderResponse orderResponse){
+        this.orderDate = orderResponse.getOrderDate();
+        this.shipmentAddress = orderResponse.getShipmentAddress();
+    }
 }
