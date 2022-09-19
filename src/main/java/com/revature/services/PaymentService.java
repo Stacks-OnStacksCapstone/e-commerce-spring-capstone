@@ -12,6 +12,7 @@ import com.revature.repositories.PaymentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
+import java.util.function.Predicate;
 
 @Service
 public class PaymentService {
@@ -32,11 +33,29 @@ public class PaymentService {
             throw new InvalidUserInputException("No user was provided for payment.");
         }
         newPayment.setUserId(user);
+        if (!isPaymentValid(newPayment)) {
+            throw new InvalidUserInputException("Invalid input provided for payment");
+        }
 
         paymentRepository.save(newPayment);
 
         return new PaymentResponse(newPayment);
     }
+
+    public boolean isPaymentValid(Payment payment) {
+        Predicate<String> notNullOrEmpty = (str) -> str != null && !str.trim().equals("");
+        if (!notNullOrEmpty.test(payment.getZip())) {
+            return false;
+        }
+        if (!notNullOrEmpty.test(payment.getCcv())) {
+            return false;
+        }
+        if (payment.getExpDate() == null) {
+            return false;
+        }
+        return true;
+    }
+
     public Payment findPaymentById(String id) {
         Payment foundPayment = paymentRepository.findById(id).orElseThrow(() -> new RuntimeException("No payment with this ID found."));
         return foundPayment;
