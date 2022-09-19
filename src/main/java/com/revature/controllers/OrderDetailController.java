@@ -46,7 +46,6 @@ public class OrderDetailController {
     public ResponseEntity<List<OrderDetailResponse>> findAllByOrderId(@PathVariable("id") int id, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         List<OrderDetailResponse> orderDetailResponses = orderDetailService.findAllOrderDetailsByOrder(id);
-        orderDetailResponses = (ArrayList) orderDetailResponses;
         if (orderDetailResponses.size() == 0) {
             return ResponseEntity.notFound().build();
         }
