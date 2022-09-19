@@ -3,7 +3,9 @@ package com.revature.services;
 import com.revature.dtos.ResetPasswordRequest;
 import com.revature.dtos.UpdateUserRequest;
 import com.revature.exceptions.InvalidUserInputException;
+import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.models.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +26,10 @@ public class AuthService {
 
     @Transactional
     public void resetPassword(UpdateUserRequest updateUserRequest) {
-        User user = userService.findByEmail(updateUserRequest.getEmail()).orElseThrow(InvalidUserInputException::new);
+        User user = userService.findByEmail(updateUserRequest.getEmail()).orElseThrow(ResourceNotFoundException::new);
+        if(updateUserRequest.getPassword() == null || updateUserRequest.getPassword().equals("")) {
+            throw new InvalidUserInputException();
+        }
         userService.update(updateUserRequest, user);
     }
 
