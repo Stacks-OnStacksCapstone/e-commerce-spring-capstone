@@ -24,6 +24,7 @@ public class User {
     private String lastName;
     private boolean isAdmin;
     private boolean isActive;
+    private String resetPasswordToken;
 
 
     public User(RegisterRequest registerRequest) {

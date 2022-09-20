@@ -32,6 +32,24 @@ public class UserService {
         return userRepository.checkEmail(email);
     }
 
+    public Optional<User> findByResetPasswordToken(String resetPasswordToken) {
+        return userRepository.findByResetPasswordToken(resetPasswordToken);
+    }
+
+    public void updateResetPasswordToken(String resetPasswordToken, String email) {
+        User user = findByEmail(email).orElseThrow(ResourceNotFoundException::new);
+
+        user.setResetPasswordToken(resetPasswordToken);
+        userRepository.save(user);
+    }
+
+    public void resetPassword(User user, String newPassword) {
+        user.setPassword(newPassword);
+        user.setResetPasswordToken(null);
+
+        userRepository.save(user);
+    }
+
     public User save(User user) {
         return userRepository.save(user);
     }

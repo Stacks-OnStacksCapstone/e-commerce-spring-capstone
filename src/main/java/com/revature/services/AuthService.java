@@ -1,17 +1,12 @@
 package com.revature.services;
 
-import com.revature.dtos.ResetPasswordRequest;
 import com.revature.dtos.UpdateUserRequest;
-import com.revature.exceptions.InvalidUserInputException;
-import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.models.User;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.security.auth.callback.ConfirmationCallback;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -29,13 +24,16 @@ public class AuthService {
     }
 
     @Transactional
-    public void resetPassword(UpdateUserRequest updateUserRequest) {
-        User user = userService.findByEmail(updateUserRequest.getEmail()).orElseThrow(ResourceNotFoundException::new);
+    public void forgotPassword(UpdateUserRequest updateUserRequest) {
 
-        String randomPassword = ":)";
-        String to = user.getEmail();
+        String token = UUID.randomUUID().toString();
+
+        userService.updateResetPasswordToken(token, updateUserRequest.getEmail());
+        String resetPasswordLink = "localhost:3000/reset-password/" + token;
+
+        String to = updateUserRequest.getEmail();
         String subject = "Reset your Congo Password";
-        String text = "Your password has been changed! \n New Password: " + randomPassword;
+        String text = "Click the link below to change your password\nIgnore this message if you didn't request your password to be changed\n" + resetPasswordLink;
 
         sendEmailService.sendEmail(to,subject,text);
 

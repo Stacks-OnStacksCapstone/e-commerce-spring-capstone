@@ -44,9 +44,9 @@ public class AuthController {
         return ResponseEntity.ok(optional.get());
     }
 
-    @PutMapping("/reset-password")
-    public ResponseEntity<Void> resetPassword(@RequestBody UpdateUserRequest updateUserRequest){
-        authService.resetPassword(updateUserRequest);
+    @PutMapping("/forgot-password")
+    public ResponseEntity<Void> forgotPassword(@RequestBody UpdateUserRequest updateUserRequest){
+        authService.forgotPassword(updateUserRequest);
         return ResponseEntity.ok().build();
     }
 
@@ -60,13 +60,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) {
-        User created = new User(0,
-                registerRequest.getEmail(),
-                registerRequest.getPassword(),
-                registerRequest.getFirstName(),
-                registerRequest.getLastName(),
-                false,
-                true);
+        User created = new User(registerRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(created));
     }
