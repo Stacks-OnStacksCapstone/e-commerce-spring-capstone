@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 public class OrderServiceTestSuite {
@@ -42,6 +44,26 @@ public class OrderServiceTestSuite {
 
         Assertions.assertInstanceOf(OrderResponse.class, actualOrderResponse);
         verify(mockOrderRepository, times(2));
+    }
+
+    @Test
+    public void test_createOrder_throwInvalidUserInputException_givenInvalidOrder(){
+
+    }
+
+    @Test
+    public void test_findAll_returnListOrderResponse(){
+        List<Order> orders = new ArrayList<>();
+
+        sut.findAll();
+        verify(mockOrderRepository, times(1));
+    }
+
+    @Test
+    public void test_findById_returnOrderResponse_givenValidId(){
+        User validUser = spy(new User(1, "valid", "valid", "valid", "valid", true, true));
+        Payment validPayment = spy(new Payment("1", "valid", new Date(2000,12,12), "12345", (float) 0.01, validUser));
+        Order validOrder = spy(new Order(1, validUser, validPayment, new Date(2000,12,12), "valid"));
     }
 
 }
