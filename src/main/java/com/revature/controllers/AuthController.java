@@ -32,6 +32,9 @@ public class AuthController {
         return ResponseEntity.ok((User)session.getAttribute("user"));
     }
 
+    @GetMapping
+    public ResponseEntity<UserResponse>
+
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         Optional<User> optional = authService.findByCredentials(loginRequest.getEmail(), loginRequest.getPassword());
@@ -49,6 +52,8 @@ public class AuthController {
         authService.forgotPassword(updateUserRequest);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/reset-password/")
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpSession session) {
