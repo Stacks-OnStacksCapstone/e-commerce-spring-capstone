@@ -147,15 +147,15 @@ class ProductReviewTest {
         arr.add(productReview1);
         arr.add(productReview2);
 
-        when(productReviewRepository.findallByProductId(eq(1))).thenReturn(new ArrayList<>());
-        when(productReviewRepository.findallByProductId(eq(2))).thenReturn(arr);
+        when(productReviewRepository.findAllByProductId(eq(1))).thenReturn(new ArrayList<>());
+        when(productReviewRepository.findAllByProductId(eq(2))).thenReturn(arr);
 
         List<ProductReviewResponse> products = productReviewService.findByProductId(1);
-        verify(productReviewRepository,times(1)).findallByProductId(1);
+        verify(productReviewRepository,times(1)).findAllByProductId(1);
         assertEquals(0, products.size());
 
         products = productReviewService.findByProductId(2);
-        verify(productReviewRepository,times(1)).findallByProductId(2);
+        verify(productReviewRepository,times(1)).findAllByProductId(2);
         assertEquals(2, products.size());
     }
 }
