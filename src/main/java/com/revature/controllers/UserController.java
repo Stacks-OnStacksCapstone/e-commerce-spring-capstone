@@ -53,7 +53,6 @@ public class UserController {
         return "The user account is successfully deactivated!";
     }
 
-
     @PutMapping("/deactivateUser")
     @Authorized(isAdmin = true)
     public String deactivateUser(User user) {
