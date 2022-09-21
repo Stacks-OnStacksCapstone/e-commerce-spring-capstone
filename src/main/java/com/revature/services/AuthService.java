@@ -20,6 +20,7 @@ public class AuthService {
         this.sendEmailService = sendEmailService;
     }
 
+    @Transactional
     public Optional<User> findByCredentials(String email, String password) {
         return userService.findByCredentials(email, password);
     }

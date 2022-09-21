@@ -26,7 +26,6 @@ public class User {
     private boolean isActive;
     private String resetPasswordToken;
 
-
     public User(RegisterRequest registerRequest) {
         this.email = registerRequest.getEmail();
         this.firstName = registerRequest.getFirstName();
