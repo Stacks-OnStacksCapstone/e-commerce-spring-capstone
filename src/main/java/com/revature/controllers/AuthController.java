@@ -32,8 +32,11 @@ public class AuthController {
         return ResponseEntity.ok((User)session.getAttribute("user"));
     }
 
-    @GetMapping
-    public ResponseEntity<UserResponse>
+    @GetMapping("/reset-password/{token}")
+    public ResponseEntity<Void> verifyResetPasswordToken(@PathVariable String token) {
+        authService.verifyResetPasswordToken(token);
+        return ResponseEntity.ok().build();
+    }
 
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
@@ -53,7 +56,11 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/reset-password/")
+    @PutMapping("/reset-password/{token}")
+    public ResponseEntity<Void> resetPassword(@PathVariable String token, @RequestBody UpdateUserRequest updateUserRequest) {
+        authService.resetPassword(token,updateUserRequest.getPassword());
+        return ResponseEntity.ok().build();
+    }
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpSession session) {

@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import com.revature.dtos.UpdateUserRequest;
+import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.models.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,15 @@ public class AuthService {
         return userService.findByCredentials(email, password);
     }
 
+    public void verifyResetPasswordToken(String token) {
+        userService.findByResetPasswordToken(token).orElseThrow(ResourceNotFoundException::new);
+    }
+
+    public void resetPassword(String token, String newPassword) {
+        User user = userService.findByResetPasswordToken(token).orElseThrow(ResourceNotFoundException::new);
+        userService.resetPassword(user,newPassword);
+    }
+
     @Transactional
     public void forgotPassword(UpdateUserRequest updateUserRequest) {
 
@@ -36,13 +46,6 @@ public class AuthService {
         String text = "Click the link below to change your password\nIgnore this message if you didn't request your password to be changed\n" + resetPasswordLink;
 
         sendEmailService.sendEmail(to,subject,text);
-
-
-
-//        if(updateUserRequest.getPassword() == null || updateUserRequest.getPassword().equals("")) {
-//            throw new InvalidUserInputException();
-//        }
-//        userService.update(updateUserRequest, user);
     }
     public User register(User user) {
         return userService.save(user);
