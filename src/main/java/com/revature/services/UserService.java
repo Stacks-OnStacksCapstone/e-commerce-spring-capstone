@@ -23,8 +23,40 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public Optional<User> findByCredentials(String email, String password) {
         return userRepository.findByEmailAndPassword(email, password);
+    }
+
+    @Transactional
+    public Optional<User> findByEmail(String email){
+        return userRepository.checkEmail(email);
+    }
+
+    @Transactional
+    public Optional<User> findByResetPasswordToken(String resetPasswordToken) {
+        return userRepository.findByResetPasswordToken(resetPasswordToken);
+    }
+
+    @Transactional
+    public void updateResetPasswordToken(String resetPasswordToken, String email) {
+        User user = findByEmail(email).orElseThrow(ResourceNotFoundException::new);
+
+        user.setResetPasswordToken(resetPasswordToken);
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void resetPassword(User user, String newPassword) {
+        user.setPassword(newPassword);
+        user.setResetPasswordToken(null);
+
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
     @Transactional(readOnly = true)
@@ -53,9 +85,6 @@ public class UserService {
 
         if(notNullOrEmpty.test(updateUserRequest.getPassword()))
             foundUser.setPassword(updateUserRequest.getPassword());
-
-
-
         }
 
     @Transactional
@@ -81,10 +110,6 @@ public class UserService {
     public User findUserById(int id) {
         User user = userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
         return user;
-    }
-
-    public User save(User user) {
-        return userRepository.save(user);
     }
 }
 
