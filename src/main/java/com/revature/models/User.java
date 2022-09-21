@@ -25,7 +25,6 @@ public class User {
     private boolean isAdmin;
     private boolean isActive;
 
-
     public User(RegisterRequest registerRequest) {
         this.email = registerRequest.getEmail();
         this.firstName = registerRequest.getFirstName();
