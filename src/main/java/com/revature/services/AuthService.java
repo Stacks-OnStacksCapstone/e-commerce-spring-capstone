@@ -39,7 +39,7 @@ public class AuthService {
         String token = UUID.randomUUID().toString();
 
         userService.updateResetPasswordToken(token, updateUserRequest.getEmail());
-        String resetPasswordLink = "localhost:3000/reset-password/" + token;
+        String resetPasswordLink = "http://localhost:3000/reset-password/" + token;
 
         String to = updateUserRequest.getEmail();
         String subject = "Reset your Congo Password";
