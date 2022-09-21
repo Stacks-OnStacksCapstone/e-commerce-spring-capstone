@@ -8,6 +8,7 @@ import com.revature.repositories.ProductReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,11 +40,34 @@ public class ProductReviewService {
     }
 
     public List<ProductReviewResponse> findByProductId(int id) {
-        return productReviewRepository.findallByProductId(id).
+        return productReviewRepository.findAllByProductId(id).
                                         stream().
                                         map(ProductReviewResponse::new).
                                         collect(Collectors.toList());
     }
+
+    public int findProductAverageScore(int id) {
+        ArrayList<Integer> list = new ArrayList<>(productReviewRepository.findProductAverageScore(id));
+        double sum=0;
+        for(int i: list){
+            sum+=i;
+        }
+        if(list.size()!=0) {
+            return (int) sum / list.size();
+        }else {
+            return 0;
+        }
+    }
+
+    public List<ProductReviewResponse> findProductByScore(int id,int rating) {
+        if(rating>5||rating<1){return null;}
+        return productReviewRepository.findAllByProductScore(id,rating).
+                stream().
+                map(ProductReviewResponse::new).
+                collect(Collectors.toList());
+    }
+
+
 
     public ProductReview save(ProductReviewRequest productReview, User user) {
         return productReviewRepository.save(new ProductReview(productReview,
