@@ -29,7 +29,7 @@ public class AuthController {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok((UserResponse)session.getAttribute("user"));
+        return ResponseEntity.ok(new UserResponse((User)session.getAttribute("user")));
     }
 
     @GetMapping("/reset-password/{token}")
