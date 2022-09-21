@@ -76,4 +76,12 @@ public class OrderServiceTestSuite {
         verify(mockOrderRepository, times(1));
     }
 
+    @Test
+    public void test_findById_throwResourceNotFoundException_givenInvalidId(){
+        when(mockOrderRepository.findById(-10)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> sut.findById(-10));
+
+        verify(mockOrderRepository, times(1));
+    }
 }
