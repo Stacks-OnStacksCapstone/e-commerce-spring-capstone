@@ -22,14 +22,14 @@ public class AuthController {
     }
 
     @GetMapping
-    public ResponseEntity<User> getCurrentUser(HttpSession session) {
+    public ResponseEntity<UserResponse> getCurrentUser(HttpSession session) {
         // If the user is not logged in
         System.out.println(session.getAttribute("user"));
         if(session.getAttribute("user") == null) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok((User)session.getAttribute("user"));
+        return ResponseEntity.ok((UserResponse)session.getAttribute("user"));
     }
 
     @GetMapping("/reset-password/{token}")
@@ -39,7 +39,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
+    public ResponseEntity<UserResponse> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         Optional<User> optional = authService.findByCredentials(loginRequest.getEmail(), loginRequest.getPassword());
 
         if(!optional.isPresent()) {
@@ -47,7 +47,7 @@ public class AuthController {
         }
         session.setAttribute("user", optional.get());
 
-        return ResponseEntity.ok(optional.get());
+        return ResponseEntity.ok(new UserResponse(optional.get()));
     }
 
     @PutMapping("/forgot-password")
@@ -71,10 +71,10 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<UserResponse> register(@RequestBody RegisterRequest registerRequest) {
         User created = new User(registerRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(created));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new UserResponse(authService.register(created)));
     }
 
 }
