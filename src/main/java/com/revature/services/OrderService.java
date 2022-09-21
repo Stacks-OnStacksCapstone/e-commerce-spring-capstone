@@ -70,14 +70,14 @@ public class OrderService {
         return orderResponses;
     }
     @Transactional
-    public Optional<Order> findById(int id) {
-        return orderRepository.findById(id);
+    public Order findById(int id) {
+        return orderRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Transactional
     public OrderResponse update(EditOrderRequest editOrderRequest, User user) throws UnauthorizedException {
         System.out.println(editOrderRequest.getOrderId());
-        Order foundOrder = findById(editOrderRequest.getOrderId()).orElseThrow(() -> new ResourceNotFoundException("No order with this ID found."));
+        Order foundOrder = findById(editOrderRequest.getOrderId());
         Predicate<String> notNullOrEmpty = (str) -> str != null && !str.trim().equals("");
         if (foundOrder.getUserId().getId() != user.getId()) {
             throw new UnauthorizedException("Not authorized to change this order.");
@@ -91,6 +91,7 @@ public class OrderService {
         OrderResponse orderResponse = new OrderResponse(foundOrder);
         return orderResponse;
     }
+
 
 
 }

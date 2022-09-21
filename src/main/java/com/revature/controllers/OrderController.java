@@ -39,7 +39,7 @@ public class OrderController {
     @Authorized
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable("id") int id) {
-        Optional<Order> optional = orderService.findById(id);
+        Optional<Order> optional = Optional.of(orderService.findById(id));
         if(!optional.isPresent()) {
             return ResponseEntity.notFound().build();
         }

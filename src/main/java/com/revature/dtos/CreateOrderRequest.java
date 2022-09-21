@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
@@ -12,10 +13,8 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateOrderRequest {
-    @NotEmpty
-    @NotNull
+    @NotBlank
     private String paymentId;
-    @NotEmpty
-    @NotNull
+    @NotBlank
     private String shipmentAddress;
 }

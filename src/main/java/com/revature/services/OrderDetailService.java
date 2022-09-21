@@ -31,7 +31,7 @@ public class OrderDetailService {
     @Transactional
     public OrderDetailResponse createOrderDetail(OrderDetailRequest orderDetailRequest) {
         OrderDetail orderDetail = new OrderDetail();
-        Order foundOrder = orderService.findById(orderDetailRequest.getOrderId()).orElseThrow(() -> new ResourceNotFoundException("No matching order detail."));
+        Order foundOrder = orderService.findById(orderDetailRequest.getOrderId());
         Product foundProduct = productService.findById(orderDetailRequest.getProductId()).orElseThrow(() -> new ResourceNotFoundException("No product found ."));
         orderDetail.setOrderId(foundOrder);
         orderDetail.setProductId(foundProduct);
@@ -48,7 +48,7 @@ public class OrderDetailService {
 
     @Transactional
     public List<OrderDetailResponse> findAllOrderDetailsByOrder(int id){
-        Order foundOrder = orderService.findById(id).orElseThrow(() -> new ResourceNotFoundException("No order found."));
+        Order foundOrder = orderService.findById(id);
         List<OrderDetail> orderDetails = orderDetailRepository.findByOrderId(foundOrder);
         List<OrderDetailResponse> orderDetailResponses = orderDetails.stream().map(OrderDetailResponse::new).collect(Collectors.toList());
         return orderDetailResponses;

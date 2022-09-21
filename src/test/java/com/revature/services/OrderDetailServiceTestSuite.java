@@ -46,7 +46,7 @@ public class OrderDetailServiceTestSuite {
         Order validOrder = spy(new Order(1, validUser, validPayment, new Date(2000,12,12), "valid"));
         OrderDetailRequest orderDetailRequest = spy(new OrderDetailRequest(1,1,1));
 
-        when(orderService.findById(validOrder.getId())).thenReturn(Optional.of(validOrder));
+        when(orderService.findById(validOrder.getId())).thenReturn(validOrder);
         when(productService.findById(orderDetailRequest.getProductId())).thenReturn(Optional.of(validProduct));
         doReturn(new OrderDetail(orderDetailRequest, validOrder, validProduct)).when(orderDetailRepository).save(any(OrderDetail.class));
 
