@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -54,6 +56,27 @@ public class ProductServiceTestSuite {
         Product returnedProduct = sut.findById(1).get();
 
         Assertions.assertInstanceOf(Product.class, returnedProduct);
+        verify(mockProductRepository, times(1));
+    }
+    @Test
+
+    public void test_findAll_returnsAllProducts(){
+        List<Product> products = new ArrayList<>();
+        Product newProduct = new Product(1,
+                10,
+                20.00,
+                "A nice pair of headphones",
+                "https://i.insider.com/54eb437f6bb3f7697f85da71?width=1000&format=jpeg&auto=webp",
+                "Headphones",
+                true);
+        products.add(newProduct);
+        when(mockProductRepository.findAll()).thenReturn(products);
+
+        List<Product> result = sut.findAll();
+        for(Product p : result){
+            Assertions.assertInstanceOf(Product.class, p);
+        }
+
         verify(mockProductRepository, times(1));
     }
 }
