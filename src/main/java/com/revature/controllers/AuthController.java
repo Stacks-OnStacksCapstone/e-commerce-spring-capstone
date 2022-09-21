@@ -2,7 +2,6 @@ package com.revature.controllers;
 
 import com.revature.dtos.LoginRequest;
 import com.revature.dtos.RegisterRequest;
-import com.revature.exceptions.NotLoggedInException;
 import com.revature.models.User;
 import com.revature.services.AuthService;
 import org.springframework.http.HttpStatus;
@@ -52,4 +51,19 @@ public class AuthController {
 
         return ResponseEntity.ok().build();
     }
+
+
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) {
+        User created = new User(0,
+                registerRequest.getEmail(),
+                registerRequest.getPassword(),
+                registerRequest.getFirstName(),
+                registerRequest.getLastName(),
+                false,
+                true);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(created));
+    }
+
 }

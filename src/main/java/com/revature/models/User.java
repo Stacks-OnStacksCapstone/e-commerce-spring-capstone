@@ -34,6 +34,7 @@ public class User {
         this.isAdmin = false;
         this.isActive = true;
     }
+
     
     
     public User(UserResponse userResponse) {

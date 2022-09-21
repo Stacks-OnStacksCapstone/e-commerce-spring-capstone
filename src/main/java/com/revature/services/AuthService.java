@@ -18,5 +18,7 @@ public class AuthService {
         return userService.findByCredentials(email, password);
     }
 
-
+    public User register(User user) {
+        return userService.save(user);
+    }
 }

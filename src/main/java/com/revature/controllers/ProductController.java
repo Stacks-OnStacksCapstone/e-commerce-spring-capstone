@@ -22,13 +22,12 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @Authorized
     @GetMapping
     public ResponseEntity<List<Product>> getInventory() {
         return ResponseEntity.ok(productService.findAll());
     }
 
-    @Authorized
+
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") int id) {
         Optional<Product> optional = productService.findById(id);
@@ -38,6 +37,13 @@ public class ProductController {
         }
         return ResponseEntity.ok(optional.get());
     }
+
+
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<List<Product>> getProductByKeyword(@PathVariable String keyword){
+        return ResponseEntity.ok(productService.findByKeyword(keyword));
+    }
+
 
     @Authorized
     @PutMapping
