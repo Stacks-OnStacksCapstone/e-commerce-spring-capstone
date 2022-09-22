@@ -8,7 +8,6 @@ import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.exceptions.ResourcePersistanceException;
 import com.revature.models.User;
 import com.revature.repositories.UserRepository;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +23,40 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public Optional<User> findByCredentials(String email, String password) {
         return userRepository.findByEmailAndPassword(email, password);
+    }
+
+    @Transactional
+    public Optional<User> findByEmail(String email){
+        return userRepository.checkEmail(email);
+    }
+
+    @Transactional
+    public Optional<User> findByResetPasswordToken(String resetPasswordToken) {
+        return userRepository.findByResetPasswordToken(resetPasswordToken);
+    }
+
+    @Transactional
+    public void updateResetPasswordToken(String resetPasswordToken, String email) {
+        User user = findByEmail(email).orElseThrow(ResourceNotFoundException::new);
+
+        user.setResetPasswordToken(resetPasswordToken);
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void resetPassword(User user, String newPassword) {
+        user.setPassword(newPassword);
+        user.setResetPasswordToken(null);
+
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
     @Transactional(readOnly = true)
@@ -36,7 +67,6 @@ public class UserService {
 
     @Transactional
     public UserResponse registerUser(RegisterRequest registerRequest) throws InvalidUserInputException, ResourcePersistanceException {
-
         User newUser = new User(registerRequest);
         isEmailAvailable(newUser.getEmail());
         return new UserResponse(userRepository.save(newUser));
@@ -55,7 +85,6 @@ public class UserService {
 
         if(notNullOrEmpty.test(updateUserRequest.getPassword()))
             foundUser.setPassword(updateUserRequest.getPassword());
-
 
 
         }

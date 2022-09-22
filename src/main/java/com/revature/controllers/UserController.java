@@ -7,7 +7,6 @@ import com.revature.dtos.UserResponse;
 import com.revature.models.User;
 import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity; //TODO: What is that?
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -42,7 +41,7 @@ public class UserController {
     @GetMapping // For user to use
     public UserResponse getProfile(HttpSession session) {
         User user = (User) session.getAttribute("user");
-        UserResponse userResponse = new UserResponse(user);
+        UserResponse userResponse = new UserResponse(userService.findUserById(user.getId())); //We get users id here to get the most recent updated user information from db
         return userResponse;
     }
 
@@ -60,4 +59,3 @@ public class UserController {
         return "The user account is successfully deactivated!";
     }
 }
-

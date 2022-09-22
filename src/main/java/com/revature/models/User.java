@@ -24,6 +24,7 @@ public class User {
     private String lastName;
     private boolean isAdmin;
     private boolean isActive;
+    private String resetPasswordToken;
 
     public User(RegisterRequest registerRequest) {
         this.email = registerRequest.getEmail();
@@ -33,6 +34,7 @@ public class User {
         this.isAdmin = false;
         this.isActive = true;
     }
+
     
     
     public User(UserResponse userResponse) {
