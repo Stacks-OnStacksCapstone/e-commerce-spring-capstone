@@ -158,4 +158,13 @@ class ProductReviewTest {
         verify(productReviewRepository,times(1)).findallByProductId(2);
         assertEquals(2, products.size());
     }
+
+    @Test
+    public void testFindById() {
+        ProductReviewResponse productReviewResponse = new ProductReviewResponse(productReview1);
+        when(productReviewRepository.findById(anyInt())).thenReturn(Optional.of(productReview1));
+        Optional<ProductReviewResponse> reviewResponse = productReviewService.findById(1);
+        verify(productReviewRepository,times(1)).findById(1);
+        assertEquals(productReviewResponse.getId(), reviewResponse.get().getId());
+    }
 }
