@@ -59,4 +59,3 @@ public class UserController {
         return "The user account is successfully deactivated!";
     }
 }
-
