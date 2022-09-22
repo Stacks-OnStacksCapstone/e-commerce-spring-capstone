@@ -2,6 +2,7 @@ package com.revature.services;
 
 import com.revature.dtos.RegisterRequest;
 import com.revature.dtos.UpdateUserRequest;
+import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.models.User;
 import com.revature.repositories.UserRepository;
 import org.junit.jupiter.api.*;
@@ -11,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -51,12 +54,11 @@ class UserServiceTest {
         verify(userRepository, times(1)).save(any());
     }
 
-//    @Test
-//    @DisplayName("Test should pass when updating a user given valid input")
-//    public void testUpdateUser_givenValidInput(){
-//
-//        when(userRepository.findById().thenReturn(user1);
-//        userService.update(updateUserRequest, user1);
-//        verify(userRepository, times(1)).save(any());
-//    }
+    @Test
+    @DisplayName("Test will pass when deactivate user is successful given a valid user")
+    public void testDeactivate_givenValidInput(){
+        when(userRepository.findById(user1.getId())).thenReturn(Optional.ofNullable(user1));
+        userService.deactivate(user1);
+    }
+
 }
