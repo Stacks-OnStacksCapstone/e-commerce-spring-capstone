@@ -1,19 +1,20 @@
 package com.revature.controllers;
 
-import com.revature.dtos.LoginRequest;
-import com.revature.dtos.RegisterRequest;
+import com.revature.dtos.*;
+import com.revature.exceptions.UnauthorizedException;
 import com.revature.models.User;
 import com.revature.services.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://127.0.0.1:3000"},  allowCredentials = "true")
 public class AuthController {
 
     private final AuthService authService;
@@ -23,27 +24,50 @@ public class AuthController {
     }
 
     @GetMapping
-    public ResponseEntity<User> getCurrentUser(HttpSession session) {
+    public ResponseEntity<UserResponse> getCurrentUser(HttpSession session) {
         // If the user is not logged in
-        System.out.println(session.getAttribute("user"));
         if(session.getAttribute("user") == null) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok((User)session.getAttribute("user"));
+        return ResponseEntity.ok(new UserResponse((User)session.getAttribute("user")));
+    }
+
+    @GetMapping("/reset-password/{token}")
+    public ResponseEntity<Void> verifyResetPasswordToken(@PathVariable String token) {
+        authService.verifyResetPasswordToken(token);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
+    public ResponseEntity<UserResponse> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         Optional<User> optional = authService.findByCredentials(loginRequest.getEmail(), loginRequest.getPassword());
 
         if(!optional.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
+
+        if(!optional.get().isActive()) {
+            return ResponseEntity.status(401).build();
+        }
+
         session.setAttribute("user", optional.get());
 
-        return ResponseEntity.ok(optional.get());
+        return ResponseEntity.ok(new UserResponse(optional.get()));
     }
+
+    @PutMapping("/forgot-password")
+    public ResponseEntity<Void> forgotPassword(@RequestBody UpdateUserRequest updateUserRequest){
+        authService.forgotPassword(updateUserRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/reset-password/{token}")
+    public ResponseEntity<Void> resetPassword(@PathVariable String token, @RequestBody UpdateUserRequest updateUserRequest) {
+        authService.resetPassword(token,updateUserRequest.getPassword());
+        return ResponseEntity.ok().build();
+    }
+
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpSession session) {
@@ -54,16 +78,10 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) {
-        User created = new User(0,
-                registerRequest.getEmail(),
-                registerRequest.getPassword(),
-                registerRequest.getFirstName(),
-                registerRequest.getLastName(),
-                false,
-                true);
+    public ResponseEntity<UserResponse> register(@RequestBody RegisterRequest registerRequest) {
+        User created = new User(registerRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(created));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new UserResponse(authService.register(created)));
     }
 
 }
