@@ -34,7 +34,7 @@ public class PaymentServiceTestSuite {
         CreatePaymentRequest createPaymentRequest = new CreatePaymentRequest();
         createPaymentRequest.setCcv("111");
         createPaymentRequest.setExpDate(new Date(System.currentTimeMillis()));
-        createPaymentRequest.setZip("11111");
+        createPaymentRequest.setCardNumber("1111111111");
         User user = new User();
         PaymentResponse paymentResponse = sut.createPayment(createPaymentRequest, user);
         Assertions.assertInstanceOf(PaymentResponse.class, paymentResponse);
@@ -43,15 +43,15 @@ public class PaymentServiceTestSuite {
     @Test
     void test_createPayment_throwException_givenInvalidInput() {
         CreatePaymentRequest createPaymentRequest1 = new CreatePaymentRequest();
-        createPaymentRequest1.setCcv("111");
-        createPaymentRequest1.setZip("11111");
+        createPaymentRequest1.setCcv("111");;
+        createPaymentRequest1.setCardNumber("1111111111");
 
         CreatePaymentRequest createPaymentRequest2 = new CreatePaymentRequest();
         createPaymentRequest2.setCcv("111");
         createPaymentRequest2.setExpDate(new Date(System.currentTimeMillis()));
 
         CreatePaymentRequest createPaymentRequest3 = new CreatePaymentRequest();
-        createPaymentRequest3.setZip("11111");
+        createPaymentRequest3.setCardNumber("111111111111");
         createPaymentRequest3.setExpDate(new Date(System.currentTimeMillis()));
 
         User user = new User();

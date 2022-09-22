@@ -14,11 +14,8 @@ import java.sql.Date;
 @NoArgsConstructor
 public class CreatePaymentRequest {
     @NotBlank
-    @Size(min = 3, max = 3)
     private String ccv;
-    @NotBlank
     private Date expDate;
     @NotBlank
-    @Size(min = 5, max = 5)
-    private String zip;
+    private String cardNumber;
 }

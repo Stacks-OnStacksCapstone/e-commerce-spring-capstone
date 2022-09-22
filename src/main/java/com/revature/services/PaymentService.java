@@ -25,9 +25,8 @@ public class PaymentService {
     public PaymentResponse createPayment(CreatePaymentRequest createPaymentRequest, User user) {
         Payment newPayment = new Payment();
         newPayment.setId(UUID.randomUUID().toString());
-        newPayment.setBalance((float) 0.0);
+        newPayment.setCardNumber(createPaymentRequest.getCardNumber());
         newPayment.setCcv(createPaymentRequest.getCcv());
-        newPayment.setZip(createPaymentRequest.getZip());
         newPayment.setExpDate(createPaymentRequest.getExpDate());
         if (user == null) {
             throw new InvalidUserInputException("No user was provided for payment.");
@@ -44,7 +43,7 @@ public class PaymentService {
 
     public boolean isPaymentValid(Payment payment) {
         Predicate<String> notNullOrEmpty = (str) -> str != null && !str.trim().equals("");
-        if (!notNullOrEmpty.test(payment.getZip())) {
+        if (!notNullOrEmpty.test(payment.getCardNumber())) {
             return false;
         }
         if (!notNullOrEmpty.test(payment.getCcv())) {
@@ -66,8 +65,8 @@ public class PaymentService {
         if (foundPayment.getUserId().getId() != user.getId()) {
             throw new UnauthorizedException("Unauthorized update payment request.");
         }
-        foundPayment.setCcv(editPaymentRequest.getCcv());
-        foundPayment.setZip(editPaymentRequest.getZip());
+        foundPayment.setCardNumber(editPaymentRequest.getCardNumber());
+        foundPayment.setCcv(editPaymentRequest.getCardType());
         foundPayment.setExpDate(editPaymentRequest.getExpDate());
         paymentRepository.save(foundPayment);
         PaymentResponse updatedPayment = new PaymentResponse(foundPayment);
