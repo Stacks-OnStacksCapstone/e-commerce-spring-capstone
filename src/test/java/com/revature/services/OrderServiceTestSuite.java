@@ -43,7 +43,7 @@ public class OrderServiceTestSuite {
 
     @Test
     public void test_findById_returnOrderResponse_givenValidId(){
-        User validUser = spy(new User(1, "valid", "valid", "valid", "valid", true, true));
+        User validUser = spy(new User(1, "valid", "valid", "valid", "valid", true, true, "valid"));
         Payment validPayment = spy(new Payment("1", "valid", new Date(2000,12,12), "12345", (float) 0.01, validUser));
         Order validOrder = spy(new Order(1, validUser, validPayment, new Date(2000,12,12), "valid"));
 
