@@ -13,11 +13,9 @@ import java.sql.Date;
 public class EditPaymentRequest {
     private String paymentId;
     @NotBlank
-    @Size(min = 3, max = 3)
-    private String ccv;
+    private String cardType;
     @NotBlank
     private Date expDate;
     @NotBlank
-    @Size(min = 5, max = 5)
-    private String zip;
+    private String cardNumber;
 }

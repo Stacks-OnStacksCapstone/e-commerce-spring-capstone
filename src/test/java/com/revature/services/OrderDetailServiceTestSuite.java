@@ -40,8 +40,8 @@ public class OrderDetailServiceTestSuite {
     }
     @Test
     public void test_createOrderDetail_returnOrderDetailResponse_givenValidCreateOrderDetailRequest(){
-        User validUser = spy(new User(1, "valid", "valid", "valid", "valid", true, true));
-        Payment validPayment = spy(new Payment("1", "valid", new Date(2000,12,12), "12345", (float) 0.01, validUser));
+        User validUser = spy(new User(1, "valid", "valid", "valid", "valid", true, true, ""));
+        Payment validPayment = spy(new Payment("1", "0000", "Visa", new Date(2000,12,12), validUser));
         Product validProduct = spy(new Product(1,1,1,"valid","valid","valid",true));
         Order validOrder = spy(new Order(1, validUser, validPayment, new Date(2000,12,12), "valid"));
         OrderDetailRequest orderDetailRequest = spy(new OrderDetailRequest(1,1,1));

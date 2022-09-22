@@ -19,14 +19,14 @@ public class Payment {
     private String id;
     @NotEmpty
     @NotNull
+    private String cardNumber;
+    @NotEmpty
+    @NotNull
     private String ccv;
     @NotNull
     @Column(name = "exp_date")
     private Date expDate;
-    @NotEmpty
-    @NotNull
-    private String zip;
-    private float balance;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
