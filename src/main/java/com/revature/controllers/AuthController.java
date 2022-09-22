@@ -7,6 +7,8 @@ import com.revature.services.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
@@ -24,7 +26,6 @@ public class AuthController {
     @GetMapping
     public ResponseEntity<UserResponse> getCurrentUser(HttpSession session) {
         // If the user is not logged in
-        System.out.println(session.getAttribute("user"));
         if(session.getAttribute("user") == null) {
             return ResponseEntity.notFound().build();
         }
@@ -47,10 +48,8 @@ public class AuthController {
         }
 
         if(!optional.get().isActive()) {
-            throw new UnauthorizedException("Your account is deactivated and not able to log in!");
+            return ResponseEntity.status(401).build();
         }
-
-
 
         session.setAttribute("user", optional.get());
 
