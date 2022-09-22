@@ -83,7 +83,7 @@ class ProductReviewTest {
         productValid3 = new Product(
                 999,1,20,"Valid","Valid","Valid",true);
 
-        userValid1 = new User(999,"Valid","Valid","Valid","Valid",true,true);
+        userValid1 = new User(999,"Valid","Valid","Valid","Valid",true,true,"Valid");
 
         productReview1 = new ProductReview(
                 999,5,"Valid", productValid1, userValid1);
