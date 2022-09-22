@@ -42,6 +42,27 @@ public class ProductServiceTestSuite {
     }
 
     @Test
+    public void test_findAll_returnsAllProducts(){
+        List<Product> products = new ArrayList<>();
+        Product newProduct = new Product(1,
+                10,
+                20.00,
+                "A nice pair of headphones",
+                "https://i.insider.com/54eb437f6bb3f7697f85da71?width=1000&format=jpeg&auto=webp",
+                "Headphones",
+                true);
+        products.add(newProduct);
+        when(mockProductRepository.findAllActive()).thenReturn(products);
+
+        List<Product> result = sut.findAll();
+        for(Product p : result){
+            Assertions.assertInstanceOf(Product.class, p);
+        }
+
+        verify(mockProductRepository, times(1));
+    }
+
+    @Test
     public void test_findById_returnsProduct_givenValidId(){
         Product newProduct = new Product(1,
                 10,
@@ -58,21 +79,32 @@ public class ProductServiceTestSuite {
         Assertions.assertInstanceOf(Product.class, returnedProduct);
         verify(mockProductRepository, times(1));
     }
+
     @Test
-
-    public void test_findAll_returnsAllProducts(){
+    public void test_findByKeyword_returnsListOfProducts_givenValidKeyword(){
         List<Product> products = new ArrayList<>();
-        Product newProduct = new Product(1,
-                10,
-                20.00,
-                "A nice pair of headphones",
-                "https://i.insider.com/54eb437f6bb3f7697f85da71?width=1000&format=jpeg&auto=webp",
-                "Headphones",
+        Product bag = new Product(3,
+                20,
+                2.50,
+                "A reusable shopping bag",
+                "https://images.ctfassets.net/5gvckmvm9289/3BlDoZxSSjqAvv1jBJP7TH/65f9a95484117730ace42abf64e89572/Noissue-x-Creatsy-Tote-Bag-Mockup-Bundle-_4_-2.png",
+                "Shopping Bag",
                 true);
-        products.add(newProduct);
-        when(mockProductRepository.findAll()).thenReturn(products);
 
-        List<Product> result = sut.findAll();
+        Product baseballCap = new Product( 4,
+                20,
+                10.00,
+                "A fancy cap for a fancy person",
+                "https://d3o2e4jr3mxnm3.cloudfront.net/Rocket-Vintage-Chill-Cap_66374_1_lg.png",
+                "Baseball Cap",
+                true);
+
+        products.add(bag);
+        products.add(baseballCap);
+
+        when(mockProductRepository.findByKeyword(eq("ba"))).thenReturn(products);
+
+        List<Product> result = sut.findByKeyword("ba");
         for(Product p : result){
             Assertions.assertInstanceOf(Product.class, p);
         }
