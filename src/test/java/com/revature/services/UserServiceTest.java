@@ -29,14 +29,16 @@ class UserServiceTest {
 
     @BeforeEach
     public void setUp(){
-        user1 = new User(1, "Valid", "Valid", "Valid", "Valid", false, true);
+        user1 = new User(1, "Valid", "Valid", "Valid", "Valid", false, true,null);
         registerRequest = new RegisterRequest("Valid", "Valid", "Valid", "Valid");
-        updateUserRequest = new UpdateUserRequest("Valid", "Valid", "Valid");
+        updateUserRequest = new UpdateUserRequest("Valid", "Valid", "Valid","Valid");
     }
 
     @AfterEach
     public void tearDown(){
         user1 = null;
+        registerRequest = null;
+        updateUserRequest = null;
     }
 
     //PASSES!
