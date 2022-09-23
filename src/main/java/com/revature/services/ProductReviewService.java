@@ -68,16 +68,25 @@ public class ProductReviewService {
                 collect(Collectors.toList());
     }
 
+    public boolean canPost(int post_id,int user_id) {
+        List<ProductReviewResponse> list= productReviewRepository.canPost(post_id,user_id).stream().
+                                            map(ProductReviewResponse::new).
+                                            collect(Collectors.toList());
+
+        if(list.size()==0){return true;}
+        return false;
+    }
+
 
 
     public ProductReview save(ProductReviewRequest productReview, User user) {
         try {
-            if(productReview.getRating()<1||productReview.getRating()>5||productReview.getComment().trim().equals(""))
+            if(productReview.getRating()<1||productReview.getRating()>5||productReview.getComment().trim().equals("")||!canPost(productReview.getPostId(),user.getId()))
             {return null;}
 
-            return productReviewRepository.save(new ProductReview(productReview,
-                    productService.findById(productReview.getPostId()).get(),
-                    user));
+
+            return productReviewRepository.save(new ProductReview(
+                    productReview,productService.findById(productReview.getPostId()).get(),user));
 
         }catch (NoSuchElementException e){
 

@@ -17,4 +17,8 @@ public interface ProductReviewRepository extends JpaRepository<ProductReview, In
 
     @Query("FROM ProductReview WHERE product_id = :product_id AND rating = :rating")
     List<ProductReview> findAllByProductScore(int product_id,int rating);
+
+    @Query("FROM ProductReview WHERE product_id = :product_id AND user_id = :user_id")
+    List<ProductReview> canPost(int product_id,int user_id);
+
 }
