@@ -41,7 +41,7 @@ public class UserController {
     @GetMapping // For user to use
     public UserResponse getProfile(HttpSession session) {
         User user = (User) session.getAttribute("user");
-        UserResponse userResponse = new UserResponse(user);
+        UserResponse userResponse = new UserResponse(userService.findUserById(user.getId())); //We get users id here to get the most recent updated user information from db
         return userResponse;
     }
 

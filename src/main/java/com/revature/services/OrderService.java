@@ -11,6 +11,7 @@ import com.revature.models.User;
 import com.revature.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class OrderService {
         this.paymentService = paymentService;
     }
 
+    @Transactional
     public OrderResponse createOrder(CreateOrderRequest createOrderRequest, User user) {
         Order newOrder = new Order();
         Payment foundPayment = paymentService.findPaymentById(createOrderRequest.getPaymentId());
@@ -49,6 +51,7 @@ public class OrderService {
         return orderResponse;
     }
 
+    @Transactional
     public List<OrderResponse> findAll() {
         ArrayList<OrderResponse> orderResponses = new ArrayList<>();
         List<Order> orders = orderRepository.findAll();
@@ -59,20 +62,22 @@ public class OrderService {
         return orderResponses;
     }
 
+    @Transactional
     public List<OrderResponse> findAllUserOrders(User user) {
         List<OrderResponse> orderResponses = new ArrayList<>();
         List<Order> orders = orderRepository.findByUserId(user);
         orderResponses = orders.stream().map(OrderResponse::new).collect(Collectors.toList());
         return orderResponses;
     }
-
-    public Optional<Order> findById(int id) {
-        return orderRepository.findById(id);
+    @Transactional
+    public Order findById(int id) {
+        return orderRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
+    @Transactional
     public OrderResponse update(EditOrderRequest editOrderRequest, User user) throws UnauthorizedException {
         System.out.println(editOrderRequest.getOrderId());
-        Order foundOrder = findById(editOrderRequest.getOrderId()).orElseThrow(() -> new ResourceNotFoundException("No order with this ID found."));
+        Order foundOrder = findById(editOrderRequest.getOrderId());
         Predicate<String> notNullOrEmpty = (str) -> str != null && !str.trim().equals("");
         if (foundOrder.getUserId().getId() != user.getId()) {
             throw new UnauthorizedException("Not authorized to change this order.");
@@ -86,6 +91,7 @@ public class OrderService {
         OrderResponse orderResponse = new OrderResponse(foundOrder);
         return orderResponse;
     }
+
 
 
 }
