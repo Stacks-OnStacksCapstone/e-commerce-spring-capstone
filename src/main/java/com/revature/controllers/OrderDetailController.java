@@ -10,17 +10,13 @@ import com.revature.services.OrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.Response;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/orderdetail")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://127.0.0.1:3000"},  allowCredentials = "true")
 public class OrderDetailController {
 
     private final OrderDetailService orderDetailService;
@@ -60,12 +56,6 @@ public class OrderDetailController {
     @PostMapping
     public ResponseEntity<OrderDetailResponse> createOrderDetail(@RequestBody OrderDetailRequest orderDetailRequest){
         return ResponseEntity.ok(orderDetailService.createOrderDetail(orderDetailRequest));
-    }
-
-    @Authorized
-    @PutMapping
-    public ResponseEntity<OrderDetail> updateOrderDetail(OrderDetail orderDetail){
-        return ResponseEntity.ok(orderDetailService.save(orderDetail));
     }
 
     @Authorized

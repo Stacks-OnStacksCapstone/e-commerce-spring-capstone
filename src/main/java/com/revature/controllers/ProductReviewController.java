@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/productreview")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://127.0.0.1:3000"},  allowCredentials = "true")
 public class ProductReviewController {
 
     private final ProductReviewService productReviewService;

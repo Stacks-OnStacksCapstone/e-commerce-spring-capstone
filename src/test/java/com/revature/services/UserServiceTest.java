@@ -46,6 +46,7 @@ class UserServiceTest {
     @DisplayName("Test should pass when registering user with valid input data")
     public void testRegisterUser_givenValidInput(){
 
+        //Use thenThrows to test for errors and exceptions thrown during method execution
         when(userRepository.save(any())).thenReturn(user1);
         userService.registerUser(registerRequest);
         verify(userRepository, times(1)).save(any());
