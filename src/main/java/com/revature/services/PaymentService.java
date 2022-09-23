@@ -3,6 +3,7 @@ package com.revature.services;
 import com.revature.dtos.CreatePaymentRequest;
 import com.revature.dtos.EditPaymentRequest;
 import com.revature.dtos.PaymentResponse;
+import com.revature.dtos.UserResponse;
 import com.revature.exceptions.InvalidUserInputException;
 import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.exceptions.UnauthorizedException;
@@ -10,8 +11,11 @@ import com.revature.models.Payment;
 import com.revature.models.User;
 import com.revature.repositories.PaymentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class PaymentService {
@@ -64,5 +68,11 @@ public class PaymentService {
         PaymentResponse paymentResponse = new PaymentResponse(foundPayment);
         paymentRepository.delete(foundPayment);
         return paymentResponse;
+    }
+
+    @Transactional(readOnly = true)
+    public List<PaymentResponse> findAllByUser(int userId){
+        List<Payment> paymentMethods = paymentRepository.findCardsByUser(userId).orElseThrow(ResourceNotFoundException::new);
+        return paymentMethods.stream().map(PaymentResponse::new).collect(Collectors.toList());
     }
 }

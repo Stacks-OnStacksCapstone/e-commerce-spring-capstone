@@ -24,4 +24,5 @@ public class PaymentResponse {
         this.balance = payment.getBalance();
         this.userEmail = payment.getUserId().getEmail();
     }
+
 }
