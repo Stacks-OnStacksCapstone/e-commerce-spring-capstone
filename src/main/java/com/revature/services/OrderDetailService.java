@@ -9,6 +9,7 @@ import com.revature.models.User;
 import com.revature.repositories.OrderDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,10 +28,11 @@ public class OrderDetailService {
         this.orderService = orderService;
     }
 
+    @Transactional
     public OrderDetailResponse createOrderDetail(OrderDetailRequest orderDetailRequest) {
         OrderDetail orderDetail = new OrderDetail();
-        Order foundOrder = orderService.findById(orderDetailRequest.getOrderId()).orElseThrow(() -> new ResourceNotFoundException("No matching order."));
-        Product foundProduct = productService.findById(orderDetailRequest.getProductId()).orElseThrow(() -> new ResourceNotFoundException("No product found."));
+        Order foundOrder = orderService.findById(orderDetailRequest.getOrderId());
+        Product foundProduct = productService.findById(orderDetailRequest.getProductId()).orElseThrow(() -> new ResourceNotFoundException("No product found ."));
         orderDetail.setOrderId(foundOrder);
         orderDetail.setProductId(foundProduct);
         orderDetail.setQuantity(orderDetailRequest.getQuantity());
@@ -38,23 +40,26 @@ public class OrderDetailService {
         return new OrderDetailResponse(orderDetail);
     }
 
+    @Transactional
     public List<OrderDetail> findAll(){
         List<OrderDetail> orderDetails = orderDetailRepository.findAll();
         return orderDetailRepository.findAll();
     }
+
+    @Transactional
     public List<OrderDetailResponse> findAllOrderDetailsByOrder(int id){
-        Order foundOrder = orderService.findById(id).orElseThrow(() -> new ResourceNotFoundException("No order found."));
+        Order foundOrder = orderService.findById(id);
         List<OrderDetail> orderDetails = orderDetailRepository.findByOrderId(foundOrder);
         List<OrderDetailResponse> orderDetailResponses = orderDetails.stream().map(OrderDetailResponse::new).collect(Collectors.toList());
         return orderDetailResponses;
     }
 
+    @Transactional
     public Optional<OrderDetail> findById(int id) {
         return orderDetailRepository.findById(id);
     }
-    public OrderDetail save(OrderDetail orderDetail) {
-        return orderDetailRepository.save(orderDetail);
-    }
+
+    @Transactional
     public boolean delete(int id) {
         OrderDetail foundOrderDetail = orderDetailRepository.findById(id).orElseThrow(() -> new RuntimeException("OrderDetail couldn't be deleted."));
         orderDetailRepository.delete(foundOrderDetail);
