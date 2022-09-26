@@ -10,14 +10,14 @@ import java.sql.Date;
 @NoArgsConstructor
 public class PaymentResponse {
     private String id;
-    private String cardType;
+    private String ccv;
     private Date expDate;
     private String cardNumber;
     private String userEmail;
 
     public PaymentResponse(Payment payment) {
         this.id = payment.getId();
-        this.cardType = payment.getCcv();
+        this.ccv = payment.getCcv();
         this.expDate = payment.getExpDate();
         this.cardNumber = payment.getCardNumber();
         this.userEmail = payment.getUserId().getEmail();
