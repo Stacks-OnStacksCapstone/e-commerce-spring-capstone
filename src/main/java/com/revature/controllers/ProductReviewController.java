@@ -34,14 +34,12 @@ public class ProductReviewController {
 
     }
 
-    @Authorized
     @GetMapping("/avr/{id}")
     public ResponseEntity<Integer> getProductAverageScore(@PathVariable("id") int id) {
         return ResponseEntity.ok(productReviewService.findProductAverageScore(id));
 
     }
 
-    @Authorized
     @GetMapping("/rate/{id}/{rating}")
     public ResponseEntity<List<ProductReviewResponse>> getProductByScore(@PathVariable("id") int id,@PathVariable("rating") int rating) {
         return ResponseEntity.ok(productReviewService.findProductByScore(id,rating));
