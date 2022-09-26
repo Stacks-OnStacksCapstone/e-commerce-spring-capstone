@@ -60,6 +60,7 @@ class UserServiceTest {
     public void testDeactivate_givenValidInput(){
         when(userRepository.findById(user1.getId())).thenReturn(Optional.ofNullable(user1));
         userService.deactivate(user1);
+        verify(userRepository, times(1)).deactivateUser(user1.getId());
     }
 
 }
