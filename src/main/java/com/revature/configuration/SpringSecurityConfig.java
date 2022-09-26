@@ -12,7 +12,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.httpBasic().disable().authorizeRequests().antMatchers("**").permitAll().and()
-                .sessionManagement().and()
-                .csrf().disable();
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
     }
 }
