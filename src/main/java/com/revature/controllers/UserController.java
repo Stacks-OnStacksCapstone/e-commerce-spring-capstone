@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 
 
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://127.0.0.1:3000"},  allowCredentials = "true")
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://127.0.0.1:3000", "http://e-commerce-congo-react-lb-919946656.us-east-1.elb.amazonaws.com"},  allowCredentials = "true")
 public class UserController {
     private final UserService userService;
 
