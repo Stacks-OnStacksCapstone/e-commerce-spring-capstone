@@ -2,14 +2,15 @@ package com.revature.dtos;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
+
+import javax.validation.constraints.NotBlank;
 
 @Data
 @NoArgsConstructor
 public class EditOrderRequest {
     private int orderId;
-    @Nullable
+    @NotBlank
     private String paymentId;
-    @Nullable
+    @NotBlank
     private String shipmentAddress;
 }

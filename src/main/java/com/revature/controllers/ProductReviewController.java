@@ -35,6 +35,27 @@ public class ProductReviewController {
     }
 
     @Authorized
+    @GetMapping("/avr/{id}")
+    public ResponseEntity<Integer> getProductAverageScore(@PathVariable("id") int id) {
+        return ResponseEntity.ok(productReviewService.findProductAverageScore(id));
+
+    }
+
+    @Authorized
+    @GetMapping("/rate/{id}/{rating}")
+    public ResponseEntity<List<ProductReviewResponse>> getProductByScore(@PathVariable("id") int id,@PathVariable("rating") int rating) {
+        return ResponseEntity.ok(productReviewService.findProductByScore(id,rating));
+
+    }
+
+    @Authorized
+    @GetMapping("/post/{post_id}/{user_id}")
+    public ResponseEntity<Boolean> canPost(@PathVariable("post_id") int post_id,@PathVariable("user_id") int user_id) {
+        return ResponseEntity.ok(productReviewService.canPost(post_id,user_id));
+
+    }
+
+    @Authorized
     @PutMapping
     public ResponseEntity<ProductReviewResponse> upsert(@RequestBody ProductReviewRequest productReview, HttpSession session) {
         if(session.getAttribute("user") == null) {

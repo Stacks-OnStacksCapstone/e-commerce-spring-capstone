@@ -4,7 +4,9 @@ import com.revature.annotations.Authorized;
 import com.revature.dtos.CreatePaymentRequest;
 import com.revature.dtos.EditPaymentRequest;
 import com.revature.dtos.PaymentResponse;
+import com.revature.dtos.UserResponse;
 import com.revature.exceptions.UnauthorizedException;
+import com.revature.models.Payment;
 import com.revature.models.User;
 import com.revature.services.PaymentService;
 import org.springframework.http.HttpStatus;
@@ -13,9 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/payment")
+    @RequestMapping("/api/payment")
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://127.0.0.1:3000"},  allowCredentials = "true")
 public class PaymentController {
 
@@ -52,5 +55,13 @@ public class PaymentController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity<>("Payment not deleted", HttpStatus.BAD_REQUEST);
+    }
+
+    @Authorized
+    @GetMapping
+    public List<PaymentResponse> findAllUserPayment(HttpSession httpSession){
+        User user = (User) httpSession.getAttribute("user");
+        List<PaymentResponse> newPaymentResponse = paymentService.findAllByUser(user.getId());
+        return newPaymentResponse;
     }
 }
