@@ -59,12 +59,6 @@ public class OrderDetailController {
     }
 
     @Authorized
-    @PutMapping
-    public ResponseEntity<OrderDetail> updateOrderDetail(OrderDetail orderDetail){
-        return ResponseEntity.ok(orderDetailService.save(orderDetail));
-    }
-
-    @Authorized
     @DeleteMapping("/{id}")
     public ResponseEntity<OrderDetail> deleteOrderDetail(@PathVariable("id") int id){
         Optional<OrderDetail> optional = orderDetailService.findById(id);
