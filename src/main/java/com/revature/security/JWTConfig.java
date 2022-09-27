@@ -1,4 +1,4 @@
-package com.revature.configuration;
+package com.revature.security;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
