@@ -4,6 +4,7 @@ import com.revature.annotations.Authorized;
 import com.revature.exceptions.NotLoggedInException;
 import com.revature.exceptions.UnauthorizedException;
 import com.revature.models.User;
+import com.revature.services.TokenService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -24,11 +25,14 @@ public class AuthAspect {
     // Spring will autowire a proxy object for the request
     // It isn't a request object itself, but if there is an active request
     // the proxy will pass method calls to the real request
-    private final HttpServletRequest req;
+    // private final HttpServletRequest req;
+
+    private final TokenService tokenService;
 
     @Autowired
-    public AuthAspect(HttpServletRequest req) {
-        this.req = req;
+    public AuthAspect(TokenService tokenService) {
+        // this.req = req;
+        this.tokenService = tokenService;
     }
 
     // This advice will execute around any method annotated with @Authorized
@@ -59,8 +63,8 @@ public class AuthAspect {
                 .getRequest()
                 .getHeader("Authorization");
         if (!tokenService.isTokenValid(token)) throw new UnauthorizedException("No Authorization token found");
-        if (annotation.isAdmin() && !tokenService.extractTokenDetails(token).isAdmin()) throw new UnauthorizedException("Authorized Token is not an Admin, please login with an Admin account to perform this request");
-        if (annotation.isITPro() && !tokenService.extractTokenDetails(token).isITPro()) throw new UnauthorizedException("Authorized Token is not an ITPro, please login with an ITPro account to perform this request");
+        if (authorized.isAdmin() && !tokenService.extractTokenDetails(token).isAdmin()) throw new UnauthorizedException("Authorized Token is not an Admin, please login with an Admin account to perform this request");
+        if (authorized.isActive() && !tokenService.extractTokenDetails(token).isActive()) throw new UnauthorizedException("Authorized Token is not an active account, please login with an active account to perform this request");
 //        HttpSession session = req.getSession(false); // Get the session (or create one)
 //
 //        if(session == null) throw new UnauthorizedException("No Session available");

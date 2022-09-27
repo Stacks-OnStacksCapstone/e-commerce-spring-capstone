@@ -23,7 +23,7 @@ public class TokenValidator {
                     .setSigningKey(jwtConfig.getSigningKey())
                     .parseClaimsJws(token)
                     .getBody();
-            return Optional.of(new Principal(Integer.parseInt(claims.getId()), claims.getSubject(), claims.get("isAdmin",Boolean.class)));
+            return Optional.of(new Principal(Integer.parseInt(claims.getId()), claims.getSubject(), claims.get("isAdmin",Boolean.class), claims.get("isActive",Boolean.class)));
 
         } catch (Exception e) {
             e.printStackTrace();
