@@ -22,20 +22,16 @@ import java.util.Optional;
 public class AuthController {
 
     private final AuthService authService;
-    private final TokenService tokenService;
-    private final UserService userService;
 
-    public AuthController(AuthService authService, TokenService tokenService, UserService userService) {
+    public AuthController(AuthService authService) {
         this.authService = authService;
-        this.tokenService = tokenService;
-        this.userService = userService;
     }
 
     @GetMapping
     public ResponseEntity<UserResponse> getCurrentUser(HttpServletRequest req) {
         String token = req.getHeader("Authorization");
-        int userId = tokenService.extractTokenDetails(token).getId();
-        return ResponseEntity.ok(userService.findById(userId));
+        User currentUser = authService.getUserByAuthToken(token);
+        return ResponseEntity.ok(new UserResponse(currentUser));
     }
 
     @GetMapping("/reset-password/{token}")
@@ -45,13 +41,14 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Principal> login(@RequestBody LoginRequest loginRequest, HttpServletResponse resp) {
+    public ResponseEntity<UserResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse resp) {
         User authUser = authService.findByCredentials(loginRequest.getEmail(), loginRequest.getPassword()).orElseThrow(UnauthorizedException::new);
         if (!authUser.isActive()) throw new UnauthorizedException("User's account is currently inactive, Please login with another account");
-        Principal payload = new Principal(authUser);
-        String token = tokenService.generateToken(payload);
+
+        String token = authService.generateAuthToken(authUser);
         resp.setHeader("Authorization", token);
-        return ResponseEntity.ok(payload);
+
+        return ResponseEntity.ok(new UserResponse(authUser));
     }
 
     @PutMapping("/forgot-password")

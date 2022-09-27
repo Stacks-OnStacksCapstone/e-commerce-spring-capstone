@@ -4,10 +4,13 @@ import com.revature.dtos.CreateOrderRequest;
 import com.revature.dtos.OrderResponse;
 import com.revature.models.Order;
 import com.revature.models.User;
+import com.revature.services.AuthService;
 import com.revature.services.OrderService;
+import com.revature.services.TokenService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -18,9 +21,11 @@ import java.util.Optional;
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://127.0.0.1:3000", "http://e-commerce-congo-react-lb-919946656.us-east-1.elb.amazonaws.com"},  allowCredentials = "true")
 public class OrderController {
     private final OrderService orderService;
+    private final AuthService authService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, AuthService authService) {
         this.orderService = orderService;
+        this.authService = authService;
     }
 
     @Authorized
@@ -31,8 +36,10 @@ public class OrderController {
 
     @Authorized
     @GetMapping("/history")
-    public ResponseEntity<List<OrderResponse>> getOrderHistory(HttpSession httpSession) {
-        User user = (User) httpSession.getAttribute("user");
+    public ResponseEntity<List<OrderResponse>> getOrderHistory(HttpServletRequest req) {
+        String token = req.getHeader("Authorization");
+        User user = authService.getUserByAuthToken(token);
+
         return ResponseEntity.ok(orderService.findAllUserOrders(user));
     }
 
@@ -47,8 +54,10 @@ public class OrderController {
     }
     @Authorized
     @PostMapping
-    public ResponseEntity<OrderResponse> createAnOrder(@RequestBody @Valid CreateOrderRequest createOrderRequest, HttpSession httpSession) {
-        User user = (User) httpSession.getAttribute("user");
+    public ResponseEntity<OrderResponse> createAnOrder(@RequestBody @Valid CreateOrderRequest createOrderRequest, HttpServletRequest req) {
+        String token = req.getHeader("Authorization");
+        User user = authService.getUserByAuthToken(token);
+
         return ResponseEntity.ok(orderService.createOrder(createOrderRequest, user));
     }
 //    @Authorized

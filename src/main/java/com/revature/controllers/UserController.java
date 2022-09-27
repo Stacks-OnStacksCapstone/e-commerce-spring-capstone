@@ -5,6 +5,7 @@ import com.revature.dtos.RegisterRequest;
 import com.revature.dtos.UpdateUserRequest;
 import com.revature.dtos.UserResponse;
 import com.revature.models.User;
+import com.revature.services.AuthService;
 import com.revature.services.TokenService;
 import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,12 @@ import javax.servlet.http.HttpSession;
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://127.0.0.1:3000", "http://e-commerce-congo-react-lb-919946656.us-east-1.elb.amazonaws.com"},  allowCredentials = "true", exposedHeaders = "Authorization")
 public class UserController {
     private final UserService userService;
-    private final TokenService tokenService;
+    private final AuthService authService;
 
     @Autowired
-    public UserController(UserService userService, TokenService tokenService) {
+    public UserController(UserService userService, AuthService authService) {
         this.userService = userService;
-        this.tokenService = tokenService;
+        this.authService = authService;
     }
 
 
@@ -39,8 +40,7 @@ public class UserController {
     @PutMapping
     public String update(@RequestBody UpdateUserRequest updateUserRequest, HttpServletRequest req) {
         String token = req.getHeader("Authorization");
-        int userId = tokenService.extractTokenDetails(token).getId();
-        User currentUser = userService.findUserById(userId);
+        User currentUser = authService.getUserByAuthToken(token);
 
         userService.update(updateUserRequest, currentUser);
         return "The user account is successfully updated!";
@@ -50,18 +50,17 @@ public class UserController {
     @GetMapping // For user to use
     public ResponseEntity<UserResponse> getProfile(HttpServletRequest req) {
         String token = req.getHeader("Authorization");
-        int userId = tokenService.extractTokenDetails(token).getId();
+        User currentUser = authService.getUserByAuthToken(token);
 
         //We get users id here to get the most recent updated user information from db
-        return ResponseEntity.ok(userService.findById(userId));
+        return ResponseEntity.ok(new UserResponse(currentUser));
     }
 
     @Authorized
     @PutMapping("/deactivate")
     public String deactivateAccount(HttpServletRequest req) {
         String token = req.getHeader("Authorization");
-        int userId = tokenService.extractTokenDetails(token).getId();
-        User currentUser = userService.findUserById(userId);
+        User currentUser = authService.getUserByAuthToken(token);
 
         userService.deactivate(currentUser);
         return "The user account is successfully deactivated!";
