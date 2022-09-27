@@ -26,12 +26,12 @@ public class TokenService {
     }
 
     public boolean isTokenValid(String token) {
-        if (token.equals(null) || token.trim().equals("")) return false;
+        if (token == null || token.trim().equals("")) return false;
         return tokenValidator.parseToken(token).isPresent();
     }
 
     public Principal extractTokenDetails(String token) {
-        if (token.equals(null) || token.trim().equals("")) throw new UnauthorizedException("No authentication token found on request");
+        if (token == null || token.trim().equals("")) throw new UnauthorizedException("No authentication token found on request");
         return tokenValidator.parseToken(token).orElseThrow(InvalidTokenException::new);
     }
 

@@ -55,16 +55,18 @@ public class AuthAspect {
     // which should return a 403 Forbidden such as:
     // String errorMessage = "Missing required role to perform this action";
     // return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorMessage);
-    @Around("@annotation(authorized)")
-    public Object authenticate(ProceedingJoinPoint pjp, Authorized authorized) throws Throwable {
+    @Around("@annotation(com.revature.annotations.Authorized)")
+    public Object authenticate(ProceedingJoinPoint pjp) throws Throwable {
         Method method = ((MethodSignature) pjp.getSignature()).getMethod();
+        Authorized annotation = method.getAnnotation(Authorized.class);
 
         String token = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
                 .getRequest()
                 .getHeader("Authorization");
+        System.out.println(token);
         if (!tokenService.isTokenValid(token)) throw new UnauthorizedException("No Authorization token found");
-        if (authorized.isAdmin() && !tokenService.extractTokenDetails(token).isAdmin()) throw new UnauthorizedException("Authorized Token is not an Admin, please login with an Admin account to perform this request");
-        if (authorized.isActive() && !tokenService.extractTokenDetails(token).isActive()) throw new UnauthorizedException("Authorized Token is not an active account, please login with an active account to perform this request");
+        if (annotation.isAdmin() && !tokenService.extractTokenDetails(token).isAdmin()) throw new UnauthorizedException("Authorized Token is not an Admin, please login with an Admin account to perform this request");
+        if (annotation.isActive() && !tokenService.extractTokenDetails(token).isActive()) throw new UnauthorizedException("Authorized Token is not an active account, please login with an active account to perform this request");
 //        HttpSession session = req.getSession(false); // Get the session (or create one)
 //
 //        if(session == null) throw new UnauthorizedException("No Session available");

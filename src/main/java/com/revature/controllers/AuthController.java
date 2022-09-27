@@ -45,13 +45,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse resp) {
+    public ResponseEntity<Principal> login(@RequestBody LoginRequest loginRequest, HttpServletResponse resp) {
         User authUser = authService.findByCredentials(loginRequest.getEmail(), loginRequest.getPassword()).orElseThrow(UnauthorizedException::new);
         if (!authUser.isActive()) throw new UnauthorizedException("User's account is currently inactive, Please login with another account");
         Principal payload = new Principal(authUser);
         String token = tokenService.generateToken(payload);
         resp.setHeader("Authorization", token);
-        return ResponseEntity.ok(new UserResponse(authUser));
+        return ResponseEntity.ok(payload);
     }
 
     @PutMapping("/forgot-password")
