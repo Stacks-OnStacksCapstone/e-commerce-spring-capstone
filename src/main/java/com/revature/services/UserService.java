@@ -60,9 +60,10 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public void isEmailAvailable(String email){
+    public boolean isEmailAvailable(String email){
         if(userRepository.checkEmail(email).isPresent())
             throw new InvalidUserInputException("Email: " + email + " is already registered please try again. Or Log in with email & password.");
+        return true;
     }
 
     @Transactional

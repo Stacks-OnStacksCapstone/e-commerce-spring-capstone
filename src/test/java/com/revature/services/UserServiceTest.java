@@ -12,6 +12,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,6 +37,7 @@ class UserServiceTest {
         updateUserRequest = new UpdateUserRequest("Valid", "Valid", "Valid","Valid");
     }
 
+
     @AfterEach
     public void tearDown(){
         user1 = null;
@@ -50,6 +54,7 @@ class UserServiceTest {
         userService.registerUser(registerRequest);
         verify(userRepository, times(1)).save(any());
     }
+
 
 //    @Test
 //    @DisplayName("Test should pass when updating a user given valid input")
