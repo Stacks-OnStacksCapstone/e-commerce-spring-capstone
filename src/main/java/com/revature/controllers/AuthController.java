@@ -27,6 +27,7 @@ public class AuthController {
         this.authService = authService;
     }
 
+    @Authorized
     @GetMapping
     public ResponseEntity<UserResponse> getCurrentUser(HttpServletRequest req) {
         String token = req.getHeader("Authorization");
