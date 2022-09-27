@@ -4,10 +4,12 @@ import com.revature.annotations.Authorized;
 import com.revature.models.User;
 import com.revature.dtos.ProductReviewRequest;
 import com.revature.dtos.ProductReviewResponse;
+import com.revature.services.AuthService;
 import com.revature.services.ProductReviewService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -17,10 +19,12 @@ import java.util.List;
 public class ProductReviewController {
 
     private final ProductReviewService productReviewService;
+    private final AuthService authService;
 
 
-    public ProductReviewController(ProductReviewService productReviewService) {
+    public ProductReviewController(ProductReviewService productReviewService, AuthService authService) {
         this.productReviewService = productReviewService;
+        this.authService = authService;
     }
 
     @GetMapping
@@ -55,20 +59,23 @@ public class ProductReviewController {
 
     @Authorized
     @PutMapping
-    public ResponseEntity<ProductReviewResponse> upsert(@RequestBody ProductReviewRequest productReview, HttpSession session) {
-        if(session.getAttribute("user") == null) {
-            return ResponseEntity.notFound().build();
-        }
-        User user = (User)session.getAttribute("user");
+    public ResponseEntity<ProductReviewResponse> upsert(@RequestBody ProductReviewRequest productReview, HttpServletRequest req) {
+//        if(session.getAttribute("user") == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        User user = (User)session.getAttribute("user");
+        String token = req.getHeader("Authorization");
+        User user = authService.getUserByAuthToken(token);
+
         return ResponseEntity.ok(new ProductReviewResponse(productReviewService.save(productReview, user)));
     }
 
     @Authorized
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") int id, HttpSession session) {
-        if(session.getAttribute("user") == null) {
-            return;
-        }
+    public void deleteById(@PathVariable("id") int id) {
+//        if(session.getAttribute("user") == null) {
+//            return;
+//        }
         productReviewService.deleteById(id);
     }
 }
