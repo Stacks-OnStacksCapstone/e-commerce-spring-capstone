@@ -7,11 +7,15 @@ import com.revature.models.User;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Method;
 
 @Aspect
 @Component
@@ -49,16 +53,23 @@ public class AuthAspect {
     // return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorMessage);
     @Around("@annotation(authorized)")
     public Object authenticate(ProceedingJoinPoint pjp, Authorized authorized) throws Throwable {
+        Method method = ((MethodSignature) pjp.getSignature()).getMethod();
 
-        HttpSession session = req.getSession(false); // Get the session (or create one)
-
-        if(session == null) throw new UnauthorizedException("No Session available");
-
-        // If the user is not logged in
-        if(session.getAttribute("user") == null) {
-            throw new NotLoggedInException("Must be logged in to perform this action");
-        }
-        User user = (User) session.getAttribute("user");
+        String token = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+                .getRequest()
+                .getHeader("Authorization");
+        if (!tokenService.isTokenValid(token)) throw new UnauthorizedException("No Authorization token found");
+        if (annotation.isAdmin() && !tokenService.extractTokenDetails(token).isAdmin()) throw new UnauthorizedException("Authorized Token is not an Admin, please login with an Admin account to perform this request");
+        if (annotation.isITPro() && !tokenService.extractTokenDetails(token).isITPro()) throw new UnauthorizedException("Authorized Token is not an ITPro, please login with an ITPro account to perform this request");
+//        HttpSession session = req.getSession(false); // Get the session (or create one)
+//
+//        if(session == null) throw new UnauthorizedException("No Session available");
+//
+//        // If the user is not logged in
+//        if(session.getAttribute("user") == null) {
+//            throw new NotLoggedInException("Must be logged in to perform this action");
+//        }
+//        User user = (User) session.getAttribute("user");
 
         return pjp.proceed(pjp.getArgs()); // Call the originally intended method
     }
