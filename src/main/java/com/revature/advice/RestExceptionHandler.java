@@ -1,8 +1,6 @@
 package com.revature.advice;
 
-import com.revature.exceptions.InvalidUserInputException;
-import com.revature.exceptions.NotLoggedInException;
-import com.revature.exceptions.ResourceNotFoundException;
+import com.revature.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +19,14 @@ public class RestExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<Object> handleUnauthorizedException(HttpServletRequest request, UnauthorizedException unauthorizedException) {
+
+        String errorMessage = unauthorizedException.getMessage();
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
+    }
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Object> handleResourceNotFoundException(HttpServletRequest request, ResourceNotFoundException resourceNotFoundException) {
 
@@ -35,5 +41,13 @@ public class RestExceptionHandler {
         String errorMessage = "Invalid User input";
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<Object> handleInvalidTokenException(HttpServletRequest request, InvalidTokenException invalidTokenException) {
+
+        String errorMessage = invalidTokenException.getMessage();
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
     }
 }

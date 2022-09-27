@@ -34,7 +34,7 @@ public class PaymentService {
         newPayment.setCcv(createPaymentRequest.getCcv());
         newPayment.setExpDate(createPaymentRequest.getExpDate());
         if (user == null) {
-            throw new InvalidUserInputException("No user was provided for payment.");
+            throw new InvalidUserInputException("No User was provided for payment.");
         }
         newPayment.setUserId(user);
         if (!isPaymentValid(newPayment)) {
