@@ -12,16 +12,15 @@ public class PaymentResponse {
     private String id;
     private String ccv;
     private Date expDate;
-    private String zip;
-    private float balance;
+    private String cardNumber;
     private String userEmail;
 
     public PaymentResponse(Payment payment) {
         this.id = payment.getId();
         this.ccv = payment.getCcv();
         this.expDate = payment.getExpDate();
-        this.zip = payment.getZip();
-        this.balance = payment.getBalance();
+        this.cardNumber = payment.getCardNumber();
         this.userEmail = payment.getUserId().getEmail();
     }
+
 }

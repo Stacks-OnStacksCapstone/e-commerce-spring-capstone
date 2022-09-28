@@ -86,6 +86,8 @@ public class UserService {
 
         if(notNullOrEmpty.test(updateUserRequest.getPassword()))
             foundUser.setPassword(updateUserRequest.getPassword());
+
+
         }
 
     @Transactional
