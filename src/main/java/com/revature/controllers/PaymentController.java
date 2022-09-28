@@ -21,8 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/payment")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://127.0.0.1:3000", "http://e-commerce-congo-react-lb-919946656.us-east-1.elb.amazonaws.com"},  allowCredentials = "true")
-
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://e-commerce-congo-react-lb-919946656.us-east-1.elb.amazonaws.com"},  allowCredentials = "true", exposedHeaders = "Authorization")
 public class PaymentController {
 
     private final PaymentService paymentService;
@@ -70,8 +69,10 @@ public class PaymentController {
 
     @Authorized
     @GetMapping
-    public List<PaymentResponse> findAllUserPayment(HttpSession httpSession){
-        User user = (User) httpSession.getAttribute("user");
+    public List<PaymentResponse> findAllUserPayment(HttpServletRequest req){
+        String token = req.getHeader("Authorization");
+        User user = authService.getUserByAuthToken(token);
+
         List<PaymentResponse> newPaymentResponse = paymentService.findAllByUser(user.getId());
         return newPaymentResponse;
     }
