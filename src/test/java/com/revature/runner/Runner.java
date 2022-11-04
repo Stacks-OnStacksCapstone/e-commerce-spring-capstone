@@ -13,7 +13,7 @@ import java.io.File;
 @CucumberOptions(features = "src/test/java/com/revature/features", glue = "com.revature.steps")
 public class Runner {
 
-    public static WebDriver driver;
+    public static ChromeDriver driver;
 
     @BeforeClass
     public static void setup() {
