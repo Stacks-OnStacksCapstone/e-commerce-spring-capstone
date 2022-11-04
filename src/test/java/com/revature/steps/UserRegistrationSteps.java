@@ -63,5 +63,11 @@ public class UserRegistrationSteps {
     }
 
 
-
+    @Then("the user should see the login page")
+    public void theUserShouldSeeTheLoginPage() {
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div/main/div/form/div[1]/div/input")));
+        WebElement username = driver.findElement(By.xpath("/html/body/div/main/div/form/div[1]/div/input"));
+        Assertions.assertNotNull(username);
+    }
 }

@@ -8,7 +8,4 @@ Feature:
     When a user enters an email address
     When a user enters a password
     When a user clicks sign up
-    When a user enters the correct username
-    When a user enters the correct password
-    When a user clicks sign in
-    Then a User should be on the homepage and see a LOGOUT button
+    Then the user should see the login page
