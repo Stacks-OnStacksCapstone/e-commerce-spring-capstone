@@ -27,6 +27,8 @@ public class LoginPositiveSteps {
     }
     @When("a user enters the correct username")
     public void a_user_enters_the_correct_username() {
+     WebDriverWait wait = new WebDriverWait(driver, 5);
+     wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div/main/div/form/div[1]/div/input")));
     WebElement username = driver.findElement(By.xpath("/html/body/div/main/div/form/div[1]/div/input"));
     username.sendKeys("team1@testing.com");
 
@@ -47,6 +49,7 @@ public class LoginPositiveSteps {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div/div[1]/div/div[2]/li/strong")));
         WebElement logout = driver.findElement(By.xpath("/html/body/div/div[1]/div/div[2]/li/strong"));
         Assertions.assertNotNull(logout);
+        logout.click();
     }
 
 
