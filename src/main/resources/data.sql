@@ -1,3 +1,5 @@
+
+--PRODUCTS
 INSERT INTO product (id, quantity, price, description, image, name, is_active) VALUES (
     1,
     10,
@@ -57,7 +59,7 @@ INSERT INTO product (id, quantity, price, description, image, name, is_active) V
     5,
     99.99,
     'A nicer MeeShirt',
-    'https://cdn-images.threadless.com/threadless-media/artist_shops/shops/myMckay/products/1793362/original-1604545416-bfb4e7e3c4fb93eae97d92920bf7f3d2.png?v=3&d=eyJvbmx5X21ldGEiOiBmYWxzZSwgImZvcmNlIjogZmFsc2UsICJvcHMiOiBbWyJ0cmltc2NyaXB0IiwgWzEyMDAuMCwgMTM3MS40Mjg1NzE0Mjg1NzEzXSwge31dLCBbImVuY29kZSIsIFsiLnBuZyJdLCB7ImRwaSI6IDMwMH1dLCBbInJlc2l6ZSIsIFs3MzBdLCB7fV0sIFsib3ZlcmxheSIsIFsidGhyZWFkbGVzcy1tZWRpYS9hcnRpc3Rfc2hvcHMvb3ZlcmxheXMvYWYyODdiMjg0YWE0NmM3ZGQxYWMxYzNkMjBkMjk2NTQvZnJvbnQtMTU2OTUxODMzMS1hOTMzYTI3NjZiZGE2ODFjNWQzZWE2Mjc2NDU4MmRhZi5wbmciXSwgeyJ5IjogMzY4LCAieCI6IDY0MCwgImJhY2tncm91bmQiOiAiZGVkZWRlIn1dLCBbInJlc2l6ZSIsIFtdLCB7IndpZHRoIjogMzUwLCAic3R5bGUiOiAiQ1JPUCIsICJoZWlnaHQiOiAzNTB9XSwgWyJlbmNvZGUiLCBbImpwZyIsIDg1XSwge31dXX0=',
+    'https://m.media-amazon.com/images/I/B1DBWbloIpS._CLa%7C2140%2C2000%7C51snuhwZFIL.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SL1500_.png',
     'TeeShirt',
     true
 ),
@@ -87,4 +89,171 @@ INSERT INTO product (id, quantity, price, description, image, name, is_active) V
     'https://media.bergdorfgoodman.com/f_auto,q_auto:good,ar_5:7,c_fill,dpr_1.0,w_720/01/bg_4370145_100664_m',
     'Coat',
     true
+);
+--USERS
+INSERT INTO users (id, email, password, first_name, last_name, is_active, is_admin) VALUES
+(
+
+    1,
+    'testuser@gmail.com',
+    'password',
+    'Testerson',
+    'Usertown',
+    true,
+    true
+
+),
+(   2,
+    'notadmin@gmail.com',
+    'password',
+    'notingham',
+    'admindude',
+    true,
+    false
+);
+--USER PAYMENTS
+INSERT INTO user_payments(id, card_number, ccv, exp_date, user_id) VALUES
+(
+    'safecard111',
+    '9999888877776666',
+    '123',
+    '2029-12-22',
+    1
+),
+(
+    'notincard233',
+    '1111222233334444',
+    '321',
+    '2028-12-27',
+    2
+);
+
+--PRODUCT REVIEWS
+INSERT INTO product_review (id, comment, rating, product_id, user_id) VALUES
+(
+    1,
+    'This shirt is the best',
+    4,
+    2,
+    1
+),
+(
+    2,
+    'These sound like tin cans',
+    1,
+    1,
+    1
+),
+(
+    3,
+    'Holds the things',
+    5,
+    3,
+    2
+),
+(
+    4,
+    'Cool beans',
+    1,
+    4,
+    2
+),
+(
+    5,
+    'A very nice coat',
+    5,
+    5,
+    2
+),
+(
+    6,
+    'These sound like tin cans',
+    2,
+    6,
+    1
+),
+(
+    7,
+    'A vote for me is a vote for this shirt',
+    4,
+    7,
+    1
+),
+(
+    8,
+    'Air is the enemy',
+    5,
+    8,
+    1
+),
+(
+    9,
+    'Nice feather',
+    3,
+    9,
+    2
+),
+(
+    10,
+    'So puffy its like a cloud',
+    5,
+    10,
+    2
+);
+
+-- ORDERS
+INSERT INTO orders (id, order_date, shipment_address, payment_id, user_id) VALUES
+(
+    1,
+    '2020-12-27',
+    '1234 This Rd. Sometown, FL',
+    'safecard111',
+    1
+),
+(
+    2,
+    '2020-12-27',
+    '1234 This Rd. Sometown, FL',
+    'safecard111',
+    1
+),
+(
+    3,
+    '2020-12-27',
+    '1234 This Rd. Sometown, FL',
+    'notincard233',
+    2
+),
+(
+    4,
+    '2020-12-27',
+    '1234 This Rd. Sometown, FL',
+    'notincard233',
+    2
+);
+
+-- ORDER DETAILS
+INSERT INTO order_details (id, quantity, order_id, product_id) VALUES (
+    1,
+    2,
+    1,
+    2
+),
+(
+    2,
+    1,
+    2,
+    1
+),
+(
+    3,
+    2,
+    3,
+    10
+),
+(
+    4,
+    2,
+    4,
+    9
 );
