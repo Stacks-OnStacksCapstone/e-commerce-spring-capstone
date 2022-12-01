@@ -1,4 +1,4 @@
---checkout the id column, make it increment!
+
 INSERT INTO product (id, quantity, price, description, image, name, is_active) VALUES (
     1,
     10,
@@ -45,7 +45,10 @@ INSERT INTO product (id, quantity, price, description, image, name, is_active) V
     true
 );
 
-INSERT INTO users (id, email, password, first_name, last_name, is_active, is_admin) VALUES (
+
+INSERT INTO users (id, email, password, first_name, last_name, is_active, is_admin) VALUES
+(
+
     1,
     'testuser@gmail.com',
     'password',
@@ -53,4 +56,14 @@ INSERT INTO users (id, email, password, first_name, last_name, is_active, is_adm
     'User',
     true,
     true
+
+),
+(   2,
+    'notadmin@gmail.com',
+    'password',
+    'not',
+    'admin',
+    true,
+    false
 );
+
