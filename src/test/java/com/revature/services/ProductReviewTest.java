@@ -115,14 +115,16 @@ class ProductReviewTest {
     }
 
 
-    @Test
-    public void testSaveProductReview_givenValidInput(){
-        when(productReviewRepository.save(any())).thenReturn(productReview1);
-        when(productRepository.findById(any())).thenReturn(Optional.of((productValid1)));
-        productReviewService.save(productReviewRequest1, userValid1);
-        verify(productReviewRepository,times(1)).save(any());
+//    @Test
+//    public void testSaveProductReview_givenValidInput(){
+//
+//        when(productReviewRepository.save(any())).thenReturn(productReview1);
+//        when(productRepository.findById(any())).thenReturn(Optional.of((productValid1)));
+//        productReviewService.save(productReviewRequest1, userValid1);
+//        verify(productReviewRepository,times(1)).save(any());
+//
+//    }
 
-    }
 
     @Test
     public void testSaveProductReview_givenInvalidInput(){
