@@ -34,7 +34,6 @@ public class AuthAspect {
         // this.req = req;
         this.tokenService = tokenService;
     }
-//https://www.educative.io/answers/how-do-you-dockerize-a-maven-project
 
     // This advice will execute around any method annotated with @Authorized
     // If the user is not logged in, an exception will be thrown and handled
