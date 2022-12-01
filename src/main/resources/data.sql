@@ -1,5 +1,6 @@
 
 --PRODUCTS
+
 INSERT INTO product (id, quantity, price, description, image, name, is_active) VALUES (
     1,
     10,
@@ -90,7 +91,9 @@ INSERT INTO product (id, quantity, price, description, image, name, is_active) V
     'Coat',
     true
 );
+
 --USERS
+
 INSERT INTO users (id, email, password, first_name, last_name, is_active, is_admin) VALUES
 (
 
@@ -111,6 +114,7 @@ INSERT INTO users (id, email, password, first_name, last_name, is_active, is_adm
     true,
     false
 );
+
 --USER PAYMENTS
 INSERT INTO user_payments(id, card_number, ccv, exp_date, user_id) VALUES
 (
@@ -257,3 +261,4 @@ INSERT INTO order_details (id, quantity, order_id, product_id) VALUES (
     4,
     9
 );
+
