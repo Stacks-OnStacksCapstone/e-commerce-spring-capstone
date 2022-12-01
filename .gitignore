@@ -2,7 +2,6 @@ HELP.md
 target/
 src/main/resources/application.yml
 src/main/resources/application.yaml
-src/main/resources/data.sql
 !src/main/**/target/
 !src/test/**/target/
 
