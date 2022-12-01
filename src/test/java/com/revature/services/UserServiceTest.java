@@ -45,17 +45,26 @@ class UserServiceTest {
     @BeforeEach
     public void setUp() {
         user1 = new User(1, "Valid", "Valid", "Valid", "Valid", false, true, null);
+
+
         registerRequest = new RegisterRequest("Valid", "Valid", "Valid", "Valid");
+
+
         updateUserRequest = new UpdateUserRequest("Valid", "Valid", "Valid", "Valid");
+
+
 
     }
 
-
     @AfterEach
     public void tearDown() {
+
         user1 = null;
+
         registerRequest = null;
+
         updateUserRequest = null;
+
     }
 
     //PASSES!
@@ -65,8 +74,11 @@ class UserServiceTest {
 
         //Use thenThrows to test for errors and exceptions thrown during method execution
         when(userRepository.save(any())).thenReturn(user1);
+
         userService.registerUser(registerRequest);
+
         verify(userRepository, times(1)).save(any());
+
     }
 
 

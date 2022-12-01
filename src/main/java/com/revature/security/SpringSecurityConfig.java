@@ -14,5 +14,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.httpBasic().disable().authorizeRequests().antMatchers("**").permitAll().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
                 .csrf().disable();
+
+        //adding some config info for the H2 console
+        httpSecurity.headers().frameOptions().sameOrigin();
     }
 }
