@@ -26,7 +26,7 @@ spring:
 jwt:
   secret: This is a secret
 
-#  For OpenAPI
+#  For OpenAPI app
   springdoc:
     swagger-ui:
       path: swagger-ui-custom.html
