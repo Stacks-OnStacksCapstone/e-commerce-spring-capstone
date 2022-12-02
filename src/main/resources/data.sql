@@ -113,6 +113,14 @@ INSERT INTO users (id, email, password, first_name, last_name, is_active, is_adm
     'admindude',
     true,
     false
+),
+(   3,
+    'project03test@gmail.com',
+    'Password1*',
+    'Fakey',
+    'McFake',
+    true,
+    false
 );
 
 --USER PAYMENTS
