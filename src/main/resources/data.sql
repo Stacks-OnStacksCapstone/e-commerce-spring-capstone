@@ -53,4 +53,13 @@ VALUES (
        'User',
        true,
        true
+),
+(
+       2,
+       'customer@gmail.com',
+       'password',
+       'Jane',
+       'Doe',
+       true,
+       false
 );
