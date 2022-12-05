@@ -14,6 +14,14 @@ INSERT INTO users (email, password, first_name, last_name, is_active, is_admin) 
     'Test Last',
     true,
     false
+),
+(
+    'user-profile@example.com',
+    'guest',
+    'UserProfileFirst',
+    'UserProfileLast',
+    true,
+    false
 );
 
 INSERT INTO product (quantity, price, description, image, name, is_active) VALUES (
@@ -55,4 +63,19 @@ INSERT INTO product (quantity, price, description, image, name, is_active) VALUE
     'https://www.pngarts.com/files/3/Women-Jacket-PNG-High-Quality-Image.png',
     'Coat',
     true
+);
+
+INSERT INTO user_payments (id, card_number, ccv, exp_date, user_id) VALUES (
+    1,
+    1234567890123456,
+    123,
+    '2077-12-01',
+    3
+),
+(
+    2,
+    2234567890123456,
+    123,
+    '1993-12-01',
+    3
 );
