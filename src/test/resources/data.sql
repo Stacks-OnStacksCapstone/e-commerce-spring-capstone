@@ -1,28 +1,22 @@
+-- read-only test data
 INSERT INTO users (email, password, first_name, last_name, is_active, is_admin) VALUES
 (
     'admin@example.com',
     'guest',
-    'Admin First',
-    'Admin Last',
+    'AdminFirst',
+    'AdminLast',
     true,
     true
 ),
 (
     'test@example.com',
     'guest',
-    'Test First',
-    'Test Last',
-    true,
-    false
-),
-(
-    'user-profile@example.com',
-    'guest',
-    'UserProfileFirst',
-    'UserProfileLast',
+    'TestFirst',
+    'TestLast',
     true,
     false
 );
+
 
 INSERT INTO product (quantity, price, description, image, name, is_active) VALUES (
     10,
@@ -63,6 +57,17 @@ INSERT INTO product (quantity, price, description, image, name, is_active) VALUE
     'https://www.pngarts.com/files/3/Women-Jacket-PNG-High-Quality-Image.png',
     'Coat',
     true
+);
+
+-- user-profile test data
+INSERT INTO users (email, password, first_name, last_name, is_active, is_admin) VALUES
+(
+    'user-profile@example.com',
+    'guest',
+    'UserProfileFirst',
+    'UserProfileLast',
+    true,
+    false
 );
 
 INSERT INTO user_payments (id, card_number, ccv, exp_date, user_id) VALUES (
