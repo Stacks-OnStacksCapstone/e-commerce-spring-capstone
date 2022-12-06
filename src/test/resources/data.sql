@@ -68,7 +68,32 @@ INSERT INTO users (email, password, first_name, last_name, is_active, is_admin) 
     'UserProfileLast',
     true,
     false
+),
+(
+    'user-profile@tobedeactivated.com',
+    'guest',
+    'UserProfileFirst',
+    'UserProfileLast',
+    true,
+    false
+),
+(
+    'user-profile@onetime.com',
+    'guest',
+    'UserProfileFirst',
+    'UserProfileLast',
+    true,
+    false
+),
+(
+    'revieworders@example.com',
+    'Review10!',
+    'Review',
+    'Orders',
+    true,
+    false
 );
+
 
 INSERT INTO user_payments (id, card_number, ccv, exp_date, user_id) VALUES (
     1,
@@ -83,4 +108,46 @@ INSERT INTO user_payments (id, card_number, ccv, exp_date, user_id) VALUES (
     123,
     '1993-12-01',
     3
+),
+(
+    'b14d6ae6-b027-47f1-8676-36ebea57b453',
+    5555444433332222,
+    777,
+    '2077-07-06',
+    6
 );
+
+INSERT INTO orders (id, order_date, shipment_address, payment_id, user_id) VALUES (
+    1,
+    '2022-12-06',
+    '555 Review Rd, Reviewella, RI, 12000, US',
+    'b14d6ae6-b027-47f1-8676-36ebea57b453',
+    6
+);
+
+INSERT INTO order_details (id, quantity, order_id, product_id) VALUES (
+    1,
+    1,
+    1,
+    4
+),
+(
+    2,
+    1,
+    1,
+    2
+),
+(
+    3,
+    1,
+    1,
+    1
+),
+(
+    4,
+    1,
+    1,
+    3
+);
+
+
