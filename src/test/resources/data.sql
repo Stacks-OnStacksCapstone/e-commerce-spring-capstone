@@ -78,6 +78,14 @@ INSERT INTO users (email, password, first_name, last_name, is_active, is_admin) 
     false
 ),
 (
+    'user-profile@badkeyphrase.com',
+    'guest',
+    'UserProfileFirst',
+    'UserProfileLast',
+    true,
+    false
+),
+(
     'user-profile@onetime.com',
     'guest',
     'UserProfileFirst',
