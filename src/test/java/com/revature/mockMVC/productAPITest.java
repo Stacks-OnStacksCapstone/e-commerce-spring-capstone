@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(ProductController.class)
 public class productAPITest {
-    @MockBean(name="AuthService")
+    @MockBean(name="ProductService")
     private ProductService productService;
 
     @Autowired private MockMvc mockMvc;
