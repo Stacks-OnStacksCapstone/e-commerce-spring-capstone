@@ -1,6 +1,7 @@
 -- read-only test data
 INSERT INTO users (email, password, first_name, last_name, is_active, is_admin) VALUES
 (
+    -- 1
     'admin@example.com',
     'guest',
     'AdminFirst',
@@ -9,6 +10,7 @@ INSERT INTO users (email, password, first_name, last_name, is_active, is_admin) 
     true
 ),
 (
+    -- 2
     'test@example.com',
     'guest',
     'TestFirst',
@@ -62,6 +64,7 @@ INSERT INTO product (quantity, price, description, image, name, is_active) VALUE
 -- user-profile test data
 INSERT INTO users (email, password, first_name, last_name, is_active, is_admin) VALUES
 (
+    -- 3
     'user-profile@example.com',
     'guest',
     'UserProfileFirst',
@@ -70,6 +73,7 @@ INSERT INTO users (email, password, first_name, last_name, is_active, is_admin) 
     false
 ),
 (
+    -- 4
     'user-profile@tobedeactivated.com',
     'guest',
     'UserProfileFirst',
@@ -78,7 +82,8 @@ INSERT INTO users (email, password, first_name, last_name, is_active, is_admin) 
     false
 ),
 (
-    'user-profile@onetime.com',
+    -- 5
+    'user-profile@badkeyphrase.com',
     'guest',
     'UserProfileFirst',
     'UserProfileLast',
@@ -86,14 +91,14 @@ INSERT INTO users (email, password, first_name, last_name, is_active, is_admin) 
     false
 ),
 (
-    'revieworders@example.com',
-    'Review10!',
-    'Review',
-    'Orders',
+    -- 6
+    'user-profile@onetime.com',
+    'guest',
+    'UserProfileFirst',
+    'UserProfileLast',
     true,
     false
 );
-
 
 INSERT INTO user_payments (id, card_number, ccv, exp_date, user_id) VALUES (
     1,
@@ -117,12 +122,24 @@ INSERT INTO user_payments (id, card_number, ccv, exp_date, user_id) VALUES (
     6
 );
 
+-- review-orders inserts
+INSERT INTO users (email, password, first_name, last_name, is_active, is_admin) VALUES
+(
+    -- 7
+    'revieworders@example.com',
+    'Review10!',
+    'Review',
+    'Orders',
+    true,
+    false
+);
+
 INSERT INTO orders (id, order_date, shipment_address, payment_id, user_id) VALUES (
     1,
     '2022-12-06',
     '555 Review Rd, Reviewella, RI, 12000, US',
     'b14d6ae6-b027-47f1-8676-36ebea57b453',
-    6
+    7
 );
 
 INSERT INTO order_details (id, quantity, order_id, product_id) VALUES (
@@ -149,5 +166,3 @@ INSERT INTO order_details (id, quantity, order_id, product_id) VALUES (
     1,
     3
 );
-
-
