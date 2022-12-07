@@ -68,7 +68,32 @@ INSERT INTO users (email, password, first_name, last_name, is_active, is_admin) 
     'UserProfileLast',
     true,
     false
+),
+(
+    'user-profile@tobedeactivated.com',
+    'guest',
+    'UserProfileFirst',
+    'UserProfileLast',
+    true,
+    false
+),
+(
+    'user-profile@badkeyphrase.com',
+    'guest',
+    'UserProfileFirst',
+    'UserProfileLast',
+    true,
+    false
+),
+(
+    'user-profile@onetime.com',
+    'guest',
+    'UserProfileFirst',
+    'UserProfileLast',
+    true,
+    false
 );
+
 
 INSERT INTO user_payments (id, card_number, ccv, exp_date, user_id) VALUES (
     1,
