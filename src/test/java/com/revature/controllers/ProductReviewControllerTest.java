@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -23,7 +24,9 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ECommerceApplication.class)
@@ -46,48 +49,29 @@ public class ProductReviewControllerTest {
 
     @Test
     public void testGetAllProductReview() throws Exception {
-        User user = new User(
-                1,
-                "testuser@gmail.com",
-                "Testerson",
-                "password",
-                "Usertown",
-                true,
-                true,
-                null
-        );
-
-        when(productReviewService.findAll()).thenReturn(List.of(
-                new ProductReviewResponse(
-                        1,
-                        4,
-                        "This shirt is the best",
-                        2,
-                        new UserResponse(user)
-                ),
-                new ProductReviewResponse(
-                        9,
-                        3,
-                        "Nice feather",
-                        9,
-                        new UserResponse(user)
-                )
-        ));
-
-        this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/api/productreview"))
-                .andDo(print())
-                // Check Shirt Review
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].rating").value(4))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].review").value("This shirt is the best"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].productId").value(2))
-                // Check Hat Review
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(9))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].rating").value(3))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].review").value("Nice feather"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].productId").value(9)
+        mockMvc.perform(get("/api/productreview")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("    {\n" +
+                                "        \"id\": 1,\n" +
+                                "        \"rating\": 4,\n" +
+                                "        \"comment\": \"This shirt is the best\",\n" +
+                                "        \"postId\": 2,\n" +
+                                "        \"user\": {\n" +
+                                "            \"userId\": 1,\n" +
+                                "            \"email\": \"testuser@gmail.com\",\n" +
+                                "            \"firstName\": \"Testerson\",\n" +
+                                "            \"lastName\": \"Usertown\",\n" +
+                                "            \"active\": false,\n" +
+                                "            \"admin\": true\n" +
+                                "        }\n" +
+                                "    }")
+                        .accept(MediaType.APPLICATION_JSON))
+                        .andDo(print())
+                        .andExpect(status().isOk())
+                        .andExpect(MockMvcResultMatchers.jsonPath("[0].id").value(1))
+                        .andExpect(MockMvcResultMatchers.jsonPath("[0].rating").value(4))
+                        .andExpect(MockMvcResultMatchers.jsonPath("[0].comment").value("This shirt is the best"))
+                        .andExpect(MockMvcResultMatchers.jsonPath("[0].postId").value(2)
                 );
     }
 }
