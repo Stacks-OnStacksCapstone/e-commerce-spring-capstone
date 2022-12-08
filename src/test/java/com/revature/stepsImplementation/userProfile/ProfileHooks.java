@@ -1,5 +1,6 @@
 package com.revature.stepsImplementation.userProfile;
 
+import com.revature.pages.ProductDetailsViewPage;
 import com.revature.pages.UserProfilePage;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -16,6 +17,7 @@ public class ProfileHooks {
     public static Actions actions;
     public static WebDriverWait wait;
     public static UserProfilePage userProfilePage;
+    public static ProductDetailsViewPage productDetailsViewPage;
     public static boolean boolRes;
 
     @Before
@@ -26,6 +28,7 @@ public class ProfileHooks {
         actions = new Actions(driver);
         wait = new WebDriverWait(driver, 20);
         userProfilePage = new UserProfilePage(driver);
+        productDetailsViewPage = new ProductDetailsViewPage(driver);
     }
 
     @After

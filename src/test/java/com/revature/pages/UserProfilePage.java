@@ -11,6 +11,7 @@ public class UserProfilePage {
 
     @FindBy(xpath = "//strong[text()='SIGN IN']")
     public WebElement signInLink;
+
     @FindBy(xpath = "//input[@id='email']")
     public WebElement loginEmailInputField;
 

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class DeactivateAccount {
+public class DeactivateAccountSteps {
     @Given("User is logged in using {string} and {string}")
     public void user_is_logged_in_using_and(String email, String password) {
         ProfileHooks.driver.get("http://localhost:3000/");
