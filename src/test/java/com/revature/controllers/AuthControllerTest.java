@@ -22,8 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-//@EnableJpaRepositories(basePackages = {"com.revature.repositories"})
-//@DataJpaTest
 //Sets the base class needed to start the H2 and have other calls available
 @SpringBootTest(classes = ECommerceApplication.class)
 @ActiveProfiles("test")
@@ -40,8 +38,8 @@ public class AuthControllerTest {
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
-    @Test
 
+    @Test
     public void testPositiveLogin() throws Exception {
 
         mockMvc.perform(post("/auth/login")
@@ -51,12 +49,11 @@ public class AuthControllerTest {
                     "    \"password\": \"password\"\n" +
                     "}")
             .accept(MediaType.APPLICATION_JSON))
-
             .andDo(print())
             .andExpect(status().isOk());
     }
     @Test
-    public void testPositiveNegativeBadUserName() throws Exception {
+    public void testNegativeBadUserName() throws Exception {
 
         mockMvc.perform(post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -68,7 +65,7 @@ public class AuthControllerTest {
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void testPositiveNegativeBadPassword() throws Exception {
+    public void testNegativeBadPassword() throws Exception {
 
         mockMvc.perform(post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
