@@ -1,4 +1,4 @@
-package com.revature.stepsImplementation;
+package com.revature.stepsImplementation.userProfile;
 
 import com.revature.pages.UserProfilePage;
 import io.cucumber.java.After;
@@ -16,14 +16,15 @@ public class ProfileHooks {
     public static Actions actions;
     public static WebDriverWait wait;
     public static UserProfilePage userProfilePage;
+    public static boolean boolRes;
 
     @Before
     public void setUp() {
-        WebDriverManager.edgedriver().setup();
-        driver = new EdgeDriver();
-        //driver = new SafariDriver();
+        //WebDriverManager.edgedriver().setup();
+        //driver = new EdgeDriver();
+        driver = new SafariDriver();
         actions = new Actions(driver);
-        wait = new WebDriverWait(driver, 30);
+        wait = new WebDriverWait(driver, 20);
         userProfilePage = new UserProfilePage(driver);
     }
 

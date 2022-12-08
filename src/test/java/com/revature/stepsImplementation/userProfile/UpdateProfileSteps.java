@@ -1,4 +1,4 @@
-package com.revature.stepsImplementation;
+package com.revature.stepsImplementation.userProfile;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -30,9 +30,9 @@ public class UpdateProfileSteps {
     }
     @Then("User is navigated to the Profile page")
     public void user_is_navigated_to_the_profile_page() {
-        String actualUrl = ProfileHooks.driver.getCurrentUrl();
         String expectedUrl = "http://localhost:3000/userProfile";
-        Assertions.assertEquals(actualUrl, expectedUrl);
+        String actualUrl = ProfileHooks.driver.getCurrentUrl();
+        Assertions.assertEquals(expectedUrl, actualUrl);
     }
     @Then("User is able to see two MUI boxes {string} and {string}")
     public void user_is_able_to_see_two_mui_boxes_and(String updateMUIHeader, String deactivateMUIHeader) {
@@ -40,7 +40,7 @@ public class UpdateProfileSteps {
         String aHone = ProfileHooks.userProfilePage.updateProfileMUIBoxHeader.getText();
         String aHtwo = ProfileHooks.userProfilePage.deactivateAccountMUIBoxHeader.getText();
         String actualHeaders = aHone + aHtwo;
-        Assertions.assertEquals(actualHeaders, expectedHeaders);
+        Assertions.assertEquals(expectedHeaders, actualHeaders);
     }
     @When("User types in {string} in the first name input field")
     public void user_types_in_in_the_first_name_input_field(String firstname) {
@@ -81,7 +81,7 @@ public class UpdateProfileSteps {
         String actualAlert =
                 ProfileHooks.wait.ignoring(StaleElementReferenceException.class)
                         .until(ExpectedConditions.visibilityOf(ProfileHooks.userProfilePage.uAlert)).getText();
-        Assertions.assertEquals(actualAlert, expectedAlert);
+        Assertions.assertEquals(expectedAlert, actualAlert);
     }
 
     // scenario 2
@@ -99,7 +99,7 @@ public class UpdateProfileSteps {
     public void an_alert_says(String expectedAlert) {
         String actualAlert = ProfileHooks.wait.ignoring(StaleElementReferenceException.class)
                 .until(ExpectedConditions.visibilityOf(ProfileHooks.userProfilePage.uAlert)).getText();
-        Assertions.assertEquals(actualAlert, expectedAlert);
+        Assertions.assertEquals(expectedAlert, actualAlert);
     }
 
     // scenario 3
@@ -140,7 +140,7 @@ public class UpdateProfileSteps {
     public void an_alert_for_no_input_fields_says(String expectedAlert) {
         String actualAlert = ProfileHooks.wait.ignoring(StaleElementReferenceException.class)
                 .until(ExpectedConditions.visibilityOf(ProfileHooks.userProfilePage.uAlert)).getText();
-        Assertions.assertEquals(actualAlert, expectedAlert);
+        Assertions.assertEquals(expectedAlert, actualAlert);
     }
 
 }
