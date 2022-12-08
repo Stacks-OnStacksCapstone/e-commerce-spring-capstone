@@ -18,3 +18,4 @@ Feature: Deactivate User Account
     Then The user is logged out, navigated to the Login page
     When User types in again their email and password to login
     Then An Alert for re-attempting to login says "Login was unsuccessful because your account has been deactivated!"
+
