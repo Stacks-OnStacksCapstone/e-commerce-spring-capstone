@@ -4,7 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class ProductDetailsView {
+public class ProductDetailsViewSteps {
     @Given("A Guesses is at the home page")
     public void a_guesses_is_at_the_home_page() {
         // Write code here that turns the phrase above into concrete actions
