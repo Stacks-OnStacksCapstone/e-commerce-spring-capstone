@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import com.revature.controllers.ProductController;
 import com.revature.models.Product;
 import com.revature.services.ProductService;
 import org.junit.Test;
