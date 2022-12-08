@@ -94,7 +94,6 @@ public class UpdateProfileSteps {
                 .build();
         seriesOfActions.perform();
     }
-
     @Then("An Alert says {string}")
     public void an_alert_says(String expectedAlert) {
         String actualAlert = ProfileHooks.wait.ignoring(StaleElementReferenceException.class)
@@ -135,7 +134,6 @@ public class UpdateProfileSteps {
             seriesOfActions.perform();
         }
     }
-
     @Then("An Alert for no input fields says {string}")
     public void an_alert_for_no_input_fields_says(String expectedAlert) {
         String actualAlert = ProfileHooks.wait.ignoring(StaleElementReferenceException.class)
