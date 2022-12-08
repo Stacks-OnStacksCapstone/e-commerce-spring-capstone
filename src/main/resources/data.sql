@@ -1,3 +1,4 @@
+
 INSERT INTO product (id, quantity, price, description, image, name, is_active)
 VALUES (
       1,
