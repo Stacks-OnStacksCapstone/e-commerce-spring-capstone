@@ -1,6 +1,5 @@
-package com.revature.mockMVC;
+package com.revature.controllers;
 
-import com.revature.controllers.ProductController;
 import com.revature.models.Product;
 import com.revature.services.ProductService;
 import org.junit.Test;
@@ -21,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ProductController.class)
-public class productAPITest {
+public class ProductControllerTest {
     @MockBean(name="ProductService")
     private ProductService productService;
 
