@@ -2,6 +2,7 @@ package com.revature.mock;
 
 import com.revature.controllers.ProductController;
 import com.revature.models.Product;
+import com.revature.services.AuthService;
 import com.revature.services.ProductService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,7 @@ public class TestProductController {
 
     @MockBean
     private ProductService productservice;
+    private AuthService authservice;
 
     @Autowired
     private MockMvc mockMvc;
@@ -34,7 +36,6 @@ public class TestProductController {
     @Test
     @DisplayName("Should List All Products - /api/product/")
     public void shouldListAllProducts() throws Exception {
-
         List<Product> product = new ArrayList<Product>();
         product.add(new Product(1,1,50,"test","img/src.gif","test",true));
         when(productservice.findAll()).thenReturn(product);
