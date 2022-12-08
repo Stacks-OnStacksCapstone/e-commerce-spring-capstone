@@ -24,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 //Sets the base class needed to start the H2 and have other calls available
 @SpringBootTest(classes = ECommerceApplication.class)
-@ActiveProfiles("test")
 public class AuthControllerTest {
 
     @MockBean(name = "AuthService")
@@ -84,6 +83,22 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testPositiveRegister() throws Exception {
+
+        mockMvc.perform(post("/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "  \"email\": \"newuser1\",\n" +
+                                "  \"password\": \"pw\",\n" +
+                                "  \"firstName\": \"Jeffy1*\",\n" +
+                                "  \"lastName\": \"Jefferson1*\"\n" +
+                                "}")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isCreated());
     }
 
 }
