@@ -53,6 +53,9 @@ public class UserProfilePage {
     @FindBy(xpath = "//main[@color='inherit'][1]//input")
     public List<WebElement> uInputFields;
 
+    @FindBy(xpath = "//div[@role='presentation']//div[2]")
+    public WebElement deactivateAccountAlert;
+
     public UserProfilePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
