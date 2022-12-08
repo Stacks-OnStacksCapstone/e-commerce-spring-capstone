@@ -18,11 +18,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 //@EnableJpaRepositories(basePackages = {"com.revature.repositories"})
 //@DataJpaTest
+//Sets the base class needed to start the H2 and have other calls available
 @SpringBootTest(classes = ECommerceApplication.class)
 @ActiveProfiles("test")
 public class AuthControllerTest {
@@ -49,6 +51,8 @@ public class AuthControllerTest {
                     "    \"password\": \"password\"\n" +
                     "}")
             .accept(MediaType.APPLICATION_JSON))
+
+            .andDo(print())
             .andExpect(status().isOk());
     }
     @Test
@@ -74,6 +78,15 @@ public class AuthControllerTest {
                                 "}")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void testLogout() throws Exception {
+
+        mockMvc.perform(post("/auth/logout")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
 }
