@@ -10,7 +10,11 @@
         <appender-ref ref="CONSOLE"/>
     </root>
 <<<<<<< HEAD
+<<<<<<< HEAD
 </configuration>
 =======
 </configuration>
 >>>>>>> 15c41c3c64bb07789ade3e689b92033b39697c15
+=======
+</configuration>
+>>>>>>> d47e2f16261d13bbee348b64e4f1b0202f0c5739
