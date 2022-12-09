@@ -36,8 +36,8 @@ public class ProfilePage {
     public WebElement addPaymentButton;
 
 
-    @FindBy(xpath = "//tbody/tr[1]/td[4]/button[1]")
-    public WebElement delPaymentButton;
+    @FindBy(xpath = "//tbody/tr[2]/td[4]/button[1]")
+    public WebElement deletePaymentButton;
 
     @FindBy(xpath = "//div[@id='root']//div[3]/div[2]//div[2]")
     public WebElement alert;
@@ -46,7 +46,6 @@ public class ProfilePage {
     public WebElement updatePaymentButton;
 
     public ProfilePage(WebDriver driver) {
-        //super();
         PageFactory.initElements(driver, this);
     }
 

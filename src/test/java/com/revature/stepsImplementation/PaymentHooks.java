@@ -1,5 +1,6 @@
 package com.revature.stepsImplementation;
 
+import com.revature.pages.CartPage;
 import com.revature.pages.ProfilePage;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -9,10 +10,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 
-public class Hooks {
+
+public class PaymentHooks {
     public static WebDriver driver;
     public static ProfilePage profilePage;
+    public static CartPage cartPage;
     public static Actions actions;
 
     public static WebDriverWait wait;
@@ -26,7 +30,8 @@ public class Hooks {
         driver = new ChromeDriver();
         actions = new Actions(driver);
         profilePage = new ProfilePage(driver);
-        wait = new WebDriverWait(driver, 20);
+        cartPage= new CartPage(driver);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
 //        driver = new SafariDriver();
 //        profilePage = new ProfilePage(driver);
