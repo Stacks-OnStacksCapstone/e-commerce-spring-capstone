@@ -59,11 +59,11 @@ VALUES ('1','123400001234','123','2027-07-07',2),
 
 
 INSERT INTO product_review (id, comment, rating, product_id, user_id)
-VALUES (1, 'Best sound quality ever', 5, 1, 3),
+VALUES (1, 'Best quality sound quality ever', 5, 1, 3),
        (2, 'There are better options', 2, 1, 4),
        (3, 'Very comfortable and stylish', 5, 5, 2),
        (4, 'I love this cap!', 4, 4, 2),
-       (5, 'size runs a little small', 3, 2, 3);
+       (5, 'The size runs a little small', 3, 2, 3);
 
 INSERT INTO orders (id, order_date, shipment_address, payment_id, user_id)
 VALUES (1,'2022-12-02','123 Home St, Atlanta, GA, 12345, USA','1',2),
@@ -77,3 +77,4 @@ VALUES (1, 1, 1, 5),
        (3, 1, 2, 2),
        (4, 1, 3, 4),
        (5, 1, 4, 1);
+

@@ -36,7 +36,7 @@ Feature: Update Profile
   Scenario: Update Profile With All Input Field Empty
     When User clears all input fields
     And clicks on the Update button
-    Then An Alert for no input fields says "Please update a field"
+    Then An Alert says "Please update a field"
 
   Scenario: Update Profile With Only One Input Field Filled
     When User types in "Jane123" in the first name input field

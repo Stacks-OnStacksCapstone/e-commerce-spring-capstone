@@ -7,6 +7,18 @@ import org.openqa.selenium.support.PageFactory;
 
 public class CartPage {
 
+    @FindBy(xpath = "//div[@id='root']/div[2]//div/button[contains(text(), 'CONTINUE SHOPPING')]")
+    public static WebElement continueShoppingBtn;
+
+    @FindBy(xpath = "//div[@id='root']/div[2]//div[@class='sc-iqcoie fFyvgU']")
+    public static WebElement cartItems;
+
+    @FindBy(xpath = "//div[@id='root']/div[2]//div[@class='sc-fLlhyt hwJrhf']")
+    public static WebElement orderSummary;
+
+    @FindBy(xpath = "//div[@id='root']/div[2]//div[@class='sc-fLlhyt hwJrhf']/button")
+    public static WebElement checkoutButton;
+
     @FindBy(xpath = "//body/div[@id='root']/div[3]/div[1]/div[1]/div[1]/div[1]/span[1]/*[1]")
     public WebElement addHeadPhonesToCart;
 
@@ -34,8 +46,6 @@ public class CartPage {
 
     @FindBy(xpath = "//body/div[@id='root']/div[2]/div[1]/div[2]/div[1]/div[1]/div[2]/div[2]/button[2]/*[1]")
     public WebElement deleteProductButton;
-
-
 
     public CartPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
