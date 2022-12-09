@@ -4,9 +4,7 @@ Feature: Product Details View
     Given A Guesses is at the home page
     When they browse the page
     Then they are able to see products' titles, descriptions, and prices
-    When they hover over the images of the products
-    Then plus icons are displayed
-    When they clicks on the plus icons of the products
+    When they hover over the images of the products for the plus icons to be displayed and clicked on the icons
     And modals pop up
     Then once again, they are able to see products' titles, descriptions, and prices
 
@@ -14,14 +12,12 @@ Feature: Product Details View
     Given User or Admin is logged in with "<email>" and "<password>"
     When they browse the page
     Then they are able to see products' titles, descriptions, and prices
-    When they hover over the images of the products
-    Then plus icons are displayed
-    When they clicks on the plus icons of the products
+    When they hover over the images of the products for the plus icons to be displayed and clicked on the icons
     And modals pop up
     Then once again, they are able to see products' titles, descriptions, and prices
 
     Examples:
       |email|password|role|
-      |testuser@gmail.com|password|admin|
       |jane@gmail.com|password|user|
       |sean@gmail.com|password|user|
+      |testuser@gmail.com|password|admin|

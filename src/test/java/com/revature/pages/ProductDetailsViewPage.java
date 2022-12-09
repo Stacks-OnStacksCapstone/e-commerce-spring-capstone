@@ -12,17 +12,20 @@ public class ProductDetailsViewPage {
     @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]/div")
     public List<WebElement> products;
 
-    @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]//img")
+    @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]/div[1]//img")
     public WebElement productImageH;
 
-    @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]//h5")
+    @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]/div[1]//h5")
     public WebElement productTileH;
 
-    @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]//p")
+    @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]/div[1]//p")
     public WebElement productDescH;
 
-    @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]//h6")
+    @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]/div[1]//h6")
     public WebElement productPriceH;
+
+    @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]/div[last()]//div[@aria-label='view-product-details']")
+    public WebElement productPlusIcon;
 
     @FindBy(xpath = "//div[@role='presentation']/div[3]/div/h2")
     public WebElement productTitleM;
