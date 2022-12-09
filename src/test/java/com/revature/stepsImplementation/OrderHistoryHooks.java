@@ -1,15 +1,17 @@
-package com.revature.stepsImplementation.orderHistory;
+package com.revature.stepsImplementation;
 
+import com.revature.ECommerceApplication;
 import com.revature.pages.FrontPage;
 import com.revature.pages.LoginPage;
 import com.revature.pages.OrdersPage;
 import com.revature.pages.ProductDetailsPage;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
-import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.boot.SpringApplication;
 
 public class OrderHistoryHooks {
     public static WebDriver driver;

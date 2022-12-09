@@ -41,7 +41,6 @@ Feature: Order History
     Given User is on the Orders page
     When User clicks on the name of a product from a previous order
     And User navigates to the details page of the product
-    And User clicks the delete button for their previous review
     And User selects a rating for the product
     And User enters a review for the product
     And User clicks the submit button

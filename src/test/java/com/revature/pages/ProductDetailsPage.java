@@ -28,6 +28,9 @@ public class ProductDetailsPage {
     @FindBy(xpath = "//div[@id='root']/div[2]/div[3]/div[3]/div")
     public static WebElement productReviews;
 
+    @FindBy(xpath = "//div[@id='root']/div[2]/div[3]/div[3]//p")
+    public static WebElement noReviewsMessage;
+
     @FindBy(xpath = "//div[@id='root']/div[2]/div[3]/div[3]//button")
     public static WebElement reviewDeleteButton;
 
