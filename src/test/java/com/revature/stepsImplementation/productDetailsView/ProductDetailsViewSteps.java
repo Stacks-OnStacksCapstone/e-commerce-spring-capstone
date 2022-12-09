@@ -24,8 +24,6 @@ public class ProductDetailsViewSteps {
                 Assertions.assertTrue(p.isDisplayed());
             } catch (Exception e) {
                 Assertions.fail("Exception occurred");
-                e.getStackTrace();
-                break;
             }
         }
     }
@@ -42,6 +40,7 @@ public class ProductDetailsViewSteps {
     }
     @When("modals pop up")
     public void modals_pop_up() {
+        ProfileHooks.wait.until(ExpectedConditions.visibilityOf(ProfileHooks.productDetailsViewPage.productModal));
         Assertions.assertTrue(ProfileHooks.productDetailsViewPage.productModal.isDisplayed());
     }
     @Then("once again, they are able to see products' titles, descriptions, and prices")

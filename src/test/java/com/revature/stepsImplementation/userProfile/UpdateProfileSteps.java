@@ -36,17 +36,17 @@ public class UpdateProfileSteps {
     }
     @Then("User is able to see two MUI boxes {string} and {string}")
     public void user_is_able_to_see_two_mui_boxes_and(String updateMUIHeader, String deactivateMUIHeader) {
-        String expectedHeaders = " " + updateMUIHeader + " " + deactivateMUIHeader;
+        String expectedHeaders = updateMUIHeader + " " + deactivateMUIHeader;
         String aHone = ProfileHooks.userProfilePage.updateProfileMUIBoxHeader.getText();
         String aHtwo = ProfileHooks.userProfilePage.deactivateAccountMUIBoxHeader.getText();
-        String actualHeaders = aHone + aHtwo;
+        String actualHeaders = aHone + " " + aHtwo;
         Assertions.assertEquals(expectedHeaders, actualHeaders);
     }
     @When("User types in {string} in the first name input field")
     public void user_types_in_in_the_first_name_input_field(String firstname) {
         WebElement el = ProfileHooks.userProfilePage.muiFirstnameInputField;
         Action seriesOfActions = ProfileHooks.actions
-                .moveToElement(el).keyDown(Keys.COMMAND).click()
+                .moveToElement(el).click().pause(500).keyDown(Keys.COMMAND)
                 .sendKeys("a",Keys.DELETE).keyUp(Keys.COMMAND)
                 .build();
         seriesOfActions.perform();
@@ -56,7 +56,7 @@ public class UpdateProfileSteps {
     public void types_in_in_the_last_name_input_field(String lastname) {
         WebElement el = ProfileHooks.userProfilePage.muiLastnameInputField;
         Action seriesOfActions = ProfileHooks.actions
-                .moveToElement(el).keyDown(Keys.COMMAND).click()
+                .moveToElement(el).click().keyDown(Keys.COMMAND)
                 .sendKeys("a",Keys.DELETE).keyUp(Keys.COMMAND)
                 .build();
         seriesOfActions.perform();
@@ -66,7 +66,7 @@ public class UpdateProfileSteps {
     public void types_in_in_the_password_input_field(String password) {
         WebElement el = ProfileHooks.userProfilePage.muiPasswordInputField;
         Action seriesOfActions = ProfileHooks.actions
-                .moveToElement(el).keyDown(Keys.COMMAND).click()
+                .moveToElement(el).click().keyDown(Keys.COMMAND)
                 .sendKeys("a",Keys.DELETE).keyUp(Keys.COMMAND)
                 .build();
         seriesOfActions.perform();
@@ -89,7 +89,7 @@ public class UpdateProfileSteps {
     public void user_clears_the_first_name_input_field() {
         WebElement el = ProfileHooks.userProfilePage.muiFirstnameInputField;
         Action seriesOfActions = ProfileHooks.actions
-                .moveToElement(el).keyDown(Keys.COMMAND).click()
+                .moveToElement(el).click().keyDown(Keys.COMMAND)
                 .sendKeys("a",Keys.DELETE).keyUp(Keys.COMMAND)
                 .build();
         seriesOfActions.perform();
@@ -106,7 +106,7 @@ public class UpdateProfileSteps {
     public void user_clears_the_last_name_input_field() {
         WebElement el = ProfileHooks.userProfilePage.muiLastnameInputField;
         Action seriesOfActions = ProfileHooks.actions
-                .moveToElement(el).keyDown(Keys.COMMAND).click()
+                .moveToElement(el).click().keyDown(Keys.COMMAND)
                 .sendKeys("a",Keys.DELETE).keyUp(Keys.COMMAND)
                 .build();
         seriesOfActions.perform();
@@ -117,7 +117,7 @@ public class UpdateProfileSteps {
     public void leaves_the_password_input_field_empty() {
         WebElement el = ProfileHooks.userProfilePage.muiPasswordInputField;
         Action seriesOfActions = ProfileHooks.actions
-                .moveToElement(el).keyDown(Keys.COMMAND).click()
+                .moveToElement(el).click().keyDown(Keys.COMMAND)
                 .sendKeys("a",Keys.DELETE).keyUp(Keys.COMMAND)
                 .build();
         seriesOfActions.perform();
@@ -129,7 +129,7 @@ public class UpdateProfileSteps {
         List<WebElement> els = new ArrayList<>(ProfileHooks.userProfilePage.uInputFields);
         for (WebElement el: els) {
             Action seriesOfActions = ProfileHooks.actions
-                    .moveToElement(el).keyDown(Keys.COMMAND).click()
+                    .moveToElement(el).click().keyDown(Keys.COMMAND)
                     .sendKeys("a",Keys.DELETE).keyUp(Keys.COMMAND).build();
             seriesOfActions.perform();
         }

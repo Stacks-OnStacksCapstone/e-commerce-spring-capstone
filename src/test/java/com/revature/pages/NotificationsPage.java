@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class NotificationsPage {
 
-    @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]/div[1]//span[@class='MuiBadge-root']")
+    @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]/div[@class='sc-ezWOiH kwluif'][1]/div/div/div[@class='sc-jIZahH exfsfQ'][1]/span[@class='MuiBadge-root']")
     public WebElement cartIcon;
 
     @FindBy(xpath = "//div[@class='sc-gsnTZi fiGUBf']/div[2]/div[3]//span[@class='MuiBadge-root']")
