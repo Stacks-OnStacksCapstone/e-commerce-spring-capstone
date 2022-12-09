@@ -5,9 +5,5 @@ import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(
-        features = {"classpath:features/ProductFeatures/DisplayProducts.feature"},
-        glue = {"com.revature.stepsImplementation.products"})
-public class Runner  {
-
-}
+@CucumberOptions(features = "classpath:features", glue = "com.revature.stepsImplementation")
+public class Runner {}
