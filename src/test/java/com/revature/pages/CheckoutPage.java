@@ -6,6 +6,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class CheckoutPage {
+    @FindBy(xpath = "//div[@id='root']/main//h6")
+    public static WebElement checkoutPageTitle;
 
     // SHIPPING ADDRESS
 

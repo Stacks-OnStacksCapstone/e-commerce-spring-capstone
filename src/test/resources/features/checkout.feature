@@ -1,23 +1,34 @@
 @checkout
 Feature: Checkout
 
-  Scenario Outline: User can checkout the items in their cart
-    Given <customer> is on the front page
-    When <customer> adds items to the cart and clicks the cart icon
+  Background: User is logged in
+    Given User is on the login page
+    When User enters valid credentials
+    Then User logs in to the front page
+
+  Scenario: User can checkout the items in their cart
+    Given User is on the front page
+    When User adds items to the cart and clicks the cart icon
     And User navigates to the cart and sees their items
     And User clicks the checkout button
-    And <customer> enters a valid shipping address and clicks next
-    And <customer> selects a payment method and clicks submit
-    And <customer> views the order summary and clicks place order
+    And User enters a valid shipping address and clicks next
+    And User selects a payment method and clicks submit
+    And User views the order summary and clicks place order
     Then A confirmation message appears with the order number and other information
 
-    Examples: |customer|
-              |"Guest" |
-              |"User"  |
+  # WITHOUT PAYMENT METHOD
+  Scenario: User cannot checkout without a payment method
+    Given User is on the front page
+    When User adds items to the cart and clicks the cart icon
+    And User navigates to the cart and sees their items
+    And User clicks the checkout button
+    And User enters a valid shipping address and clicks next
+    And User does not select a payment method and clicks submit
+    Then User will not proceed to the final step to view their order summary
 
   # WITH INVALID SHIPPING ADDRESS
   Scenario Outline: User cannot checkout with invalid shipping address
-    Given User is on the front page
+   Given User is on the front page
     When User adds items to the cart and clicks the cart icon
     And User navigates to the cart and sees their items
     And User clicks the checkout button
@@ -38,14 +49,6 @@ Feature: Checkout
               |"Jane"    |"Doe"    |"123 Home St"|"Atlanta"|""      |"USA"  |zip code  |
               |"Jane"    |"Doe"    |"123 Home St"|"Atlanta"|"12345" |""     |country   |
 
-  # WITHOUT PAYMENT METHOD
-  Scenario: User cannot checkout without a payment method
-    Given User is on the front page
-    When User adds items to the cart and clicks the cart icon
-    And User navigates to the cart and sees their items
-    And User clicks the checkout button
-    And User enters a valid shipping address and clicks next
-    And User does not select a payment method and clicks submit
-    Then User will not proceed to the final step to view their order summary
+
 
 

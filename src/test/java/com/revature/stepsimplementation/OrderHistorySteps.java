@@ -1,17 +1,14 @@
-package com.revature.stepsImplementation;
+package com.revature.stepsimplementation;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static com.revature.stepsImplementation.OrderHistoryHooks.productDetailsPage;
-import static com.revature.stepsImplementation.OrderHistoryHooks.wait;
+import static com.revature.stepsimplementation.OrderHistoryHooks.productDetailsPage;
+import static com.revature.stepsimplementation.OrderHistoryHooks.wait;
 
 public class OrderHistorySteps {
 
