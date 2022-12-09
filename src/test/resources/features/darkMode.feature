@@ -16,9 +16,3 @@ Feature: Dark Mode
               |product |
               |cart    |
               |checkout|
-
-  Scenario: Dark mode changes product image backgrounds to black
-    Given User is on the front page
-    When User clicks the theme switch
-    Then The theme of the front page changes to dark mode
-    And The image background for each product changes to black
