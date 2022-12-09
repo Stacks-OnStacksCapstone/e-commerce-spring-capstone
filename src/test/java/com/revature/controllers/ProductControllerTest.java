@@ -27,8 +27,6 @@ public class ProductControllerTest {
 
     @Autowired private MockMvc mockMvc;
 
-    // Test Collection of Products [headphone1, shirt2, mask, hat1, coat1]
-    // /api/product
     @Test
     public void testGetAllProducts() throws Exception {
         when(productService.findAll()).thenReturn(List.of(
@@ -98,8 +96,6 @@ public class ProductControllerTest {
                 );
     }
 
-    // Test Finding Product By ID
-    // /api/product/{id}
     @Test
     public void testProductById() throws Exception {
         when(productService.findById(1)).thenReturn(Optional.of(
@@ -149,8 +145,6 @@ public class ProductControllerTest {
                 );
     }
 
-    // Test Finding Product By Keyword
-    // /api/product/search/{keyword}
     @Test
     public void testProductByKeyword() throws Exception {
         when(productService.findByKeyword("coat")).thenReturn(List.of(
