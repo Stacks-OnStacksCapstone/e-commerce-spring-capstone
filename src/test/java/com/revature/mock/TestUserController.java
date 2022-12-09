@@ -1,7 +1,10 @@
 package com.revature.mock;
 
 import com.revature.controllers.UserController;
+import com.revature.dtos.RegisterRequest;
+import com.revature.dtos.UserResponse;
 import com.revature.models.User;
+import com.revature.repositories.UserRepository;
 import com.revature.services.AuthService;
 import com.revature.services.UserService;
 import org.junit.jupiter.api.DisplayName;
@@ -24,11 +27,31 @@ public class TestUserController {
 
     @MockBean
     private UserService userService;
-
     @MockBean
     private AuthService authService;
     @Autowired
     private MockMvc mockMvc;
+
+    @Test
+    @DisplayName("Add user - /user")
+    public void addUser() throws Exception {
+        User muser = new User(1, "fake@email.com", "password", "Fake", "Name", false, true, "fjidaop3898awe8f");
+        when(userService.registerUser(new RegisterRequest("fake@email.com", "password", "Fake", "Name")))
+                .thenReturn(new UserResponse(muser));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/user")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content("{\"id\":\"1\",\"email\":\"fake@email.com\",\"password\":\"password\",\"firstName\":\"Fake\",\"lastName\":\"Name\",\"isAdmin\":\"false\",\"isActive\":\"true\"}"))
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(jsonPath("$.userId").value("1"))
+                .andExpect(jsonPath("$.email").value("fake@email.com"))
+                .andExpect(jsonPath("$.firstName").value("Fake"))
+                .andExpect(jsonPath("$.lastName").value("Name"))
+                .andExpect(jsonPath("$.admin").value(false))
+                .andExpect(jsonPath("$.active").value(true))
+                .andDo(print())
+                .andReturn();
+    }
 
     @Test
     @DisplayName("Get user - /user")
@@ -50,23 +73,24 @@ public class TestUserController {
                 .andReturn();
     }
 
-    @Test
-    @DisplayName("Add user - /user")
-    public void addUser() throws Exception {
-        User muser = new User(1, "fake@email.com", "password", "Fake", "Name", false, true, "fjidaop3898awe8f");
-        when(authService.getUserByAuthToken(anyString())).thenReturn(muser);
+//    @Test
+//    @DisplayName("Update user - /user")
+//    public void updateUser() throws Exception {
+//
+//        when().thenReturn();
+//
+//        mockMvc.perform(MockMvcRequestBuilders.put("/user")
+//                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                        .content("{\"id\":\"1\",\"email\":\"fake@email.com\",\"password\":\"password\",\"firstName\":\"Fake\",\"lastName\":\"Name\",\"isAdmin\":\"false\",\"isActive\":\"true\"}"))
+//                .andExpect(MockMvcResultMatchers.status().is(200))
+//                .andExpect(jsonPath("$.userId").value("1"))
+//                .andExpect(jsonPath("$.email").value("fake@email.com"))
+//                .andExpect(jsonPath("$.firstName").value("Fake"))
+//                .andExpect(jsonPath("$.lastName").value("Name"))
+//                .andExpect(jsonPath("$.admin").value(false))
+//                .andExpect(jsonPath("$.active").value(true))
+//                .andDo(print())
+//                .andReturn();
+//    }
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/user")
-                        .header("Authorization",""))
-                .andExpect(MockMvcResultMatchers.status().is(200))
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.userId").value("1"))
-                .andExpect(jsonPath("$.email").value("fake@email.com"))
-                .andExpect(jsonPath("$.firstName").value("Fake"))
-                .andExpect(jsonPath("$.lastName").value("Name"))
-                .andExpect(jsonPath("$.admin").value(false))
-                .andExpect(jsonPath("$.active").value(true))
-                .andDo(print())
-                .andReturn();
-    }
 }
