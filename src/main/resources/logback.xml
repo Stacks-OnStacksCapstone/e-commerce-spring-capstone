@@ -9,4 +9,8 @@
     <root level="info">
         <appender-ref ref="CONSOLE"/>
     </root>
+<<<<<<< HEAD
 </configuration>
+=======
+</configuration>
+>>>>>>> 15c41c3c64bb07789ade3e689b92033b39697c15

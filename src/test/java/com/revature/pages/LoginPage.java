@@ -16,6 +16,15 @@ public class LoginPage {
     @FindBy(xpath = "//form//button[contains(text(), 'Sign In')]")
     public WebElement loginButton;
 
+    @FindBy(xpath = "//input[@id='email']")
+    public WebElement username;
+
+    @FindBy(xpath = "//input[@id='password']")
+    public WebElement password;
+
+    @FindBy(xpath = "//*[@id=\"root\"]/main/div/form/div[3]/div/div[2]")
+    public WebElement message;
+
     public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }

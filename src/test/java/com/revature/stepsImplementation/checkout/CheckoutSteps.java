@@ -1,4 +1,4 @@
-package com.revature.stepsimplementation;
+package com.revature.stepsImplementation.checkout;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
