@@ -24,9 +24,6 @@ public class ProductDetailsViewPage {
     @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]/div[1]//h6")
     public WebElement productPriceH;
 
-    @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]/div[last()]")
-    public WebElement productToBeClicked;
-
     @FindBy(xpath = "//div[@class='sc-himrzO gFAZYV'][2]/div[last()]//div[@aria-label='view-product-details']")
     public WebElement productPlusIcon;
 
