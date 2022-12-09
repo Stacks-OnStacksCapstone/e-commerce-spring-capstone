@@ -5,5 +5,9 @@ import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features", glue = "com.revature.stepsImplementation", tags = "@checkout")
+@CucumberOptions(features = "classpath:features", glue = "com.revature.stepsImplementation",tags = "@payment" )
+
 public class Runner {}
+
+//tags = "@productCart"
+//"@payment"
