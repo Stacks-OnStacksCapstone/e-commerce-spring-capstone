@@ -9,5 +9,5 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features", glue = "com.revature.stepsImplementation", tags = "@orderhistory")
+@CucumberOptions(features = "src/test/resources/features", glue = "com.revature.stepsImplementation", tags = "@checkout")
 public class Runner {}

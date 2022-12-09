@@ -12,8 +12,8 @@ Feature: Checkout
     Then A confirmation message appears with the order number and other information
 
     Examples: |customer|
-              |Guest   |
-              |User    |
+              |"Guest" |
+              |"User"  |
 
   # WITH INVALID SHIPPING ADDRESS
   Scenario Outline: User cannot checkout with invalid shipping address
@@ -21,12 +21,13 @@ Feature: Checkout
     When User adds items to the cart and clicks the cart icon
     And User navigates to the cart and sees their items
     And User clicks the checkout button
-    And User enters <first name>
-    And User enters <last name>
-    And User enters <address>
-    And User enters <city>
-    And User enters <zip code>
-    And User enters <country>
+    And User enters <first name> to first name input
+    And User enters <last name> to last name input
+    And User enters <address> to address input
+    And User enters <city> to city input
+    And Users enters GA to state input
+    And User enters <zip code> to zip input
+    And User enters <country> to country input
     Then User sees the <input> field turn red with an error message displayed
 
     Examples: |first name|last name|address      |city     |zip code|country|input     |

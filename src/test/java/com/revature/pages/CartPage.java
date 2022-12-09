@@ -10,23 +10,14 @@ public class CartPage {
     @FindBy(xpath = "//div[@id='root']/div[2]//div/button[contains(text(), 'CONTINUE SHOPPING')]")
     public static WebElement continueShoppingBtn;
 
-   /* @FindBy(xpath = "")
-    public static WebElement ;
+    @FindBy(xpath = "//div[@id='root']/div[2]//div[@class='sc-iqcoie fFyvgU']")
+    public static WebElement cartItems;
 
-    @FindBy(xpath = "")
-    public static WebElement ;
+    @FindBy(xpath = "//div[@id='root']/div[2]//div[@class='sc-fLlhyt hwJrhf']")
+    public static WebElement orderSummary;
 
-    @FindBy(xpath = "")
-    public static WebElement ;
-
-    @FindBy(xpath = "")
-    public static WebElement ;
-
-    @FindBy(xpath = "")
-    public static WebElement ;
-
-    @FindBy(xpath = "")
-    public static WebElement ;*/
+    @FindBy(xpath = "//div[@id='root']/div[2]//div[@class='sc-fLlhyt hwJrhf']/button")
+    public static WebElement checkoutButton;
 
     public CartPage(WebDriver driver) {
         PageFactory.initElements(driver, this);

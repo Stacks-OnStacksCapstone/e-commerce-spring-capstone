@@ -1,9 +1,6 @@
 package com.revature.stepsImplementation;
 
-import com.revature.pages.FrontPage;
-import com.revature.pages.LoginPage;
-import com.revature.pages.OrdersPage;
-import com.revature.pages.ProductDetailsPage;
+import com.revature.pages.*;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -11,13 +8,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class OrderHistoryHooks {
+public class CheckoutHooks {
     public static WebDriver driver;
     public static WebDriverWait wait;
     public static LoginPage loginPage;
     public static FrontPage frontPage;
-    public static OrdersPage orderPage;
-    public static ProductDetailsPage productDetailsPage;
+    public static CartPage cartPage;
+    public static CheckoutPage checkoutPage;
+
 
     @Before
     public void setUp() {
@@ -26,8 +24,9 @@ public class OrderHistoryHooks {
         wait = new WebDriverWait(driver, 10);
         loginPage = new LoginPage(driver);
         frontPage = new FrontPage(driver);
-        orderPage = new OrdersPage(driver);
-        productDetailsPage = new ProductDetailsPage(driver);
+        cartPage = new CartPage(driver);
+        checkoutPage = new CheckoutPage(driver);
+
     }
 
     @After

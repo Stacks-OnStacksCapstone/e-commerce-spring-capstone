@@ -15,17 +15,17 @@ public class FrontPage {
     @FindBy(xpath = "//div[@id='root']//div/div[3]/span")
     public static WebElement cartButton;
 
-    /*@FindBy(xpath = "")
-    public static WebElement ;
+    @FindBy(xpath = "//div[@id='root']/div[3]")
+    public static WebElement productsDisplayed;
 
-    @FindBy(xpath = "")
-    public static WebElement ;
+    @FindBy(xpath = "//div[@id='root']/div[3]/div[1]//span")
+    public static WebElement headphonesAddButton;
 
-    @FindBy(xpath = "")
-    public static WebElement ;
+    @FindBy(xpath = "//div[@id='root']/div[3]/div[3]//span")
+    public static WebElement shoppingBagAddButton;
 
-    @FindBy(xpath = "")
-    public static WebElement ;*/
+    @FindBy(xpath = "//div[@id='root']/div[3]/div[5]//span")
+    public static WebElement coatAddButton;
 
     public FrontPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
