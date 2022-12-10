@@ -1,5 +1,6 @@
-package com.revature.stepsImplementation;
+package com.revature.stepimplementations.payment;
 
+import com.revature.stepimplementations.hooks.Hooks;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -7,7 +8,7 @@ import io.cucumber.java.en.When;
 public class ProductCart {
     @Given("the user is on the Home Page")
     public void the_user_is_on_the_home_page() {
-        PaymentHooks.driver.get("http://localhost:3000/");
+        Hooks.driver.get("http://localhost:3000/");
     }
     @When("the user see the products")
     public void the_user_see_the_products() {

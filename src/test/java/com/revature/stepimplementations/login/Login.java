@@ -1,5 +1,6 @@
-package com.revature.stepimplementations;
+package com.revature.stepimplementations.login;
 
+import com.revature.stepimplementations.hooks.Hooks;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -41,8 +42,7 @@ public class Login {
     @Then("the user should see alert message {string}")
     public void theUserShouldSee(String expectedMessage) {
         // wait for the alert to be visible
-        System.out.println("Break");
-        new WebDriverWait(Hooks.driver, Duration.ofSeconds(10)).ignoring(NoSuchElementException.class).until(ExpectedConditions.visibilityOf(Hooks.loginPage.message));
+        Hooks.wait.ignoring(NoSuchElementException.class).until(ExpectedConditions.visibilityOf(Hooks.loginPage.message));
         String message = Hooks.loginPage.message.getText();
         Assertions.assertEquals(expectedMessage, message);
     }

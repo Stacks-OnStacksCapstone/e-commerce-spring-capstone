@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 public class UserProfilePage {
     @FindBy(xpath = "//input[@id='email']")
     public WebElement loginEmailInputField;
@@ -41,6 +43,30 @@ public class UserProfilePage {
 
     @FindBy(xpath = "//div[@color='inherit']//button[text()='Deactivate']")
     public WebElement muiDeactivateButton;
+
+    // Just to get code to compile,
+    // TODO: fix later
+    @FindBy(xpath = "//a[@id='sign-in-link']")
+    public WebElement signInLink;
+
+    // Just to get code to compile,
+    // TODO: fix later
+    @FindBy(xpath = "//div[@id='deactivateAccountAlert']")
+    public WebElement deactivateAccountAlert;
+
+    // Just to get code to compile,
+    // TODO: fix later
+    @FindBy(xpath = "//div[@id='uAlert']")
+    public WebElement uAlert;
+
+    // Just to get code to compile,
+    // TODO: fix later
+    @FindBy(xpath = "//div[@id='uInputFields']")
+    public List<WebElement> uInputFields;
+
+
+
+
 
     public UserProfilePage(WebDriver driver) {
         PageFactory.initElements(driver, this);

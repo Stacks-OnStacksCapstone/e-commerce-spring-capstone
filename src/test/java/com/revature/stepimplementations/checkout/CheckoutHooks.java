@@ -1,4 +1,4 @@
-package com.revature.stepsImplementation.checkout;
+package com.revature.stepimplementations.checkout;
 
 import com.revature.pages.*;
 import io.cucumber.java.After;
