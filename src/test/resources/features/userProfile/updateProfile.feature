@@ -7,7 +7,6 @@ Feature: Update Profile
     Then User is able to see two MUI boxes "Update Your Profile" and "Deactivate Your Account"
 
   Scenario: Update a Profile
-#    clear fields before sendKeys() in steps implementation
     When User types in "Jane123" in the first name input field
     And types in "Doe123" in the last name input field
     And types in "password" in the password input field
@@ -36,7 +35,7 @@ Feature: Update Profile
   Scenario: Update Profile With All Input Field Empty
     When User clears all input fields
     And clicks on the Update button
-    Then An Alert says "Please update a field"
+    Then An Alert for no input fields says "Please update a field"
 
   Scenario: Update Profile With Only One Input Field Filled
     When User types in "Jane123" in the first name input field
