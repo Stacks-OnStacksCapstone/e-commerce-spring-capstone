@@ -12,8 +12,8 @@ Feature: Checkout
     Then A checkout message is displayed
 
     Examples:
-    |status|
-    |logged in|
+    |status       |
+    |logged in    |
     |not logged in|
 
   # WITHOUT PAYMENT METHOD
@@ -70,10 +70,10 @@ Feature: Checkout
     And User remains on the shipping address page
 
     Examples:
-      |firstname |lastname |address      |city    |zip     |country|message                    |
-      |Jane%     |Doe      |123 Home St  |Atlanta |12345   |USA    |Use only allowed characters|
-      |Jane      |Doe%     |123 Home St  |Atlanta |12345   |USA    |Use only allowed characters|
-      |Jane      |Doe      |123 Home St% |Atlanta |12345   |USA    |Use only allowed characters|
-      |Jane      |Doe      |123 Home St  |Atlanta%|12345   |USA    |Use only allowed characters|
-      |Jane      |Doe      |123 Home St  |Atlanta |12345%  |USA    |Must be only digits        |
-      |Jane      |Doe      |123 Home St  |Atlanta |12345   |USA%   |Use only allowed characters|
+      |firstname   |lastname |address       |city      |zip     |country|message                    |
+      |Jane%@!     |Doe      |123 Home St   |Atlanta   |12345   |USA    |Use only allowed characters|
+      |Jane        |Doe%@!   |123 Home St   |Atlanta   |12345   |USA    |Use only allowed characters|
+      |Jane        |Doe      |123 Home St%@!|Atlanta   |12345   |USA    |Use only allowed characters|
+      |Jane        |Doe      |123 Home St   |Atlanta%@!|12345   |USA    |Use only allowed characters|
+      |Jane        |Doe      |123 Home St   |Atlanta   |12345%@!|USA    |Must be only digits        |
+      |Jane        |Doe      |123 Home St   |Atlanta   |12345   |USA%@! |Use only allowed characters|
