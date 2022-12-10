@@ -16,30 +16,16 @@ import static java.awt.Color.red;
 
 public class CheckoutSteps {
 
-    // BACKGROUND
+    // LOGGED IN CHECKOUT
 
-    @Given("User is on the login page")
-    public void user_is_on_the_login_page() {
+    @Given("User is logged in on the front page")
+    public void user_is_logged_in_on_the_front_page() {
         driver.get("http://localhost:3000/login");
-    }
-    @When("User enters valid credentials")
-    public void user_enters_valid_credentials() {
-        Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//form//input[@id='email']")));
         Hooks.loginPage.emailInput.sendKeys("jane@gmail.com");
         Hooks.loginPage.passwordInput.sendKeys("password");
         Hooks.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//form//button[contains(text(), 'Sign In')]")));
         Hooks.loginPage.loginButton.click();
-    }
-    @Then("User logs in to the front page")
-    public void user_logs_in_to_the_front_page() {
         Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
-        String actualUrl = driver.getCurrentUrl();
-        Assert.assertEquals("http://localhost:3000/", actualUrl);
-    }
-
-    // CHECKOUT POSITIVE
-    @Given("User is on the front page")
-    public void user_is_on_the_front_page() {
         String actualUrl = driver.getCurrentUrl();
         Assert.assertEquals("http://localhost:3000/", actualUrl);
     }
@@ -89,6 +75,15 @@ public class CheckoutSteps {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='root']/main//h6")));
         String actualText = checkoutPage.checkoutMessage.getText();
         Assert.assertEquals("Thank you for your order.", actualText);
+    }
+
+    // NOT LOGGED IN CHECKOUT
+
+    @Given("User is not logged in on the front page")
+    public void user_is_not_logged_in_on_the_front_page() {
+        Hooks.driver.get("http://localhost:3000/");
+        String actualUrl = driver.getCurrentUrl();
+        Assert.assertEquals("http://localhost:3000/", actualUrl);
     }
 
     // WITHOUT PAYMENT

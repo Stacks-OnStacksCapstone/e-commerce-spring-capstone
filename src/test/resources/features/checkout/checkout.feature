@@ -1,13 +1,8 @@
 @checkout
 Feature: Checkout
 
-  Background: User is logged in
-    Given User is on the login page
-    When User enters valid credentials
-    Then User logs in to the front page
-
-  Scenario: User can checkout the items in their cart
-    Given User is on the front page
+  Scenario Outline: User/Guest can checkout the items in their cart
+    Given User is <status> on the front page
     When User adds an item to the cart and clicks the cart icon
     And User navigates to the cart
     And User clicks the checkout button
@@ -16,9 +11,14 @@ Feature: Checkout
     And User clicks place order
     Then A checkout message is displayed
 
+    Examples:
+    |status|
+    |logged in|
+    |not logged in|
+
   # WITHOUT PAYMENT METHOD
   Scenario: User cannot checkout without a payment method
-    Given User is on the front page
+    Given User is logged in on the front page
     When User adds an item to the cart and clicks the cart icon
     And User navigates to the cart
     And User clicks the checkout button
@@ -28,7 +28,7 @@ Feature: Checkout
 
   # SHIPPING ADDRESS WITH EMPTY FIELDS
   Scenario Outline: User cannot checkout with empty fields for shipping address
-    Given User is on the front page
+    Given User is logged in on the front page
     When User adds an item to the cart and clicks the cart icon
     And User navigates to the cart
     And User clicks the checkout button
@@ -54,7 +54,7 @@ Feature: Checkout
 
   # FIELDS WITH SPECIAL CHARACTERS
   Scenario Outline: User cannot checkout with special characters in input fields
-    Given User is on the front page
+    Given User is logged in on the front page
     When User adds an item to the cart and clicks the cart icon
     And User navigates to the cart
     And User clicks the checkout button
