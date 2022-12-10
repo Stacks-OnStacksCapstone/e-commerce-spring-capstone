@@ -1,4 +1,3 @@
-
 package com.revature.stepsImplementation.userProfile;
 
 import com.revature.pages.NotificationsPage;
@@ -40,4 +39,5 @@ public class ProfileHooks {
     public void cleanUp() {
         driver.quit();
     }
+
 }
