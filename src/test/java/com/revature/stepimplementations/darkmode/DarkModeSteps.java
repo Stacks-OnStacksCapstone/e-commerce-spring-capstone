@@ -4,7 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class DarkMode {
+public class DarkModeSteps {
 
     // FRONT PAGE
     @Given("User navigates to the front page")
