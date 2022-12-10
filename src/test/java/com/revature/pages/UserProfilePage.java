@@ -8,6 +8,10 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 public class UserProfilePage {
+
+    @FindBy(xpath = "//strong[text()='SIGN IN']")
+    public WebElement signInLink;
+
     @FindBy(xpath = "//input[@id='email']")
     public WebElement loginEmailInputField;
 
@@ -35,6 +39,9 @@ public class UserProfilePage {
     @FindBy(xpath = "//main[@color='inherit']//button[text()='Update']")
     public WebElement muiUpdateButton;
 
+    @FindBy(xpath = "//div[@id='root']//div[3]/div[2]//div[2]")
+    public WebElement uAlert;
+
     @FindBy(xpath = "//div[@color='inherit']//h5")
     public WebElement deactivateAccountMUIBoxHeader;
 
@@ -49,24 +56,21 @@ public class UserProfilePage {
     @FindBy(xpath = "//a[@id='sign-in-link']")
     public WebElement signInLink;
 
-    // Just to get code to compile,
-    // TODO: fix later
-    @FindBy(xpath = "//div[@id='deactivateAccountAlert']")
-    public WebElement deactivateAccountAlert;
 
     // Just to get code to compile,
     // TODO: fix later
     @FindBy(xpath = "//div[@id='uAlert']")
     public WebElement uAlert;
 
-    // Just to get code to compile,
-    // TODO: fix later
-    @FindBy(xpath = "//div[@id='uInputFields']")
+
+
+
+
+    @FindBy(xpath = "//main[@color='inherit'][1]//input")
     public List<WebElement> uInputFields;
 
-
-
-
+    @FindBy(xpath = "//div[@role='presentation']//div[2]")
+    public WebElement deactivateAccountAlert;
 
     public UserProfilePage(WebDriver driver) {
         PageFactory.initElements(driver, this);

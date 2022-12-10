@@ -1,4 +1,3 @@
-
 package com.revature.stepimplementations.userProfile;
 
 import com.revature.stepimplementations.hooks.Hooks;
@@ -144,4 +143,3 @@ public class UpdateProfileSteps {
     }
 
 }
-
