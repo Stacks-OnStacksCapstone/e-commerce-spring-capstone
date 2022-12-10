@@ -7,6 +7,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -96,14 +97,14 @@ public class CheckoutSteps {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//form//div//button[contains(text(), 'Submit')]")));
         checkoutPage.submitPaymentButton.click();
     }
-    @Then("User will not proceed to the final step to view their order summary")
-    public void user_will_not_proceed_to_the_final_step_to_view_their_order_summary() {
+    @Then("User remains on the payment method page")
+    public void user_remains_on_the_payment_method_page() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='root']/main//h6")));
         String actualText = checkoutPage.checkoutStepTitle.getText();
         Assert.assertEquals("Payment method", actualText);
     }
 
-    // INVALID SHIPPING ADDRESS
+    // EMPTY FIELDS AND SPECIAL CHARACTERS
 
     @When("User enters {string} to first name input")
     public void user_enters_to_first_name_input(String firstname) {
@@ -139,10 +140,17 @@ public class CheckoutSteps {
     }
     @Then("The empty field turns red and displays {string}")
     public void the_empty_field_turns_red_and_displays(String string) {
+        actions.sendKeys(Keys.TAB).build().perform();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='root']/main//form//p")));
         String actualText = checkoutPage.addressErrorMessage.getText();
         String fontColor = checkoutPage.addressErrorMessage.getCssValue("color");
         Assert.assertEquals(string, actualText);
         Assert.assertEquals("rgba(211, 47, 47, 1)", fontColor);
+    }
+    @Then("User remains on the shipping address page")
+    public void user_remains_on_the_shipping_address_page() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='root']/main//h6")));
+        String actualText = checkoutPage.checkoutStepTitle.getText();
+        Assert.assertEquals("Shipping address", actualText);
     }
 }
