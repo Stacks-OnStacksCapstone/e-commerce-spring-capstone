@@ -25,6 +25,7 @@ public class Hooks {
     public static UserProfilePage userProfilePage;
     public static ProductDetailsViewPage productDetailsViewPage;
     public static NotificationsPage notificationsPage;
+    public static CheckoutPage checkoutPage;
     public static boolean boolRes;
 
     @BeforeAll
@@ -47,6 +48,8 @@ public class Hooks {
         userProfilePage = new UserProfilePage(driver);
         productDetailsViewPage = new ProductDetailsViewPage(driver);
         notificationsPage = new NotificationsPage(driver);
+        checkoutPage = new CheckoutPage(driver);
+
     }
 
     @After

@@ -1,5 +1,6 @@
 package com.revature.stepimplementations.checkout;
 
+import com.revature.stepimplementations.hooks.Hooks;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -14,20 +15,20 @@ public class CheckoutSteps {
 
     @Given("User is on the login page")
     public void user_is_on_the_login_page() {
-        CheckoutHooks.driver.get("http://localhost:3000/login");
+        Hooks.driver.get("http://localhost:3000/login");
     }
     @When("User enters valid credentials")
     public void user_enters_valid_credentials() {
-        CheckoutHooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//form//input[@id='email']")));
-        CheckoutHooks.loginPage.emailInput.sendKeys("jane@gmail.com");
-        CheckoutHooks.loginPage.passwordInput.sendKeys("password");
-        CheckoutHooks.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//form//button[contains(text(), 'Sign In')]")));
-        CheckoutHooks.loginPage.loginButton.click();
+        Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//form//input[@id='email']")));
+        Hooks.loginPage.emailInput.sendKeys("jane@gmail.com");
+        Hooks.loginPage.passwordInput.sendKeys("password");
+        Hooks.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//form//button[contains(text(), 'Sign In')]")));
+        Hooks.loginPage.loginButton.click();
     }
     @Then("User logs in to the front page")
     public void user_logs_in_to_the_front_page() {
-        CheckoutHooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
-        String actualUrl = CheckoutHooks.driver.getCurrentUrl();
+        Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
+        String actualUrl = Hooks.driver.getCurrentUrl();
         Assert.assertEquals("http://localhost:3000/", actualUrl);
     }
 
@@ -54,7 +55,7 @@ public class CheckoutSteps {
 
     @And("User selects a payment method and clicks submit")
     public void user_selects_a_payment__method_and_clicks_submit() {
-        //CheckoutHooks.actions.moveToElement(checkoutPage.paymentRadioButton).sendKeys(Keys.PAUSE.ENTER).build().perform();
+        //Hooks.actions.moveToElement(checkoutPage.paymentRadioButton).sendKeys(Keys.PAUSE.ENTER).build().perform();
     }
 
     @And("User views the order summary and clicks place order")
