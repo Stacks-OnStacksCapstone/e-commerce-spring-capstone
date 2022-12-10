@@ -51,21 +51,6 @@ public class UserProfilePage {
     @FindBy(xpath = "//div[@color='inherit']//button[text()='Deactivate']")
     public WebElement muiDeactivateButton;
 
-    // Just to get code to compile,
-    // TODO: fix later
-    @FindBy(xpath = "//a[@id='sign-in-link']")
-    public WebElement signInLink;
-
-
-    // Just to get code to compile,
-    // TODO: fix later
-    @FindBy(xpath = "//div[@id='uAlert']")
-    public WebElement uAlert;
-
-
-
-
-
     @FindBy(xpath = "//main[@color='inherit'][1]//input")
     public List<WebElement> uInputFields;
 
