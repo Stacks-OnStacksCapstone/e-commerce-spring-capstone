@@ -8,47 +8,49 @@ Feature: Checkout
 
   Scenario: User can checkout the items in their cart
     Given User is on the front page
-    When User adds items to the cart and clicks the cart icon
-    And User navigates to the cart and sees their items
+    When User adds an item to the cart and clicks the cart icon
+    And User navigates to the cart
     And User clicks the checkout button
     And User enters a valid shipping address and clicks next
     And User selects a payment method and clicks submit
-    And User views the order summary and clicks place order
-    Then A confirmation message appears with the order number and other information
+    And User clicks place order
+    Then A checkout message is displayed
 
   # WITHOUT PAYMENT METHOD
   Scenario: User cannot checkout without a payment method
     Given User is on the front page
-    When User adds items to the cart and clicks the cart icon
-    And User navigates to the cart and sees their items
+    When User adds an item to the cart and clicks the cart icon
+    And User navigates to the cart
     And User clicks the checkout button
     And User enters a valid shipping address and clicks next
     And User does not select a payment method and clicks submit
     Then User will not proceed to the final step to view their order summary
 
-  # WITH INVALID SHIPPING ADDRESS
-  Scenario Outline: User cannot checkout with invalid shipping address
+
+  # SHIPPING ADDRESS WITH EMPTY FIELDS
+  Scenario Outline: User cannot checkout with empty fields for shipping address
    Given User is on the front page
-    When User adds items to the cart and clicks the cart icon
-    And User navigates to the cart and sees their items
+    When User adds an item to the cart and clicks the cart icon
+    And User navigates to the cart
     And User clicks the checkout button
-    And User enters <first name> to first name input
-    And User enters <last name> to last name input
-    And User enters <address> to address input
-    And User enters <city> to city input
+    And User enters "<firstname>" to first name input
+    And User enters "<lastname>" to last name input
+    And User enters "<address>" to address input
+    And User enters "<city>" to city input
     And Users enters GA to state input
-    And User enters <zip code> to zip input
-    And User enters <country> to country input
-    Then User sees the <input> field turn red with an error message displayed
+    And User enters "<zip>" to zip input
+    And User enters "<country>" to country input
+    And User clicks next
+    Then The empty field turns red and displays "<message>"
 
-    Examples: |first name|last name|address      |city     |zip code|country|input     |
-              |""        |"Doe"    |"123 Home St"|"Atlanta"|"12345" |"USA"  |first name|
-              |"Jane"    |""       |"123 Home St"|"Atlanta"|"12345" |"USA"  |last name |
-              |"Jane"    |"Doe"    |""           |"Atlanta"|"12345" |"USA"  |address   |
-              |"Jane"    |"Doe"    |"123 Home St"|""       |"12345" |"USA"  |city      |
-              |"Jane"    |"Doe"    |"123 Home St"|"Atlanta"|""      |"USA"  |zip code  |
-              |"Jane"    |"Doe"    |"123 Home St"|"Atlanta"|"12345" |""     |country   |
-
+      Examples:
+                |firstname |lastname |address      |city   |zip     |country|message               |
+                |          |Doe      |123 Home St  |Atlanta|12345   |USA    |First Name is required|
+                |Jane      |         |123 Home St  |Atlanta|12345   |USA    |Last Name is required |
+                |Jane      |Doe      |             |Atlanta|12345   |USA    |Address is required   |
+                |Jane      |Doe      |123 Home St  |       |12345   |USA    |City is required      |
+                |Jane      |Doe      |123 Home St  |Atlanta|        |USA    |Zipcode is required   |
+                |Jane      |Doe      |123 Home St  |Atlanta|12345   |       |Country is required   |
 
 
 

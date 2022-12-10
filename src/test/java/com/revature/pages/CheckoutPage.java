@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class CheckoutPage {
     @FindBy(xpath = "//div[@id='root']/main//h6")
-    public static WebElement checkoutPageTitle;
+    public static WebElement checkoutStepTitle;
 
     // SHIPPING ADDRESS
 
@@ -35,12 +35,15 @@ public class CheckoutPage {
     @FindBy(xpath = "//form/div[2]/button[contains(text(), 'Next')]")
     public static WebElement nextButton;
 
+    @FindBy(xpath = "//div[@id='root']/main//form//p")
+    public static WebElement addressErrorMessage;
+
     // PAYMENT METHOD
 
     @FindBy(xpath = "//form//div//table")
     public static WebElement paymentOptions;
 
-    @FindBy(xpath = "//form//div//table/input[@type='radio']")
+    @FindBy(xpath = "//form//table//span[@class='css-hyxlzm']")
     public static WebElement paymentRadioButton;
 
     @FindBy(xpath = "//form//div//button[contains(text(), 'Submit')]")
@@ -68,7 +71,7 @@ public class CheckoutPage {
 
     // CHECKOUT MESSAGE
 
-    @FindBy(xpath = "//div[@id='root']/main//h6")
+    @FindBy(xpath = "//div[@id='root']/main//h5")
     public static WebElement checkoutMessage;
 
 
