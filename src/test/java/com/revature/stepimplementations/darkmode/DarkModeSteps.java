@@ -30,13 +30,6 @@ public class DarkModeSteps {
         Assert.assertEquals("rgba(18, 18, 18, 1)", bgColor);
     }
 
-    @Then("The theme of the front page changes back to light mode")
-    public void the_theme_of_the_front_page_changes_back_to_light_mode() {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
-        String bgColor = frontPage.pageBody.getCssValue("background-color");
-        Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
-    }
-
     // REGISTER PAGE
     @Given("User navigates to the register page")
     public void user_navigates_to_the_register_page() {
@@ -174,5 +167,63 @@ public class DarkModeSteps {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
         String bgColor = checkoutPage.pageBody.getCssValue("background-color");
         Assert.assertEquals("rgba(18, 18, 18, 1)", bgColor);
+    }
+
+     // BACK TO LIGHT MODE
+
+    @Then("The theme of the front page changes back to light mode")
+    public void the_theme_of_the_front_page_changes_back_to_light_mode() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
+        String bgColor = frontPage.pageBody.getCssValue("background-color");
+        Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
+    }
+
+    @Then("The theme of the register page changes back to light mode")
+    public void the_theme_of_the_register_page_changes_back_to_light_mode() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
+        //String bgColor = registerPage.pageBody.getCssValue("background-color");
+        //Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
+    }
+
+    @Then("The theme of the login page changes back to light mode")
+    public void the_theme_of_the_login_page_changes_back_to_light_mode() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
+        String bgColor = loginPage.pageBody.getCssValue("background-color");
+        Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
+    }
+
+    @Then("The theme of the profile page changes back to light mode")
+    public void the_theme_of_the_profile_page_changes_back_to_light_mode() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
+        String bgColor = userProfilePage.pageBody.getCssValue("background-color");
+        Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
+    }
+
+    @Then("The theme of the orders page changes back to light mode")
+    public void the_theme_of_the_orders_page_changes_back_to_light_mode() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
+        String bgColor = ordersPage.pageBody.getCssValue("background-color");
+        Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
+    }
+
+    @Then("The theme of the product page changes back to light mode")
+    public void the_theme_of_the_product_page_changes_back_to_light_mode() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
+        String bgColor = productDetailsPage.pageBody.getCssValue("background-color");
+        Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
+    }
+
+    @Then("The theme of the cart page changes back to light mode")
+    public void the_theme_of_the_cart_page_changes_back_to_light_mode() throws InterruptedException {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
+        String bgColor = cartPage.pageBody.getCssValue("background-color");
+        Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
+    }
+
+    @Then("The theme of the checkout page changes back to light mode")
+    public void the_theme_of_the_checkout_page_changes_back_to_light_mode() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
+        String bgColor = checkoutPage.pageBody.getCssValue("background-color");
+        Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
     }
 }
