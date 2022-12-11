@@ -41,7 +41,7 @@ public class OrderHistorySteps {
     @When("User clicks the Orders link")
     public void user_clicks_the_orders_link() {
         Hooks.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='root']//strong[contains(text(), 'ORDERS')]")));
-        Hooks.frontPage.ordersButton.click();
+        Hooks.frontPage.ordersLink.click();
     }
 
     @Then("User navigates to the Orders page")
@@ -68,8 +68,8 @@ public class OrderHistorySteps {
     public void user_can_see_the_order_date_and_total_of_each_order() {
         Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='root']//div[4]/div[1]//span[2]//p[1]")));
         Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='root']//div[4]/div[1]//span[2]//p[2]")));
-        String actualDate = Hooks.orderPage.orderDate.getText();
-        String actualTotal = Hooks.orderPage.orderTotal.getText();
+        String actualDate = Hooks.ordersPage.orderDate.getText();
+        String actualTotal = Hooks.ordersPage.orderTotal.getText();
         Assert.assertEquals("Order date: 2022-12-16", actualDate);
         Assert.assertEquals("Order total: $10", actualTotal);
     }
@@ -79,8 +79,8 @@ public class OrderHistorySteps {
     public void user_can_view_the_order_detail_id_and_order_id() {
         Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='root']//div[4]/div[1]//div[2]/div/p[1]")));
         Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='root']//div[4]/div[1]//div[2]/div/p[2]")));
-        String actualOrderDetailId = Hooks.orderPage.capOrderDetailId.getText();
-        String actualOrderId = Hooks.orderPage.capOrderId.getText();
+        String actualOrderDetailId = Hooks.ordersPage.capOrderDetailId.getText();
+        String actualOrderId = Hooks.ordersPage.capOrderId.getText();
         Assert.assertEquals("OrderDetail ID: 4", actualOrderDetailId);
         Assert.assertEquals("Order ID: 3", actualOrderId);
     }
@@ -89,8 +89,8 @@ public class OrderHistorySteps {
     public void user_can_view_the_product_purchased() {
         Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='root']//div[4]//div[2]//a[@href='/products/4']")));
         Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='root']//div[4]/div[1]//div[1]/div/p")));
-        String actualProd = Hooks.orderPage.capLink.getText();
-        String actualDesc = Hooks.orderPage.capDescription.getText();
+        String actualProd = Hooks.ordersPage.capLink.getText();
+        String actualDesc = Hooks.ordersPage.capDescription.getText();
         Assert.assertEquals("Baseball Cap", actualProd);
         Assert.assertEquals("A fancy cap for a fancy person", actualDesc);
     }
@@ -99,8 +99,8 @@ public class OrderHistorySteps {
     public void user_can_view_the_product_id_and_quantity_of_the_product_purchased() {
         Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='root']//div[4]/div[1]//div[2]/div/p[3]")));
         Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='root']//div[4]/div[1]//div[2]/div/p[4]")));
-        String actualProductId = Hooks.orderPage.capProductId.getText();
-        String actualQuantity = Hooks.orderPage.capQuantity.getText();
+        String actualProductId = Hooks.ordersPage.capProductId.getText();
+        String actualQuantity = Hooks.ordersPage.capQuantity.getText();
         Assert.assertEquals("Product ID: 4", actualProductId);
         Assert.assertEquals("Quantity: 1", actualQuantity);
     }
@@ -110,7 +110,7 @@ public class OrderHistorySteps {
     @When("User clicks on the name of a product from a previous order")
     public void user_clicks_on_the_name_of_a_product_from_a_previous_order() {
         Hooks.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='root']//div[4]//div[2]//a[@href='/products/4']")));
-        Hooks.orderPage.capLink.click();
+        Hooks.ordersPage.capLink.click();
     }
     @Then("User navigates to the details page of the product")
     public void user_navigates_to_the_details_page_of_the_product() {

@@ -74,6 +74,8 @@ public class CheckoutPage {
     @FindBy(xpath = "//div[@id='root']/main//h5")
     public static WebElement checkoutMessage;
 
+    @FindBy(xpath = "//body")
+    public static WebElement pageBody;
 
     public CheckoutPage(WebDriver driver) {
         PageFactory.initElements(driver, this);

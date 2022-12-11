@@ -57,6 +57,9 @@ public class UserProfilePage {
     @FindBy(xpath = "//div[@role='presentation']//div[2]")
     public WebElement deactivateAccountAlert;
 
+    @FindBy(xpath = "//body")
+    public static WebElement pageBody;
+
     public UserProfilePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }

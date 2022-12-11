@@ -25,6 +25,9 @@ public class LoginPage {
     @FindBy(xpath = "//*[@id=\"root\"]/main/div/form/div[3]/div/div[2]")
     public WebElement message;
 
+    @FindBy(xpath = "//body")
+    public static WebElement pageBody;
+
     public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }

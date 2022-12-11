@@ -46,6 +46,9 @@ public class OrdersPage {
     @FindBy(xpath = "//div[@id='root']//div[4]/div[2]//div[2]/div/p")
     public static WebElement coatOrderDetails;
 
+    @FindBy(xpath = "//body")
+    public static WebElement pageBody;
+
     public OrdersPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
