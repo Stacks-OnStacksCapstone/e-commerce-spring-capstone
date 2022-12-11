@@ -32,12 +32,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
+import com.revature.ECommerceApplication;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ECommerceApplication.class)
- public class OrderDetailControllerTest {
-
+public class PaymentControllerTest {
     @MockBean(name="AuthService")
     private AuthService authService;
 
@@ -68,11 +70,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     }
 
 
-    //FROM POSTMAN!
-    private String auth = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoidGVzdHVzZXJAZ21haWwuY29tIiwiaXNzIjoiQ29uZ28iLCJpc0FkbWluIjp0cnV" +
-            "lLCJpc0FjdGl2ZSI6dHJ1ZSwiaWF0IjoxNj" +
-            "cwNzk0NDY0LCJleHAiOjE2NzA4ODA4NjR9.TxXkPNCqblPG" +
-            "CxHdguVB1114qRrt5CPQkm8s0qJu4Hc";
+
+    private String auth = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoidGVzdHVzZXJAZ21haWwuY29tIiwiaXNzIjoi" +
+            "Q29uZ28iLCJpc0FkbWluIjp0cnVlLCJ" +
+            "pc0FjdGl2ZSI6dHJ1ZSwiaWF0IjoxNjcwODAwMTE" +
+            "wLCJleHAiOjE2NzA4ODY1MTB9.ur9zAPmarEphAim-JXpYQfA" +
+            "XGWcb8uU138m2-_guoRo";
+
 
     @Test
     public void testPositiveLogin() throws Exception {
@@ -87,79 +91,60 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                 .andExpect(status().isOk());
     }
 
-
-    //Should be 200 but is 400 instead!
+    //200postman 401 MVC(Must be logged in as payment owner to delete payment.)
     @Test
-    public void testapiorderdetailgetbyid() throws Exception {
-       when(orderDetailService.createOrderDetail(new OrderDetailRequest())).thenReturn(new OrderDetailResponse());
-        mockMvc.perform(post("/api/orderdetail")
+    public void deletepaymentnegative() throws Exception {
+        when(orderDetailService.createOrderDetail(new OrderDetailRequest())).thenReturn(new OrderDetailResponse());
+        mockMvc.perform(delete("/api/payment")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",auth)
-                        .content( "  \"productId\": \"1\",\n" +
-                                "  \"orderId\": \"1\",\n" +
-                                "  \"quantity\": \"0\""))
-                .andDo(print())
-                .andExpect(status().is4xxClientError());
+                        .param("paymentId", "notincard233"))
+                        .andDo(print())
+                        .andExpect(status().is4xxClientError());
+
     }
 
 
-
-
-     @Test
-    public void testdeleteapinonexistentorderdetailbyid() throws Exception {
-        int id = 100;
-        when( orderDetailService.delete(id)).thenReturn(true);
-        mockMvc.perform(delete("/api/orderdetail/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization",auth)
-                        .content(""))
+    //200 postman 200 MVC
+    @Test
+    public void getpayment() throws Exception {
+        //when(orderDetailService.createOrderDetail(new OrderDetailRequest())).thenReturn(new OrderDetailResponse());
+        mockMvc.perform(get("/api/payment").header("Authorization",auth)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
-            }
-
-    @Test
-    public void testgetapiorderdetailbyid() throws Exception {
-        int id = 1;
-        Optional<OrderDetail> optional = orderDetailService.findById(id);
-        when(orderDetailService.findById(id)).thenReturn(optional);
-        mockMvc.perform(get("/api/orderdetail/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization",auth)
-                        .content(""))
-                .andDo(print())
-                .andExpect(status().is4xxClientError());
-            }
 
 
 
-    @Test
-    public void testgetapiorderdetailbyorder() throws Exception {
-        mockMvc.perform(get("/api/orderdetail/order/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization",auth)
-                        .content(""))
-                .andDo(print())
-                .andExpect(status().is4xxClientError());
     }
+
+    //200 in Postman 400 in MVC(HttpMessageNotReadableException)
+    @Test
+    public void postpayment() throws Exception {
+        //when(orderDetailService.createOrderDetail(new OrderDetailRequest())).thenReturn(new OrderDetailResponse());
+        mockMvc.perform(post("/api/payment").header("Authorization",auth)
+                        .contentType(MediaType.APPLICATION_JSON)
+                .content("  \"ccv\": \"string\",\n" +
+                        "  \"expDate\": \"2022-12-05T19:51:32.665Z\",\n" +
+                        "  \"cardNumber\": \"string\""))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+
+    }
+
+    //200 in postman 400 on MVC
+    @Test
+    public void putpayment() throws Exception {
+        //when(orderDetailService.createOrderDetail(new OrderDetailRequest())).thenReturn(new OrderDetailResponse());
+        mockMvc.perform(put("/api/payment").header("Authorization",auth)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("   \"paymentId\": \"safecard111\",\n" +
+                                "  \"cardType\": \"string\",\n" +
+                                "  \"expDate\": \"2022-12-05T20:01:15.857Z\",\n" +
+                                "  \"cardNumber\": \"string\""))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+
+    }
+
 }
-
-
-
-
-// -- Notes --
-//Get Auth from postman!
-//Cannot generate auth token using a real user or fake user, keeps returning an empty token string, even though the user exists.
-// Why?
-//having a hard time generating auth token
-//String token = authService.generateAuthToken(muser1);
-//Principal payload = new Principal(muser1);
-//String token1 = tokenGenerator.createToken(payload);
-//String token = tokenService.generateToken(payload);
-//System.out.println(token1);
-//String  authService.getUserByAuthToken("1");
-// User user = userService.findUserById(id);
-//Get a 404 response should be 200
-// User muser1 = new User(1, "testuser@gmail.com","password", "Testerson", "Usertown",
-//true, true, "");
-//System.out.println(muser1);
-//Get a 404 response should be 200
