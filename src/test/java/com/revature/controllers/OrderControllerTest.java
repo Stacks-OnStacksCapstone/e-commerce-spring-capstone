@@ -5,9 +5,11 @@ import com.revature.ECommerceApplication;
 import com.revature.dtos.CreateOrderRequest;
 import com.revature.dtos.OrderResponse;
 import com.revature.models.Order;
+import com.revature.models.OrderDetail;
 import com.revature.models.User;
 import com.revature.repositories.OrderRepository;
 import com.revature.services.AuthService;
+import com.revature.services.OrderDetailService;
 import com.revature.services.OrderService;
 import com.revature.services.ProductService;
 import org.junit.Before;
@@ -46,6 +48,9 @@ public class OrderControllerTest {
     @MockBean(name="OrderService")
     private OrderService orderService;
 
+
+    @MockBean(name="OrderDetailService")
+    private OrderDetailService orderDetailService;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -112,6 +117,8 @@ public class OrderControllerTest {
                          .andExpect(status().is4xxClientError());
 
     }
+
+
 
 
 
