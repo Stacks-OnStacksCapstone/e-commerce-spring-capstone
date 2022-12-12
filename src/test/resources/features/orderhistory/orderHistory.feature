@@ -2,14 +2,9 @@
 
 Feature: Order History
 
-  Background: User is logged in
-    Given User is on login page
-    When User enters an email
-    And User enters a password
-    And User clicks login
-    And User logs in to Front page
+  Background: User is logged in on the Orders page
+    Given User logs in with valid credentials
     And User clicks the Orders link
-    Then User navigates to the Orders page
 
   Scenario: User can view list of previous orders
     Given User is on the Orders page

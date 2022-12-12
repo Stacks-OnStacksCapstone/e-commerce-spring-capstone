@@ -15,6 +15,7 @@ import java.time.Duration;
 public class Hooks {
     public static WebDriver driver;
     public static WebDriverWait wait;
+    public static GeneralPage generalPage;
     public static LoginPage loginPage;
     public static FrontPage frontPage;
     public static OrdersPage ordersPage;
@@ -39,6 +40,7 @@ public class Hooks {
         actions = new Actions(driver);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
+        generalPage = new GeneralPage(driver);
         loginPage = new LoginPage(driver);
         frontPage = new FrontPage(driver);
         ordersPage = new OrdersPage(driver);

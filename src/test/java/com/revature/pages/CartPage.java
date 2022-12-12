@@ -47,9 +47,6 @@ public class CartPage {
     @FindBy(xpath = "//body/div[@id='root']/div[2]/div[1]/div[2]/div[1]/div[1]/div[2]/div[2]/button[2]/*[1]")
     public WebElement deleteProductButton;
 
-    @FindBy(xpath = "//body")
-    public static WebElement pageBody;
-
     public CartPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
