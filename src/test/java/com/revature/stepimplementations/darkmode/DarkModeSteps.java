@@ -169,13 +169,14 @@ public class DarkModeSteps {
         Assert.assertEquals("rgba(18, 18, 18, 1)", bgColor);
     }
 
-     // BACK TO LIGHT MODE
+     // SWITCH BACK TO LIGHT MODE
 
     @When("User clicks the theme switch again")
     public void user_clicks_the_theme_switch_again() {
         actions.moveToElement(frontPage.darkModeSwitch).click().build().perform();
     }
 
+    // FRONT PAGE
     @Then("The theme of the front page changes back to light mode")
     public void the_theme_of_the_front_page_changes_back_to_light_mode() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
@@ -183,6 +184,8 @@ public class DarkModeSteps {
         Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
     }
 
+    // REGISTER PAGE
+    // waiting for register page to be created
     @Then("The theme of the register page changes back to light mode")
     public void the_theme_of_the_register_page_changes_back_to_light_mode() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
@@ -190,6 +193,7 @@ public class DarkModeSteps {
         //Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
     }
 
+    // LOGIN PAGE
     @Then("The theme of the login page changes back to light mode")
     public void the_theme_of_the_login_page_changes_back_to_light_mode() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
@@ -197,6 +201,7 @@ public class DarkModeSteps {
         Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
     }
 
+    // PROFILE PAGE
     @Then("The theme of the profile page changes back to light mode")
     public void the_theme_of_the_profile_page_changes_back_to_light_mode() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
@@ -204,6 +209,7 @@ public class DarkModeSteps {
         Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
     }
 
+    // ORDERS PAGE
     @Then("The theme of the orders page changes back to light mode")
     public void the_theme_of_the_orders_page_changes_back_to_light_mode() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
@@ -211,6 +217,7 @@ public class DarkModeSteps {
         Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
     }
 
+    // PRODUCT PAGE
     @Then("The theme of the product page changes back to light mode")
     public void the_theme_of_the_product_page_changes_back_to_light_mode() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
@@ -218,6 +225,7 @@ public class DarkModeSteps {
         Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
     }
 
+    // CART PAGE
     @Then("The theme of the cart page changes back to light mode")
     public void the_theme_of_the_cart_page_changes_back_to_light_mode() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
@@ -225,6 +233,7 @@ public class DarkModeSteps {
         Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
     }
 
+    // CHECKOUT PAGE
     @Then("The theme of the checkout page changes back to light mode")
     public void the_theme_of_the_checkout_page_changes_back_to_light_mode() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
