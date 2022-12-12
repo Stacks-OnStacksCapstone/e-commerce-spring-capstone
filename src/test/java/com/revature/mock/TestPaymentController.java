@@ -1,8 +1,11 @@
 package com.revature.mock;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.controllers.PaymentController;
 import com.revature.controllers.ProductController;
+import com.revature.dtos.EditPaymentRequest;
 import com.revature.dtos.PaymentResponse;
 import com.revature.models.Payment;
 import com.revature.models.User;
@@ -99,6 +102,70 @@ public class TestPaymentController {
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.valueOf("text/plain;charset=UTF-8")))
                 .andExpect(MockMvcResultMatchers.content().string("Payment 1 was deleted"))
+                .andDo(print())
+                .andReturn();
+    }
+
+    @Test
+    @DisplayName("Update Payment - /api/payment/")
+    public void shouldUpdatePayment() throws Exception {
+
+        //User Object
+        String jsonString2 = "{\"id\":\"1\",\"email\":\"test@test.com\",\"firstName\":\"first\",\"lastName\":\"last\",\"active\":\"true\",\"admin\":\"true\"}";
+        ObjectMapper objectMapper2 = new ObjectMapper();
+        User user = objectMapper2.readValue(jsonString2, User.class);
+        System.out.println(user);
+
+        //Payment Response List Object
+        String jsonString3 = "{\"paymentId\":\"5\",\"cardType\":\"Visa\",\"id\":\"1\",\"ccv\":\"333\",\"expDate\":\"2022-12-09T22:17:27.651Z\",\"cardNumber\":\"333344445555666\",\"userEmail\":\"test@example.com\"}";
+        ObjectMapper objectMapper3 = new ObjectMapper();
+        objectMapper3.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        EditPaymentRequest epr = objectMapper3.readValue(jsonString3, EditPaymentRequest.class);
+        System.out.println(epr);
+        PaymentResponse pr = objectMapper3.readValue(jsonString3, PaymentResponse.class);
+        System.out.println(pr);
+
+        when(authservice.getUserByAuthToken(anyString())).thenReturn(user);
+        when(paymentservice.updatePayment(any(), any())).thenReturn(pr);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/payment/")
+                        .header("Authorization","")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content("{\"id\":\"fdsasf\",\"ccv\":\"333\",\"expDate\":\"2022-12-12T19:02:52.720Z\",\"cardNumber\":\"333344445555\",\"userEmail\":\"test@example.com\"}"))
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andReturn();
+    }
+
+    @Test
+    @DisplayName("Add Payment - /api/payment/")
+    public void shouldAddPayment() throws Exception {
+
+        //User Object
+        String jsonString2 = "{\"id\":\"1\",\"email\":\"test@test.com\",\"firstName\":\"first\",\"lastName\":\"last\",\"active\":\"true\",\"admin\":\"true\"}";
+        ObjectMapper objectMapper2 = new ObjectMapper();
+        User user = objectMapper2.readValue(jsonString2, User.class);
+        System.out.println(user);
+
+        //Payment Response List Object
+        String jsonString3 = "{\"paymentId\":\"5\",\"cardType\":\"Visa\",\"id\":\"1\",\"ccv\":\"333\",\"expDate\":\"2022-12-09T22:17:27.651Z\",\"cardNumber\":\"333344445555666\",\"userEmail\":\"test@example.com\"}";
+        ObjectMapper objectMapper3 = new ObjectMapper();
+        objectMapper3.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        EditPaymentRequest epr = objectMapper3.readValue(jsonString3, EditPaymentRequest.class);
+        System.out.println(epr);
+        PaymentResponse pr = objectMapper3.readValue(jsonString3, PaymentResponse.class);
+        System.out.println(pr);
+
+        when(authservice.getUserByAuthToken(anyString())).thenReturn(user);
+        when(paymentservice.createPayment(any(), any())).thenReturn(pr);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/payment/")
+                        .header("Authorization","")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content("{\"id\":\"fdsasf\",\"ccv\":\"333\",\"expDate\":\"2022-12-12T19:02:52.720Z\",\"cardNumber\":\"333344445555\",\"userEmail\":\"test@example.com\"}"))
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andReturn();
     }
