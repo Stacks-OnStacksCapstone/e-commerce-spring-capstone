@@ -29,6 +29,8 @@ public class TestProductController {
 
     @MockBean
     private ProductService productservice;
+
+    @MockBean
     private AuthService authservice;
 
     @Autowired
