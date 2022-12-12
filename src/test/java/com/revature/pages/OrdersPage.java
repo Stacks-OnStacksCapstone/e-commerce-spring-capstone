@@ -13,7 +13,7 @@ public class OrdersPage {
     @FindBy(xpath = "//div[@id='root']//div[3]//li[1]/button")
     public static WebElement ordersBackNav;
 
-    @FindBy(xpath = "//div[@id='root']/div[@class='MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-direction-xs-column MuiGrid-justify-content-xs-space-between']")
+    @FindBy(xpath = "//div[@id='root']//div[@class='MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column']")
     public static WebElement previousOrders;
 
     @FindBy(xpath = "//div[@id='root']//div[4]/div[1]//span[2]//p[1]")
