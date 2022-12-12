@@ -16,6 +16,7 @@ public class Hooks {
     public static WebDriver driver;
     public static WebDriverWait wait;
     public static LoginPage loginPage;
+    public static RegistrationPage registrationPage;
     public static FrontPage frontPage;
     public static OrdersPage orderPage;
     public static ProductDetailsPage productDetailsPage;
@@ -27,6 +28,10 @@ public class Hooks {
     public static NotificationsPage notificationsPage;
     public static CheckoutPage checkoutPage;
     public static boolean boolRes;
+
+    public static String homeURL = "http://localhost:3000/";
+    public static String loginURL = "http://localhost:3000/login";
+    public static String registrationURL = "http://localhost:3000/register";
 
     @BeforeAll
     public static void setupClass() {
@@ -40,6 +45,7 @@ public class Hooks {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         loginPage = new LoginPage(driver);
+        registrationPage = new RegistrationPage(driver);
         frontPage = new FrontPage(driver);
         orderPage = new OrdersPage(driver);
         productDetailsPage = new ProductDetailsPage(driver);
