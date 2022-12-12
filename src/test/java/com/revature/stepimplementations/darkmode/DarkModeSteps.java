@@ -19,8 +19,7 @@ public class DarkModeSteps {
     }
     @When("User clicks the theme switch")
     public void user_clicks_the_theme_switch() {
-        actions.moveToElement(frontPage.darkModeSwitch).click().build().perform();
-        actions.moveToElement(frontPage.darkModeSwitch).click().build().perform();
+        actions.moveToElement(frontPage.darkModeSwitch).click().pause(1).click().build().perform();
     }
 
     @Then("The theme of the front page changes to dark mode")
@@ -37,6 +36,7 @@ public class DarkModeSteps {
         Assert.assertEquals("http://localhost:3000/register", driver.getCurrentUrl());
     }
 
+    // waiting for register page to be created
     @Then("The theme of the register page changes to dark mode")
     public void the_theme_of_the_register_page_changes_to_dark_mode() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
@@ -153,7 +153,7 @@ public class DarkModeSteps {
         Hooks.loginPage.passwordInput.sendKeys("password");
         Hooks.loginPage.loginButton.click();
         Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
-        actions.moveToElement(frontPage.coatAddButton).click().build().perform();
+        actions.moveToElement(frontPage.coatAddButton).click().pause(1).click().build().perform();
         Hooks.frontPage.cartButton.click();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='root']/div[2]//div[@class='sc-fLlhyt hwJrhf']/button")));
         Hooks.cartPage.checkoutButton.click();
@@ -170,6 +170,11 @@ public class DarkModeSteps {
     }
 
      // BACK TO LIGHT MODE
+
+    @When("User clicks the theme switch again")
+    public void user_clicks_the_theme_switch_again() {
+        actions.moveToElement(frontPage.darkModeSwitch).click().build().perform();
+    }
 
     @Then("The theme of the front page changes back to light mode")
     public void the_theme_of_the_front_page_changes_back_to_light_mode() {
@@ -214,7 +219,7 @@ public class DarkModeSteps {
     }
 
     @Then("The theme of the cart page changes back to light mode")
-    public void the_theme_of_the_cart_page_changes_back_to_light_mode() throws InterruptedException {
+    public void the_theme_of_the_cart_page_changes_back_to_light_mode() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body")));
         String bgColor = cartPage.pageBody.getCssValue("background-color");
         Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);

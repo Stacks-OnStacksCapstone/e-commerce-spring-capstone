@@ -22,7 +22,7 @@ Feature: Dark Mode
     Given User navigates to the <type> page
     When User clicks the theme switch
     And The theme of the <type> page changes to dark mode
-    And User clicks the theme switch
+    And User clicks the theme switch again
     Then The theme of the <type> page changes back to light mode
 
     Examples:
