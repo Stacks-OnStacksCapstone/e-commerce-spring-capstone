@@ -17,6 +17,7 @@ public class Hooks {
     public static WebDriverWait wait;
     public static LoginPage loginPage;
     public static RegistrationPage registrationPage;
+    public static PasswordResetPage passwordResetPage;
     public static FrontPage frontPage;
     public static OrdersPage orderPage;
     public static ProductDetailsPage productDetailsPage;
@@ -46,6 +47,7 @@ public class Hooks {
 
         loginPage = new LoginPage(driver);
         registrationPage = new RegistrationPage(driver);
+        passwordResetPage = new PasswordResetPage(driver);
         frontPage = new FrontPage(driver);
         orderPage = new OrdersPage(driver);
         productDetailsPage = new ProductDetailsPage(driver);
