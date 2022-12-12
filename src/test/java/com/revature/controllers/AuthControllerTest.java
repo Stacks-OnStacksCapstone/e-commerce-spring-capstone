@@ -51,6 +51,7 @@ public class AuthControllerTest {
             .andDo(print())
             .andExpect(status().isOk());
     }
+
     @Test
     public void testNegativeBadUserName() throws Exception {
 
@@ -63,6 +64,7 @@ public class AuthControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
     }
+
     @Test
     public void testNegativeBadPassword() throws Exception {
 
