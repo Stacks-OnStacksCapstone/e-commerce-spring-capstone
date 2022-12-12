@@ -12,11 +12,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @RunWith(SpringRunner.class)
@@ -82,7 +82,7 @@ public class ProductControllerTest {
 
         for(int order : orders) {
             this.mockMvc
-                    .perform(MockMvcRequestBuilders.get("/api/product"))
+                    .perform(get("/api/product"))
                     .andDo(print())
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     // Check For Names of Products
@@ -126,7 +126,7 @@ public class ProductControllerTest {
 
         for(int order : orders) {
             this.mockMvc
-                    .perform(MockMvcRequestBuilders.get("/api/product/{id}", order + 1))
+                    .perform(get("/api/product/{id}", order + 1))
                     .andDo(print())
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath(".name").value(names[order]))
@@ -147,7 +147,7 @@ public class ProductControllerTest {
 
         for(String[] product : products) {
             this.mockMvc
-                    .perform(MockMvcRequestBuilders.get("/api/product/search/{keyword}", product[0]))
+                    .perform(get("/api/product/search/{keyword}", product[0]))
                     .andDo(print())
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath("[0].name").value(product[1]))
@@ -159,7 +159,7 @@ public class ProductControllerTest {
     @Test
     public void testPutProduct() throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.put("/api/product")
+                .perform(put("/api/product")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{   \n" +
                                 "    \"id\": 10,\n" +
@@ -185,7 +185,7 @@ public class ProductControllerTest {
     @Test
     public void testDeleteProduct() throws Exception {
         this.mockMvc
-                .perform(MockMvcRequestBuilders.delete("/api/product/{id}", 10))
+                .perform(delete("/api/product/{id}", 10))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("[0].id").value(10))
@@ -195,5 +195,28 @@ public class ProductControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("[0].image").value("https://media.bergdorfgoodman.com/f_auto,q_auto:good,ar_5:7,c_fill,dpr_1.0,w_720/01/bg_4370145_100664_m"))
                 .andExpect(MockMvcResultMatchers.jsonPath("[0].name").value("Coat"))
                 .andExpect(MockMvcResultMatchers.jsonPath("[0].active").value(false));
+    }
+
+    // TODO: patch product needs authentication to work
+    @Test
+    public void testPatchProduct() throws Exception {
+        this.mockMvc
+                .perform(patch("/api/product")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("[\n" +
+                                "    {\n" +
+                                "        \"id\": 3,\n" +
+                                "        \"quantity\": 4\n" +
+                                "    }\n" +
+                                "  ]"))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("[0].id").value(3))
+                .andExpect(MockMvcResultMatchers.jsonPath("[0].quantity").value(16))
+                .andExpect(MockMvcResultMatchers.jsonPath("[0].price").value(2.5))
+                .andExpect(MockMvcResultMatchers.jsonPath("[0].description").value("A reusable shopping bag"))
+                .andExpect(MockMvcResultMatchers.jsonPath("[0].image").value("https://images.ctfassets.net/5gvckmvm9289/3BlDoZxSSjqAvv1jBJP7TH/65f9a95484117730ace42abf64e89572/Noissue-x-Creatsy-Tote-Bag-Mockup-Bundle-_4_-2.png"))
+                .andExpect(MockMvcResultMatchers.jsonPath("[0].name").value("Shopping Bag"))
+                .andExpect(MockMvcResultMatchers.jsonPath("[0].active").value(true));
     }
 }
