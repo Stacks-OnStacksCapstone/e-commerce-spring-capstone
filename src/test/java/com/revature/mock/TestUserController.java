@@ -96,4 +96,32 @@ public class TestUserController {
                 .andReturn();
     }
 
+    @Test
+    @DisplayName("User deactivates account = /user/deactivate")
+    public void deactivateUser()throws Exception {
+        User muser = new User(1, "fake@email.com", "password", "Fake", "Name", false, true, "fjidaop3898awe8f");
+        userService.deactivate(muser);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/user/deactivate"))
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(content().string("The user account is successfully deactivated!"))
+                .andDo(print())
+                .andReturn();
+    }
+
+    @Test
+    @DisplayName("Admin deactivates account = /user/deactivateUser")
+    public void deactivateUserAdmin()throws Exception {
+        User muser = new User(1, "fake@email.com", "password", "Fake", "Name", false, true, "fjidaop3898awe8f");
+        userService.deactivate(muser);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/user/deactivateUser"))
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(content().string("The user account is successfully deactivated!"))
+                .andDo(print())
+                .andReturn();
+    }
+
 }
