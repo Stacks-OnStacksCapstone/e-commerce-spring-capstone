@@ -16,6 +16,7 @@ public class GeneralPage {
 
     @FindBy(xpath = "//div[@id='root']//strong[contains(text(), 'PROFILE')]")
     public static WebElement profileLink;
+
     @FindBy(xpath = "//div[@id='root']//strong[contains(text(), 'ORDERS')]")
     public static WebElement ordersLink;
 
