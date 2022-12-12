@@ -36,7 +36,7 @@ public class CheckoutPage {
     public static WebElement nextButton;
 
     @FindBy(xpath = "//div[@id='root']/main//form//p")
-    public static WebElement addressErrorMessage;
+    public static WebElement shipAddressErrorMessage;
 
     // PAYMENT METHOD
 
@@ -72,8 +72,10 @@ public class CheckoutPage {
     // CHECKOUT MESSAGE
 
     @FindBy(xpath = "//div[@id='root']/main//h5")
-    public static WebElement checkoutMessage;
+    public static WebElement thankYouMessage;
 
+    @FindBy(xpath = "//div[@id='root']/main//h6")
+    public static WebElement checkoutMessage;
 
     public CheckoutPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
