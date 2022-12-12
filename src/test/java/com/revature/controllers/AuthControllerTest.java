@@ -87,7 +87,6 @@ public class AuthControllerTest {
 
     @Test
     public void testPositiveRegister() throws Exception {
-
         mockMvc.perform(post("/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
@@ -100,5 +99,4 @@ public class AuthControllerTest {
                 .andDo(print())
                 .andExpect(status().isCreated());
     }
-
 }
