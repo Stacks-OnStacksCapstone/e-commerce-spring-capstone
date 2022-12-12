@@ -5,7 +5,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class OrderHistorySteps {
@@ -41,26 +40,34 @@ public class OrderHistorySteps {
     }
 
     @Then("User can see the order date and total of each order")
-    public void user_can_see_the_order_date_and_total_of_each_order() {
+    public boolean user_can_see_the_order_date_and_total_of_each_order() {
         Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.ordersPage.orderDate));
         Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.ordersPage.orderTotal));
         String actualDate = Hooks.ordersPage.orderDate.getText();
         String actualTotal = Hooks.ordersPage.orderTotal.getText();
         boolean containsDate = actualDate.contains("Order date:");
         boolean containsTotal = actualTotal.contains("Order total:");
-        if (containsDate && containsTotal?true:false);
+        if (containsDate && containsTotal) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // VIEW ORDER DETAILS OF PREVIOUS ORDERS
     @Then("User can view the order detail ID and order ID")
-    public void user_can_view_the_order_detail_id_and_order_id() {
+    public boolean user_can_view_the_order_detail_id_and_order_id() {
         Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.ordersPage.productOrderDetailId));
         Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.ordersPage.productOrderId));
         String actualOrderDetailId = Hooks.ordersPage.productOrderDetailId.getText();
         String actualOrderId = Hooks.ordersPage.productOrderId.getText();
         boolean containsDetailId = actualOrderDetailId.contains("OrderDetail ID:");
         boolean containsOrderId = actualOrderId.contains("Order ID:");
-        if (containsDetailId && containsOrderId?true:false);
+        if (containsDetailId && containsOrderId) {
+            return true;
+        } else {
+            return false;
+        }
 
     }
 
@@ -73,14 +80,18 @@ public class OrderHistorySteps {
     }
 
     @Then("User can view the product ID and quantity of the product purchased")
-    public void user_can_view_the_product_id_and_quantity_of_the_product_purchased() {
+    public boolean user_can_view_the_product_id_and_quantity_of_the_product_purchased() {
         Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.ordersPage.productId));
         Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.ordersPage.productQuantity));
         String actualProductId = Hooks.ordersPage.productId.getText();
         String actualQuantity = Hooks.ordersPage.productQuantity.getText();
         boolean containsProductId = actualProductId.contains("Product ID:");
         boolean containsQuantity = actualQuantity.contains("Quantity:");
-        if (containsProductId && containsQuantity?true:false);
+        if (containsProductId && containsQuantity) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // VIEW PRODUCT DETAILS OF A PREVIOUS ORDER
