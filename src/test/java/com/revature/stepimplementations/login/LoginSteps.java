@@ -26,6 +26,9 @@ public class LoginSteps {
             case "Registration":
                 expectedURL = Hooks.registrationURL;
                 break;
+            case "Password Reset":
+                expectedURL = Hooks.passwordResetURL;
+                break;
         }
         Hooks.driver.get(expectedURL);
         Assertions.assertEquals(expectedURL, Hooks.driver.getCurrentUrl());

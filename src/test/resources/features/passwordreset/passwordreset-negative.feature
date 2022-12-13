@@ -22,5 +22,11 @@ Feature: Password Reset
     Then the user should see an error message under the "password" field saying "<error message>"
 
     Examples:
-      | email | password | confirmation message | error message |
-      | jane@gmail.com | P@ssword123 | A link to reset your password has been sent to 'jane@gmail.com', please check your email! | |
+      | email          | password     | confirmation message                                                                      | error message                                                                                                   |
+      | jane@gmail.com | password123! | A link to reset your password has been sent to 'jane@gmail.com', please check your email! | Password must contain at least 1 upper case letter                                                              |
+      | jane@gmail.com | PASSWORD123! | A link to reset your password has been sent to 'jane@gmail.com', please check your email! | Password must contain at least 1 lower case letter                                                              |
+      | jane@gmail.com | Password!    | A link to reset your password has been sent to 'jane@gmail.com', please check your email! | Password must contain at least 1 number                                                                         |
+      | jane@gmail.com | Password123  | A link to reset your password has been sent to 'jane@gmail.com', please check your email! | Password must contain at least 1 special character                                                              |
+      | jane@gmail.com | Pass1!       | A link to reset your password has been sent to 'jane@gmail.com', please check your email! | Password must contain 8 or more characters                                                                      |
+      | jane@gmail.com |              | A link to reset your password has been sent to 'jane@gmail.com', please check your email! | Password must contain 8 or more characters with at least one of each: uppercase, lowercase, number, and special |
+

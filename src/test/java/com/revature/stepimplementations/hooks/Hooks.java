@@ -33,17 +33,19 @@ public class Hooks {
     public static String homeURL = "http://localhost:3000/";
     public static String loginURL = "http://localhost:3000/login";
     public static String registrationURL = "http://localhost:3000/register";
+    public static String passwordResetURL = "http://localhost:3000/forgot-password";
+
 
     @BeforeAll
     public static void setupClass() {
         WebDriverManager.chromedriver().setup();
     }
 
-    @Before
+    @Before(order = 1)
     public void setUp() {
         driver = new ChromeDriver();
         actions = new Actions(driver);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(2));
 
         loginPage = new LoginPage(driver);
         registrationPage = new RegistrationPage(driver);

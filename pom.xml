@@ -149,6 +149,34 @@
 			<scope>test</scope>
 		</dependency>
 
+<!--		JSON parsing dependency-->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+<!--		YAML parsing dependency-->
+<!--		<dependency>-->
+<!--			<groupId>com.fasterxml.jackson.core</groupId>-->
+<!--			<artifactId>jackson-dataformat-yaml</artifactId>-->
+<!--&lt;!&ndash;			<version>{$version}</version>&ndash;&gt;-->
+<!--		</dependency>-->
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+			<version>2.14.1</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+<!--			<version>{$version}</version>-->
+		</dependency>
+
 
 
 	</dependencies>

@@ -9,7 +9,7 @@ Feature: Password Reset
     # Reset the password
     When the user goes to the reset link
     When the user enters "<password>" as their new password
-    When the user clicks on the reset password button
+    When the user clicks on the password reset button
     Then the user should be redirected to the "Login" page
     # Verify the new password works
     When the user enters "<email>" as email
