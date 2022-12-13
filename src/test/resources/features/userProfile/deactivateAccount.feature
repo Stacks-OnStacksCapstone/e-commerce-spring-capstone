@@ -1,3 +1,4 @@
+@userprofile
 Feature: Deactivate User Account
 
   Background:
