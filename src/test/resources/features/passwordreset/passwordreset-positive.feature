@@ -20,7 +20,6 @@ Feature: Password Reset
     Examples:
       | email | password | message |
       | jane@gmail.com | P@ssword123 | A link to reset your password has been sent to 'jane@gmail.com', please check your email! |
+      | jane@gmail.com | password | A link to reset your password has been sent to 'jane@gmail.com', please check your email! |
 
-
-    # Entered email does not correspond to a registered user
-    # A link to reset your password has been sent to 'jane@gmail.com', please check your email!
+    # second case is just to reset the password to the expected value for other tests
