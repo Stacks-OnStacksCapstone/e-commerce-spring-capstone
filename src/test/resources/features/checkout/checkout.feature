@@ -36,7 +36,7 @@ Feature: Checkout
     And User enters "<lastname>" to last name input
     And User enters "<address>" to address input
     And User enters "<city>" to city input
-    And Users enters GA to state input
+    And Users enters TX to state input
     And User enters "<zip>" to zip input
     And User enters "<country>" to country input
     And User clicks next
@@ -44,13 +44,13 @@ Feature: Checkout
     And User remains on the shipping address page
 
     Examples:
-      |firstname |lastname |address      |city   |zip     |country|message               |
-      |          |Doe      |123 Home St  |Atlanta|12345   |USA    |First Name is required|
-      |Jane      |         |123 Home St  |Atlanta|12345   |USA    |Last Name is required |
-      |Jane      |Doe      |             |Atlanta|12345   |USA    |Address is required   |
-      |Jane      |Doe      |123 Home St  |       |12345   |USA    |City is required      |
-      |Jane      |Doe      |123 Home St  |Atlanta|        |USA    |Zipcode is required   |
-      |Jane      |Doe      |123 Home St  |Atlanta|12345   |       |Country is required   |
+      |firstname |lastname |address       |city   |zip    |country|message               |
+      |          |Man      |500 Nowhere Rd|Dallas|50000   |USA    |First Name is required|
+      |Mark      |         |500 Nowhere Rd|Dallas|50000   |USA    |Last Name is required |
+      |Mark      |Man      |              |Dallas|50000   |USA    |Address is required   |
+      |Mark      |Man      |500 Nowhere Rd|      |50000   |USA    |City is required      |
+      |Mark      |Man      |500 Nowhere Rd|Dallas|        |USA    |Zipcode is required   |
+      |Mark      |Man      |500 Nowhere Rd|Dallas|50000   |       |Country is required   |
 
   # FIELDS WITH SPECIAL CHARACTERS
   Scenario Outline: User cannot checkout with special characters in input fields
@@ -62,7 +62,7 @@ Feature: Checkout
     And User enters "<lastname>" to last name input
     And User enters "<address>" to address input
     And User enters "<city>" to city input
-    And Users enters GA to state input
+    And Users enters TX to state input
     And User enters "<zip>" to zip input
     And User enters "<country>" to country input
     And The empty field turns red and displays "<message>"
@@ -70,10 +70,10 @@ Feature: Checkout
     And User remains on the shipping address page
 
     Examples:
-      |firstname   |lastname |address       |city      |zip     |country|message                    |
-      |Jane%@!     |Doe      |123 Home St   |Atlanta   |12345   |USA    |Use only allowed characters|
-      |Jane        |Doe%@!   |123 Home St   |Atlanta   |12345   |USA    |Use only allowed characters|
-      |Jane        |Doe      |123 Home St%@!|Atlanta   |12345   |USA    |Use only allowed characters|
-      |Jane        |Doe      |123 Home St   |Atlanta%@!|12345   |USA    |Use only allowed characters|
-      |Jane        |Doe      |123 Home St   |Atlanta   |12345%@!|USA    |Must be only digits        |
-      |Jane        |Doe      |123 Home St   |Atlanta   |12345   |USA%@! |Use only allowed characters|
+      |firstname   |lastname |address          |city     |zip     |country|message                    |
+      |Mark%@!     |Man      |500 Nowhere Rd   |Dallas   |50000   |USA    |Use only allowed characters|
+      |Mark        |Man%@!   |500 Nowhere Rd   |Dallas   |50000   |USA    |Use only allowed characters|
+      |Mark        |Man      |500 Nowhere Rd%@!|Dallas   |50000   |USA    |Use only allowed characters|
+      |Mark        |Man      |500 Nowhere Rd   |Dallas%@!|50000   |USA    |Use only allowed characters|
+      |Mark        |Man      |500 Nowhere Rd   |Dallas   |50000%@!|USA    |Must be only digits        |
+      |Mark        |Man      |500 Nowhere Rd   |Dallas   |50000   |USA%@! |Use only allowed characters|

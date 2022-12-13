@@ -13,6 +13,9 @@ public class OrdersPage {
     @FindBy(xpath = "//div[@id='root']//div[3]//li[1]/button")
     public static WebElement ordersBackNav;
 
+    @FindBy(xpath = "//div[@id='root']//div[@class='MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column']")
+    public static WebElement previousOrders;
+
     @FindBy(xpath = "//div[@id='root']//div[4]/div[1]//span[2]//p[1]")
     public static WebElement orderDate;
 
@@ -20,31 +23,22 @@ public class OrdersPage {
     public static WebElement orderTotal;
 
     @FindBy(xpath = "//div[@id='root']//div[4]//div[2]//a[@href='/products/4']")
-    public static WebElement capLink;
+    public static WebElement productLink;
 
     @FindBy(xpath = "//div[@id='root']//div[4]/div[1]//div[1]/div/p")
-    public static WebElement capDescription;
+    public static WebElement productDescription;
 
     @FindBy(xpath = "//div[@id='root']//div[4]/div[1]//div[2]/div/p[1]")
-    public static WebElement capOrderDetailId;
+    public static WebElement productOrderDetailId;
 
     @FindBy(xpath = "//div[@id='root']//div[4]/div[1]//div[2]/div/p[2]")
-    public static WebElement capOrderId;
+    public static WebElement productOrderId;
 
     @FindBy(xpath = "//div[@id='root']//div[4]/div[1]//div[2]/div/p[3]")
-    public static WebElement capQuantity;
+    public static WebElement productQuantity;
 
     @FindBy(xpath = "//div[@id='root']//div[4]/div[1]//div[2]/div/p[4]")
-    public static WebElement capProductId;
-
-    @FindBy(xpath = "//div[@id='root']//div[4]//div[2]//a[@href='/products/5']")
-    public static WebElement coatLink;
-
-    @FindBy(xpath = "//div[@id='root']//div[4]/div[2]//div[1]/div/p")
-    public static WebElement coatDescription;
-
-    @FindBy(xpath = "//div[@id='root']//div[4]/div[2]//div[2]/div/p")
-    public static WebElement coatOrderDetails;
+    public static WebElement productId;
 
     public OrdersPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
