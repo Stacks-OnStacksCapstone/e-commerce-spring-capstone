@@ -14,6 +14,12 @@ public class GeneralPage {
     @FindBy(xpath = "//div[@id='root']//input[@class='jss4 MuiSwitch-input']")
     public static WebElement darkModeSwitch;
 
+    @FindBy(xpath = "//div[@id='root']//span[@class='MuiButtonBase-root MuiIconButton-root jss1 MuiSwitch-switchBase MuiSwitch-colorPrimary']")
+    public static WebElement switchOnDarkMode;
+
+    @FindBy(xpath = "//div[@id='root']//span[@class='MuiButtonBase-root MuiIconButton-root jss1 MuiSwitch-switchBase MuiSwitch-colorPrimary jss2 Mui-checked']")
+    public static WebElement switchOnLightMode;
+
     @FindBy(xpath = "//div[@id='root']//strong[contains(text(), 'PROFILE')]")
     public static WebElement profileLink;
 

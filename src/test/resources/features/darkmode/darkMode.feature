@@ -5,7 +5,8 @@ Feature: Dark Mode
   Scenario Outline: User can change theme to dark mode
     Given User navigates to the <type> page
     When User clicks the theme switch
-    Then The theme of the page changes to dark mode
+    Then The switch slides towards the moon icon
+    And The theme of the page changes to dark mode
     And The font color changes to white
 
     Examples:
@@ -24,7 +25,8 @@ Feature: Dark Mode
     When User clicks the theme switch
     And The theme of the page changes to dark mode
     And User clicks the theme switch again
-    Then The theme of the page changes back to light mode
+    Then The switch slides towards the sun icon
+    And The theme of the page changes back to light mode
     And The font color changes to black
 
     Examples:
