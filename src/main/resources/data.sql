@@ -126,15 +126,28 @@ INSERT INTO users (id, email, password, first_name, last_name, is_active, is_adm
 --USER PAYMENTS
 INSERT INTO user_payments(id, card_number, ccv, exp_date, user_id) VALUES
 (
-    'safecard111',
+    '5bc1bb79-6ef8-48e1-be83-8dfee8f981a7',
     '9999888877776666',
     '123',
     '2029-12-22',
     1
 ),
 (
-    'notincard233',
+    'f6eb6c0c-2a9d-4e8a-8541-6d9c7ba37ad2',
     '1111222233334444',
+    '321',
+    '2028-12-27',
+    2
+),(
+    3,
+    '9119228873372266',
+    '123',
+    '2029-12-22',
+    1
+),
+(
+    4,
+    '1115522255334524',
     '321',
     '2028-12-27',
     2
@@ -219,28 +232,28 @@ INSERT INTO orders (id, order_date, shipment_address, payment_id, user_id) VALUE
     1,
     '2020-12-27',
     '1234 This Rd. Sometown, FL',
-    'safecard111',
+    '5bc1bb79-6ef8-48e1-be83-8dfee8f981a7',
     1
 ),
 (
     2,
     '2020-12-27',
     '1234 This Rd. Sometown, FL',
-    'safecard111',
+    '5bc1bb79-6ef8-48e1-be83-8dfee8f981a7',
     1
 ),
 (
     3,
     '2020-12-27',
     '1234 This Rd. Sometown, FL',
-    'notincard233',
+    'f6eb6c0c-2a9d-4e8a-8541-6d9c7ba37ad2',
     2
 ),
 (
     4,
     '2020-12-27',
     '1234 This Rd. Sometown, FL',
-    'notincard233',
+    'f6eb6c0c-2a9d-4e8a-8541-6d9c7ba37ad2',
     2
 );
 
