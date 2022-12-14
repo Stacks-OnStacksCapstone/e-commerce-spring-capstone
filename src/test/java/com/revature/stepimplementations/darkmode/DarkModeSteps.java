@@ -122,14 +122,30 @@ public class DarkModeSteps {
         Hooks.loginPage.loginButton.click();
         Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
         actions.moveToElement(frontPage.coatAddButton).click().pause(1).click().build().perform();
-        generalPage.cartButton.click();
+        Hooks.generalPage.cartButton.click();
         Hooks.cartPage.checkoutButton.click();
         Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/checkout"));
         String actualUrl = driver.getCurrentUrl();
         Assert.assertEquals("http://localhost:3000/checkout", actualUrl);
     }
 
-     // SWITCH BACK TO LIGHT MODE
+    // EDIT PRODUCTS PAGE
+
+    @Given("User navigates to the edit products page")
+    public void user_navigates_to_the_edit_products_page() {
+        driver.get("http://localhost:3000/login");
+        Hooks.loginPage.emailInput.sendKeys("testuser@gmail.com");
+        Hooks.loginPage.passwordInput.sendKeys("password");
+        Hooks.loginPage.loginButton.click();
+        wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
+        generalPage.editProductsLink.click();
+        wait.until(ExpectedConditions.urlToBe("http://localhost:3000/admin/products"));
+        String actualUrl = driver.getCurrentUrl();
+        Assert.assertEquals("http://localhost:3000/admin/products", actualUrl);
+    }
+
+
+    // SWITCH BACK TO LIGHT MODE
 
     @When("User clicks the theme switch again")
     public void user_clicks_the_theme_switch_again() {

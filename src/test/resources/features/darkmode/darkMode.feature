@@ -10,15 +10,16 @@ Feature: Dark Mode
     And The font color changes to white
 
     Examples:
-      |type    |
-      |front   |
-      |register|
-      |login   |
-      |profile |
-      |orders  |
-      |product |
-      |cart    |
-      |checkout|
+      |type         |
+      |front        |
+      |register     |
+      |login        |
+      |profile      |
+      |orders       |
+      |product      |
+      |cart         |
+      |checkout     |
+      |edit products|
 
   Scenario Outline: User can change theme back to light mode
     Given User navigates to the <type> page
@@ -30,12 +31,13 @@ Feature: Dark Mode
     And The font color changes to black
 
     Examples:
-      |type    |
-      |front   |
-      |register|
-      |login   |
-      |profile |
-      |orders  |
-      |product |
-      |cart    |
-      |checkout|
+      |type         |
+      |front        |
+      |register     |
+      |login        |
+      |profile      |
+      |orders       |
+      |product      |
+      |cart         |
+      |checkout     |
+      |edit products|
