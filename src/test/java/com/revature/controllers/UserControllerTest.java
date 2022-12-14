@@ -1,4 +1,4 @@
-package com.revature;
+package com.revature.controllers;
 
 import com.revature.ECommerceApplication;
 import com.revature.dtos.Principal;
