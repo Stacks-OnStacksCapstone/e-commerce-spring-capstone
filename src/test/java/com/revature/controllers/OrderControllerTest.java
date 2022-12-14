@@ -45,6 +45,7 @@ public class OrderControllerTest {
     private UserService userService;
     @Autowired
     private TokenService tokenService;
+
     public String getToken() throws Exception {
 
         User user1 = userService.findUserById(1);
@@ -123,11 +124,5 @@ public class OrderControllerTest {
                          .accept(MediaType.APPLICATION_JSON))
                          .andDo(print())
                          .andExpect(status().isOk());
-
     }
-
-
-
-
-
 }
