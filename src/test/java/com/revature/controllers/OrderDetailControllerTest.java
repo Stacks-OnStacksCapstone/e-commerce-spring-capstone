@@ -25,6 +25,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import com.revature.ECommerceApplication;
+import com.revature.dtos.CreateOrderRequest;
+import com.revature.dtos.OrderResponse;
+import com.revature.dtos.Principal;
+import com.revature.models.Order;
+import com.revature.models.OrderDetail;
+import com.revature.models.User;
+import com.revature.repositories.OrderRepository;
+import com.revature.services.*;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -36,7 +71,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ECommerceApplication.class)
+
 public class OrderDetailControllerTest {
+
 
     @MockBean(name="AuthService")
     private AuthService authService;
@@ -47,33 +84,33 @@ public class OrderDetailControllerTest {
     @MockBean(name="OrderDetailService")
     private OrderDetailService orderDetailService;
 
-    @MockBean(name="UserService")
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    private MockMvc mockMvc;
+
+    @Autowired
     private UserService userService;
 
-    @MockBean(name="TokenService")
+    @Autowired
     private TokenService tokenService;
 
 
-    @MockBean(name="TokenGenerator")
-    private TokenGenerator tokenGenerator;
-
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-    private MockMvc mockMvc;
+    public String getToken() throws Exception {
+        /*User user1 = new User(1,"testuser@gmail.com", "password", "Testerson", "Usertown",
+                true, true,null);*/
+        User user1 = userService.findUserById(1);
+        Principal payload = new Principal(user1);
+        String token = tokenService.generateToken(payload);
+        return token;
+    }
 
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
-
     //FROM POSTMAN!
-    private String auth = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoidGVzdHVzZXJAZ21haWwuY29tIiwiaXNzIjoiQ29uZ28iLCJpc0FkbWluIjp0cnV" +
-            "lLCJpc0FjdGl2ZSI6dHJ1ZSwiaWF0IjoxNj" +
-            "cwNzk0NDY0LCJleHAiOjE2NzA4ODA4NjR9.TxXkPNCqblPG" +
-            "CxHdguVB1114qRrt5CPQkm8s0qJu4Hc";
-
     @Test
     public void testPositiveLogin() throws Exception {
         mockMvc.perform(post("/auth/login")
@@ -90,28 +127,38 @@ public class OrderDetailControllerTest {
 
     //Should be 200 but is 400 instead!
     @Test
-    public void testapiorderdetailgetbyid() throws Exception {
-        when(orderDetailService.createOrderDetail(new OrderDetailRequest())).thenReturn(new OrderDetailResponse());
+
+    public void testapiorderdetail() throws Exception {
+
         mockMvc.perform(post("/api/orderdetail")
+                        .header("Authorization",getToken())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization",auth)
-                        .content( "  \"productId\": \"1\",\n" +
-                                "  \"orderId\": \"1\",\n" +
-                                "  \"quantity\": \"0\""))
-                .andDo(print())
-                .andExpect(status().is4xxClientError());
-    }
-
-
+                         .content("{\"productId\": 1,\n" +
+                                 "  \"orderId\": 1,\n" +
+                                 "  \"quantity\": 1 }")
+                        .accept(MediaType.APPLICATION_JSON))
+                        .andDo(print())
+                        .andExpect(status().isOk());
+        }
 
 
     @Test
     public void testdeleteapinonexistentorderdetailbyid() throws Exception {
-        int id = 100;
-        when( orderDetailService.delete(id)).thenReturn(true);
-        mockMvc.perform(delete("/api/orderdetail/1")
+        mockMvc.perform(delete("/api/orderdetail/987654321")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization",auth)
+                        .header("Authorization",getToken())
+                        .content(""))
+                .andDo(print())
+
+                .andExpect(status().is4xxClientError());
+            }
+
+
+    @Test
+    public void testdeleteexistentorderdetailbyid() throws Exception {
+        mockMvc.perform(delete("/api/orderdetail/4")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization",getToken())
                         .content(""))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -119,30 +166,65 @@ public class OrderDetailControllerTest {
 
     @Test
     public void testgetapiorderdetailbyid() throws Exception {
-        int id = 1;
-        Optional<OrderDetail> optional = orderDetailService.findById(id);
-        when(orderDetailService.findById(id)).thenReturn(optional);
         mockMvc.perform(get("/api/orderdetail/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization",auth)
+                        .header("Authorization",getToken())
+                        .content(""))
+                .andDo(print())
+
+                .andExpect(status().isOk());
+            }
+    @Test
+    public void testgetapiorderdetailbyfakeid() throws Exception {
+        mockMvc.perform(get("/api/orderdetail/987654321")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization",getToken())
                         .content(""))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
-
 
     @Test
     public void testgetapiorderdetailbyorder() throws Exception {
         mockMvc.perform(get("/api/orderdetail/order/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization",auth)
+                        .header("Authorization",getToken())
+                        .content(""))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+
+    @Test
+    public void testgetapiorderdetailbyfakeorder() throws Exception {
+        mockMvc.perform(get("/api/orderdetail/order/987654321")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization",getToken())
                         .content(""))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-}
 
+    @Test
+    public void testgetapiorderdetailbynorder() throws Exception {
+        mockMvc.perform(get("/api/orderdetail/order/0")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization",getToken())
+                        .content(""))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+
+    @Test
+    public void testgetapiorderdetailwithnoauth() throws Exception {
+        mockMvc.perform(get("/api/orderdetail/order/0")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(""))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+}
 
 
 
