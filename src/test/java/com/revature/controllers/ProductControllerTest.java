@@ -1,11 +1,16 @@
 package com.revature.controllers;
 
 import com.revature.ECommerceApplication;
+import com.revature.dtos.Principal;
+import com.revature.models.User;
 import com.revature.services.AuthService;
 import com.revature.services.ProductService;
+import com.revature.services.TokenService;
+import com.revature.services.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -34,23 +39,23 @@ public class ProductControllerTest {
     private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
 
+    @Autowired
+    @InjectMocks
+    private TokenService tokenService;
+
+    @Autowired
+    @InjectMocks
+    private UserService userService;
+
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     public String getToken() throws Exception {
-        MvcResult result =
-                mockMvc.perform(post("/auth/login")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content("{\n" +
-                                        "    \"email\": \"testuser@gmail.com\",\n" +
-                                        "    \"password\": \"password\"\n" +
-                                        "}"))
-                        .andExpect(status().isOk())
-                        .andReturn();
-
-        return result.getResponse().getHeader("Authorization");
+        User user1 = userService.findUserById(1);
+        Principal payload = new Principal(user1);
+        return tokenService.generateToken(payload);
     }
 
     @Test
