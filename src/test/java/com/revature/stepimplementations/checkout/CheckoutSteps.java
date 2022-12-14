@@ -135,8 +135,8 @@ public class CheckoutSteps {
     public void user_clicks_next() {
         Hooks.checkoutPage.nextButton.click();
     }
-    @Then("The empty field turns red and displays {string}")
-    public void the_empty_field_turns_red_and_displays(String string) {
+    @Then("The invalid field turns red and displays {string}")
+    public void the_invalid_field_turns_red_and_displays(String string) {
         actions.sendKeys(Keys.TAB).build().perform();
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.shipAddressErrorMessage));
         String actualText = checkoutPage.shipAddressErrorMessage.getText();

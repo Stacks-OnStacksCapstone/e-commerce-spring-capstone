@@ -6,6 +6,7 @@ Feature: Dark Mode
     Given User navigates to the <type> page
     When User clicks the theme switch
     Then The theme of the page changes to dark mode
+    And The font color changes to white
 
     Examples:
       |type    |
@@ -24,6 +25,7 @@ Feature: Dark Mode
     And The theme of the page changes to dark mode
     And User clicks the theme switch again
     Then The theme of the page changes back to light mode
+    And The font color changes to black
 
     Examples:
       |type    |
