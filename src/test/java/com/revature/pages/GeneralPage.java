@@ -10,14 +10,26 @@ public class GeneralPage {
     @FindBy(xpath = "//body")
     public static WebElement pageBody;
 
+    @FindBy(xpath = "//div[@id='root']//*[self::p or self::b or self::h1 or self::h5 or self::h6]")
+    public static WebElement pageText;
+
     // NAV BAR
     @FindBy(xpath = "//div[@id='root']//input[@class='jss4 MuiSwitch-input']")
     public static WebElement darkModeSwitch;
 
-    @FindBy(xpath = "//div[@id='root']//strong[contains(text(), 'PROFILE')]")
+    @FindBy(xpath = "//div[@id='root']//span[@class='MuiButtonBase-root MuiIconButton-root jss1 MuiSwitch-switchBase MuiSwitch-colorPrimary']")
+    public static WebElement switchOnDarkMode;
+
+    @FindBy(xpath = "//div[@id='root']//span[@class='MuiButtonBase-root MuiIconButton-root jss1 MuiSwitch-switchBase MuiSwitch-colorPrimary jss2 Mui-checked']")
+    public static WebElement switchOnLightMode;
+
+    @FindBy(xpath = "//div[@id='root']/div[1]//strong[text()='EDIT PRODUCTS']")
+    public static WebElement editProductsLink;
+
+    @FindBy(xpath = "//div[@id='root']//strong[text()='PROFILE']")
     public static WebElement profileLink;
 
-    @FindBy(xpath = "//div[@id='root']//strong[contains(text(), 'ORDERS')]")
+    @FindBy(xpath = "//div[@id='root']//strong[text()='ORDERS']")
     public static WebElement ordersLink;
 
     @FindBy(xpath = "//div[@id='root']//div/div[3]/span")
