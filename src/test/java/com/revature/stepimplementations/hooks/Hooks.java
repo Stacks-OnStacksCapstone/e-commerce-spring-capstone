@@ -15,9 +15,12 @@ import java.time.Duration;
 public class Hooks {
     public static WebDriver driver;
     public static WebDriverWait wait;
+    public static GeneralPage generalPage;
     public static LoginPage loginPage;
+    public static RegistrationPage registrationPage;
+    public static PasswordResetPage passwordResetPage;
     public static FrontPage frontPage;
-    public static OrdersPage orderPage;
+    public static OrdersPage ordersPage;
     public static ProductDetailsPage productDetailsPage;
     public static ProfilePage profilePage;
     public static CartPage cartPage;
@@ -28,20 +31,29 @@ public class Hooks {
     public static CheckoutPage checkoutPage;
     public static boolean boolRes;
 
+    public static String homeURL = "http://localhost:3000/";
+    public static String loginURL = "http://localhost:3000/login";
+    public static String registrationURL = "http://localhost:3000/register";
+    public static String passwordResetURL = "http://localhost:3000/forgot-password";
+
+
     @BeforeAll
     public static void setupClass() {
         WebDriverManager.chromedriver().setup();
     }
 
-    @Before
+    @Before(order = 1)
     public void setUp() {
         driver = new ChromeDriver();
         actions = new Actions(driver);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(2));
 
+        generalPage = new GeneralPage(driver);
         loginPage = new LoginPage(driver);
+        registrationPage = new RegistrationPage(driver);
+        passwordResetPage = new PasswordResetPage(driver);
         frontPage = new FrontPage(driver);
-        orderPage = new OrdersPage(driver);
+        ordersPage = new OrdersPage(driver);
         productDetailsPage = new ProductDetailsPage(driver);
         profilePage = new ProfilePage(driver);
         cartPage= new CartPage(driver);

@@ -1,7 +1,9 @@
 HELP.md
 target/
-src/main/resources/application.yml
-src/main/resources/application.yaml
+#src/main/resources/application.yml
+#src/main/resources/application.yaml
+*.yml
+*.yaml
 !src/main/**/target/
 !src/test/**/target/
 

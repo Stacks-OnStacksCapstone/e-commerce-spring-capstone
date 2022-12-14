@@ -1,5 +1,6 @@
 package com.revature.stepimplementations.userProfile;
 
+import com.revature.OperatingSystem;
 import com.revature.stepimplementations.hooks.Hooks;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -45,31 +46,58 @@ public class UpdateProfileSteps {
     }
     @When("User types in {string} in the first name input field")
     public void user_types_in_in_the_first_name_input_field(String firstname) {
+        OperatingSystem.OSType detectedOS = OperatingSystem.getOperatingSystemType();
         WebElement el = Hooks.userProfilePage.muiFirstnameInputField;
-        Action seriesOfActions = Hooks.actions
-                .moveToElement(el).click().pause(500).keyDown(Keys.COMMAND)
-                .sendKeys("a",Keys.DELETE).keyUp(Keys.COMMAND)
-                .build();
+        Action seriesOfActions;
+        if (detectedOS == OperatingSystem.OSType.MacOS) {
+            seriesOfActions = Hooks.actions
+                    .moveToElement(el).click().keyDown(Keys.COMMAND)
+                    .sendKeys("a", Keys.DELETE).keyUp(Keys.COMMAND)
+                    .build();
+        } else {
+            seriesOfActions = Hooks.actions
+                    .moveToElement(el).click().keyDown(Keys.CONTROL)
+                    .sendKeys("a", Keys.BACK_SPACE).keyUp(Keys.CONTROL)
+                    .build();
+        }
         seriesOfActions.perform();
         el.sendKeys(firstname);
     }
     @When("types in {string} in the last name input field")
     public void types_in_in_the_last_name_input_field(String lastname) {
+        OperatingSystem.OSType detectedOS = OperatingSystem.getOperatingSystemType();
         WebElement el = Hooks.userProfilePage.muiLastnameInputField;
-        Action seriesOfActions = Hooks.actions
-                .moveToElement(el).click().keyDown(Keys.COMMAND)
-                .sendKeys("a",Keys.DELETE).keyUp(Keys.COMMAND)
-                .build();
+        Action seriesOfActions;
+        if (detectedOS == OperatingSystem.OSType.MacOS) {
+            seriesOfActions = Hooks.actions
+                    .moveToElement(el).click().keyDown(Keys.COMMAND)
+                    .sendKeys("a", Keys.DELETE).keyUp(Keys.COMMAND)
+                    .build();
+        } else {
+            seriesOfActions = Hooks.actions
+                    .moveToElement(el).click().keyDown(Keys.CONTROL)
+                    .sendKeys("a", Keys.BACK_SPACE).keyUp(Keys.CONTROL)
+                    .build();
+        }
         seriesOfActions.perform();
         el.sendKeys(lastname);
     }
     @When("types in {string} in the password input field")
     public void types_in_in_the_password_input_field(String password) {
+        OperatingSystem.OSType detectedOS = OperatingSystem.getOperatingSystemType();
         WebElement el = Hooks.userProfilePage.muiPasswordInputField;
-        Action seriesOfActions = Hooks.actions
-                .moveToElement(el).click().keyDown(Keys.COMMAND)
-                .sendKeys("a",Keys.DELETE).keyUp(Keys.COMMAND)
-                .build();
+        Action seriesOfActions;
+        if (detectedOS == OperatingSystem.OSType.MacOS) {
+            seriesOfActions = Hooks.actions
+                    .moveToElement(el).click().keyDown(Keys.COMMAND)
+                    .sendKeys("a", Keys.DELETE).keyUp(Keys.COMMAND)
+                    .build();
+        } else {
+            seriesOfActions = Hooks.actions
+                    .moveToElement(el).click().keyDown(Keys.CONTROL)
+                    .sendKeys("a", Keys.BACK_SPACE).keyUp(Keys.CONTROL)
+                    .build();
+        }
         seriesOfActions.perform();
         el.sendKeys(password);
     }
@@ -88,11 +116,20 @@ public class UpdateProfileSteps {
     // scenario 2
     @When("User clears the first name input field")
     public void user_clears_the_first_name_input_field() {
+        OperatingSystem.OSType detectedOS = OperatingSystem.getOperatingSystemType();
         WebElement el = Hooks.userProfilePage.muiFirstnameInputField;
-        Action seriesOfActions = Hooks.actions
-                .moveToElement(el).click().keyDown(Keys.COMMAND)
-                .sendKeys("a",Keys.DELETE).keyUp(Keys.COMMAND)
-                .build();
+        Action seriesOfActions;
+        if (detectedOS == OperatingSystem.OSType.MacOS) {
+            seriesOfActions = Hooks.actions
+                    .moveToElement(el).click().keyDown(Keys.COMMAND)
+                    .sendKeys("a", Keys.DELETE).keyUp(Keys.COMMAND)
+                    .build();
+        } else {
+            seriesOfActions = Hooks.actions
+                    .moveToElement(el).click().keyDown(Keys.CONTROL)
+                    .sendKeys("a", Keys.BACK_SPACE).keyUp(Keys.CONTROL)
+                    .build();
+        }
         seriesOfActions.perform();
     }
     @Then("An Alert says {string}")
@@ -105,33 +142,61 @@ public class UpdateProfileSteps {
     // scenario 3
     @When("User clears the last name input field")
     public void user_clears_the_last_name_input_field() {
+        OperatingSystem.OSType detectedOS = OperatingSystem.getOperatingSystemType();
         WebElement el = Hooks.userProfilePage.muiLastnameInputField;
-        Action seriesOfActions = Hooks.actions
-                .moveToElement(el).click().keyDown(Keys.COMMAND)
-                .sendKeys("a",Keys.DELETE).keyUp(Keys.COMMAND)
-                .build();
+        Action seriesOfActions;
+        if (detectedOS == OperatingSystem.OSType.MacOS) {
+            seriesOfActions = Hooks.actions
+                    .moveToElement(el).click().keyDown(Keys.COMMAND)
+                    .sendKeys("a", Keys.DELETE).keyUp(Keys.COMMAND)
+                    .build();
+        } else {
+            seriesOfActions = Hooks.actions
+                    .moveToElement(el).click().keyDown(Keys.CONTROL)
+                    .sendKeys("a", Keys.BACK_SPACE).keyUp(Keys.CONTROL)
+                    .build();
+        }
         seriesOfActions.perform();
     }
 
     // scenario 4
     @When("leaves the password input field empty")
     public void leaves_the_password_input_field_empty() {
+        OperatingSystem.OSType detectedOS = OperatingSystem.getOperatingSystemType();
         WebElement el = Hooks.userProfilePage.muiPasswordInputField;
-        Action seriesOfActions = Hooks.actions
-                .moveToElement(el).click().keyDown(Keys.COMMAND)
-                .sendKeys("a",Keys.DELETE).keyUp(Keys.COMMAND)
-                .build();
+        Action seriesOfActions;
+        if (detectedOS == OperatingSystem.OSType.MacOS) {
+            seriesOfActions = Hooks.actions
+                    .moveToElement(el).click().keyDown(Keys.COMMAND)
+                    .sendKeys("a", Keys.DELETE).keyUp(Keys.COMMAND)
+                    .build();
+        } else {
+            seriesOfActions = Hooks.actions
+                    .moveToElement(el).click().keyDown(Keys.CONTROL)
+                    .sendKeys("a", Keys.BACK_SPACE).keyUp(Keys.CONTROL)
+                    .build();
+        }
         seriesOfActions.perform();
     }
 
     // scenario 5
     @When("User clears all input fields")
     public void user_clears_all_input_fields() {
+        OperatingSystem.OSType detectedOS = OperatingSystem.getOperatingSystemType();
         List<WebElement> els = new ArrayList<>(Hooks.userProfilePage.uInputFields);
         for (WebElement el: els) {
-            Action seriesOfActions = Hooks.actions
-                    .moveToElement(el).click().keyDown(Keys.COMMAND)
-                    .sendKeys("a",Keys.DELETE).keyUp(Keys.COMMAND).build();
+            Action seriesOfActions;
+            if (detectedOS == OperatingSystem.OSType.MacOS) {
+                seriesOfActions = Hooks.actions
+                        .moveToElement(el).click().keyDown(Keys.COMMAND)
+                        .sendKeys("a", Keys.DELETE).keyUp(Keys.COMMAND)
+                        .build();
+            } else {
+                seriesOfActions = Hooks.actions
+                        .moveToElement(el).click().keyDown(Keys.CONTROL)
+                        .sendKeys("a", Keys.BACK_SPACE).keyUp(Keys.CONTROL)
+                        .build();
+            }
             seriesOfActions.perform();
         }
     }
