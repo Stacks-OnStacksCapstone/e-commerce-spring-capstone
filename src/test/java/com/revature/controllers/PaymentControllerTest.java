@@ -10,6 +10,7 @@ import com.revature.services.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,22 +44,13 @@ public class PaymentControllerTest {
     @MockBean(name="AuthService")
     private AuthService authService;
 
-    @MockBean(name="OrderService")
-    private OrderService orderService;
-
-    @MockBean(name="OrderDetailService")
-    private OrderDetailService orderDetailService;
-
-    @MockBean(name="UserService")
+    @Autowired
+    @InjectMocks
     private UserService userService;
 
-    @MockBean(name="TokenService")
+    @Autowired
+    @InjectMocks
     private TokenService tokenService;
-
-
-    @MockBean(name="TokenGenerator")
-    private TokenGenerator tokenGenerator;
-
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -69,35 +61,19 @@ public class PaymentControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
-
-
-    private String auth = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoidGVzdHVzZXJAZ21haWwuY29tIiwiaXNzIjoi" +
-            "Q29uZ28iLCJpc0FkbWluIjp0cnVlLCJ" +
-            "pc0FjdGl2ZSI6dHJ1ZSwiaWF0IjoxNjcwODAwMTE" +
-            "wLCJleHAiOjE2NzA4ODY1MTB9.ur9zAPmarEphAim-JXpYQfA" +
-            "XGWcb8uU138m2-_guoRo";
-
-
-    @Test
-    public void testPositiveLogin() throws Exception {
-        mockMvc.perform(post("/auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "    \"email\": \"testuser@gmail.com\",\n" +
-                                "    \"password\": \"password\"\n" +
-                                "}")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk());
+    public String getToken(int userId) throws Exception {
+        User user1 = userService.findUserById(userId);
+        Principal payload = new Principal(user1);
+        String token = tokenService.generateToken(payload);
+        return token;
     }
 
     //200postman 401 MVC(Must be logged in as payment owner to delete payment.)
     @Test
     public void deletepaymentnegative() throws Exception {
-        when(orderDetailService.createOrderDetail(new OrderDetailRequest())).thenReturn(new OrderDetailResponse());
         mockMvc.perform(delete("/api/payment")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization",auth)
+                        .header("Authorization",getToken(1))
                         .param("paymentId", "notincard233"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
@@ -108,8 +84,8 @@ public class PaymentControllerTest {
     //200 postman 200 MVC
     @Test
     public void getpayment() throws Exception {
-        //when(orderDetailService.createOrderDetail(new OrderDetailRequest())).thenReturn(new OrderDetailResponse());
-        mockMvc.perform(get("/api/payment").header("Authorization",auth)
+
+        mockMvc.perform(get("/api/payment").header("Authorization",getToken(1))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -122,7 +98,7 @@ public class PaymentControllerTest {
     @Test
     public void postpayment() throws Exception {
         //when(orderDetailService.createOrderDetail(new OrderDetailRequest())).thenReturn(new OrderDetailResponse());
-        mockMvc.perform(post("/api/payment").header("Authorization",auth)
+        mockMvc.perform(post("/api/payment").header("Authorization",getToken(1))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("  \"ccv\": \"string\",\n" +
                                 "  \"expDate\": \"2022-12-05T19:51:32.665Z\",\n" +
@@ -136,7 +112,7 @@ public class PaymentControllerTest {
     @Test
     public void putpayment() throws Exception {
         //when(orderDetailService.createOrderDetail(new OrderDetailRequest())).thenReturn(new OrderDetailResponse());
-        mockMvc.perform(put("/api/payment").header("Authorization",auth)
+        mockMvc.perform(put("/api/payment").header("Authorization",getToken(1))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("   \"paymentId\": \"safecard111\",\n" +
                                 "  \"cardType\": \"string\",\n" +
