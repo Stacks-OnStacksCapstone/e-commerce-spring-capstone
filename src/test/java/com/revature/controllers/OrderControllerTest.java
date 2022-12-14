@@ -35,46 +35,27 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ECommerceApplication.class)
 public class OrderControllerTest {
     @MockBean(name="AuthService")
     private AuthService authService;
 
-    @MockBean(name="OrderService")
-    private OrderService orderService;
-
-
-    @MockBean(name="OrderDetailService")
-    private OrderDetailService orderDetailService;
-
     @Autowired
-    private WebApplicationContext webApplicationContext;
-    private MockMvc mockMvc;
-
-
-    private String auth = " eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoidGVzdHVzZXJAZ21haWwuY29tIiwiaXNzIjoiQ29uZ28iLCJpc0" +
-            "FkbWluIjp0cnVlLCJpc0FjdGl2ZSI6dHJ1ZSw" +
-            "iaWF0IjoxNjcwNjA5NzM2LCJleHAiOjE2NzA2OTYxMzZ9" +
-            ".NAHFDXIqZr98I19uYyWh2UM8YrCxYIAWRx6sW_APH9Y";
-
-    @Autowired
-
     private UserService userService;
-
     @Autowired
-
     private TokenService tokenService;
+
     public String getToken() throws Exception {
-        /*User user1 = new User(1,"testuser@gmail.com", "password", "Testerson", "Usertown",
-                true, true,null);*/
+
         User user1 = userService.findUserById(1);
         Principal payload = new Principal(user1);
         String token = tokenService.generateToken(payload);
         return token;
     }
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+    private MockMvc mockMvc;
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -91,7 +72,6 @@ public class OrderControllerTest {
 
     }
     //One line not covered here!
-
 
     @Test
     public void testapiorderid() throws Exception {
@@ -138,17 +118,11 @@ public class OrderControllerTest {
                         .header("Authorization", getToken())
                          .contentType(MediaType.APPLICATION_JSON)
                             .content("{\n" +
-                        "    \"paymentId\": \"safecard111\",\n" +
+                        "    \"paymentId\": \"5bc1bb79-6ef8-48e1-be83-8dfee8f981a7\",\n" +
                         "    \"shipmentAddress\": \"9999888877776666\"\n" +
                         "}")
                          .accept(MediaType.APPLICATION_JSON))
                          .andDo(print())
                          .andExpect(status().isOk());
-
     }
-
-
-
-
-
 }
