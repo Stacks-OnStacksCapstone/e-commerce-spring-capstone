@@ -42,11 +42,9 @@ public class UserControllerTest {
     private AuthService authService;
 
     @Autowired
-    @InjectMocks
     private UserService userService;
 
     @Autowired
-    @InjectMocks
     private TokenService tokenService;
 
     @Autowired
