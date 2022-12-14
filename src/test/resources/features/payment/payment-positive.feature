@@ -1,7 +1,7 @@
 @payment
 Feature: Payment Method
 
-  Scenario Outline:  create payment method
+  Scenario Outline: create payment method
     Given the user is logged in
     When the user clicks on the Profile link
     Then the user is navigated to the Profile page
