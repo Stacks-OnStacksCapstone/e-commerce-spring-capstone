@@ -54,19 +54,13 @@ public class OrderControllerTest {
     private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
 
-
-    private String auth = " eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoidGVzdHVzZXJAZ21haWwuY29tIiwiaXNzIjoiQ29uZ28iLCJpc0" +
-            "FkbWluIjp0cnVlLCJpc0FjdGl2ZSI6dHJ1ZSw" +
-            "iaWF0IjoxNjcwNjA5NzM2LCJleHAiOjE2NzA2OTYxMzZ9" +
-            ".NAHFDXIqZr98I19uYyWh2UM8YrCxYIAWRx6sW_APH9Y";
-
     @Autowired
-
     private UserService userService;
 
     @Autowired
-
     private TokenService tokenService;
+
+
     public String getToken() throws Exception {
         /*User user1 = new User(1,"testuser@gmail.com", "password", "Testerson", "Usertown",
                 true, true,null);*/
@@ -144,11 +138,5 @@ public class OrderControllerTest {
                          .accept(MediaType.APPLICATION_JSON))
                          .andDo(print())
                          .andExpect(status().isOk());
-
     }
-
-
-
-
-
 }
