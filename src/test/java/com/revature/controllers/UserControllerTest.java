@@ -1,4 +1,4 @@
-package com.revature;
+package com.revature.controllers;
 
 import com.revature.ECommerceApplication;
 import com.revature.dtos.Principal;
@@ -136,15 +136,17 @@ public class UserControllerTest {
     public void testDeactivateUser() throws Exception {
         String token = getToken();
         mockMvc.perform(put("/user/deactivateUser")
-                /*.contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
+                        "  \"userId\": 1,\n" +
                         "  \"email\": \"testuser@gmail.com\",\n" +
                         "  \"password\": \"password\",\n" +
                         "  \"firstName\": \"Testerson\",\n" +
                         "  \"lastName\": \"Usertown\"\n" +
+                        "  \"resetPasswordToken\": \"string\"\n" +
                         "  \"active\": true,\n" +
                         "  \"admin\": true\n" +
-                        "}")*/
+                        "}")
                         .header("Authorization", token)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
