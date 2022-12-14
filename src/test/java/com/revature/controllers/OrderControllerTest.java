@@ -117,7 +117,7 @@ public class OrderControllerTest {
                         .header("Authorization", getToken())
                          .contentType(MediaType.APPLICATION_JSON)
                             .content("{\n" +
-                        "    \"paymentId\": \"safecard111\",\n" +
+                        "    \"paymentId\": \"5bc1bb79-6ef8-48e1-be83-8dfee8f981a7\",\n" +
                         "    \"shipmentAddress\": \"9999888877776666\"\n" +
                         "}")
                          .accept(MediaType.APPLICATION_JSON))

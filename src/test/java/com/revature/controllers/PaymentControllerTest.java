@@ -31,6 +31,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.revature.ECommerceApplication;
@@ -70,14 +71,14 @@ public class PaymentControllerTest {
 
     //200postman 401 MVC(Must be logged in as payment owner to delete payment.)
     @Test
-    public void deletepaymentnegative() throws Exception {
+    public void deletepaymentNegative() throws Exception {
         mockMvc.perform(delete("/api/payment")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken(2))
-                        .param("paymentId", "1"))
+                        .param("paymentId", "3"))
                 .andDo(print())
+                .andExpect(content().string("Must be logged in as payment owner to delete payment."))
                 .andExpect(status().is4xxClientError());
-
     }
 
     @Test
@@ -91,45 +92,54 @@ public class PaymentControllerTest {
 
     }
 
+    @Test
+    public void deletepaymentNoAuth() throws Exception {
+        mockMvc.perform(delete("/api/payment")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("paymentId", "3"))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
 
-    //200 postman 200 MVC
+    }
+    @Test
+    public void deletepaymentNoParam() throws Exception {
+        mockMvc.perform(delete("/api/payment")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+
+    }
+
     @Test
     public void getpayment() throws Exception {
-
         mockMvc.perform(get("/api/payment").header("Authorization",getToken(1))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
-
-
-
     }
 
-    //200 in Postman 400 in MVC(HttpMessageNotReadableException)
     @Test
-    public void postpayment() throws Exception {
-        mockMvc.perform(post("/api/payment").header("Authorization",getToken(1))
+    public void postPayment() throws Exception {
+        mockMvc.perform(post("/api/payment").header("Authorization",getToken(2))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("  \"ccv\": \"string\",\n" +
-                                "  \"expDate\": \"2022-12-05T19:51:32.665Z\",\n" +
-                                "  \"cardNumber\": \"string\""))
+                        .content("{ \"ccv\": \"string\",\n" +
+                                "  \"expDate\": \"2022-12-05\",\n" +
+                                "  \"cardNumber\": \"string\"}"))
                 .andDo(print())
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().isOk());
 
     }
 
-    //200 in postman 400 on MVC
     @Test
-    public void putpayment() throws Exception {
-        //when(orderDetailService.createOrderDetail(new OrderDetailRequest())).thenReturn(new OrderDetailResponse());
+    public void putPayment() throws Exception {
         mockMvc.perform(put("/api/payment").header("Authorization",getToken(1))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("   \"paymentId\": \"safecard111\",\n" +
+                        .content("{ \"paymentId\": \"3\",\n" +
                                 "  \"cardType\": \"string\",\n" +
-                                "  \"expDate\": \"2022-12-05T20:01:15.857Z\",\n" +
-                                "  \"cardNumber\": \"string\""))
+                                "  \"expDate\": \"2022-12-05\",\n" +
+                                "  \"cardNumber\": \"string\"}"))
                 .andDo(print())
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().isOk());
 
     }
 
