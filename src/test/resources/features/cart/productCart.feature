@@ -6,7 +6,6 @@ Feature: Product Cart
     When the user clicks the cart icon on the product to add it to the cart
     Then one item from that product should be added to the cart page
 
-
   Scenario: Update quantity of products in the cart
     Given the user is on the Cart Page
     When the user clicks on plus button in item that is in the cart
