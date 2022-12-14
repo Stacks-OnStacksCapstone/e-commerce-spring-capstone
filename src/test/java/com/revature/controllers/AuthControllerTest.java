@@ -2,11 +2,18 @@ package com.revature.controllers;
 
 
 import com.revature.ECommerceApplication;
+import com.revature.dtos.Principal;
+import com.revature.exceptions.UnauthorizedException;
 import com.revature.models.User;
+import com.revature.repositories.UserRepository;
 import com.revature.services.AuthService;
+import com.revature.services.TokenService;
+import com.revature.services.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,10 +21,15 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,12 +42,36 @@ public class AuthControllerTest {
     private AuthService authService;
 
     @Autowired
+    @InjectMocks
+    private UserService userService;
+
+    @Autowired
+    @InjectMocks
+    private TokenService tokenService;
+
+    @Autowired
     private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
 
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
+
+    public String getToken() throws Exception {
+        /*User user1 = new User(1,"testuser@gmail.com", "password", "Testerson", "Usertown",
+                true, true,null);*/
+        User user1 = userService.findUserById(1);
+        Principal payload = new Principal(user1);
+        String token = tokenService.generateToken(payload);
+        return token;
+    }
+
+    public String getResetPasswordToken() throws Exception {
+        String resetPasswordToken = UUID.randomUUID().toString();
+        userService.updateResetPasswordToken(resetPasswordToken, "testuser@gmail.com");
+        System.out.println(resetPasswordToken);
+        return resetPasswordToken;
     }
 
     @Test
@@ -100,5 +136,57 @@ public class AuthControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void testGetCurrentUser() throws Exception {
+        String token = getToken();
+        mockMvc.perform(get("/auth")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", token)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath(".userId").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath(".email").value("testuser@gmail.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath(".firstName").value("Testerson"))
+                .andExpect(MockMvcResultMatchers.jsonPath(".lastName").value("Usertown"))
+                .andExpect(MockMvcResultMatchers.jsonPath(".active").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath(".admin").value(true));
+    }
+
+    @Test
+    public void testForgotPassword() throws Exception {
+        String token = getToken();
+        mockMvc.perform(put("/auth/forgot-password")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n" +
+                        "  \"email\": \"testuser@gmail.com\"\n" +
+                        "}")
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testResetPasswordGet() throws Exception {
+        String resetPasswordToken = getResetPasswordToken();
+        mockMvc.perform(get("/auth/reset-password/{token}", resetPasswordToken)
+                ).andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testResetPasswordPut() throws Exception {
+        String resetPasswordToken = getResetPasswordToken();
+        mockMvc.perform(put("/auth/reset-password/{token}", resetPasswordToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "  \"email\": \"testuser@gmail.com\"\n" +
+                                "}")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }
