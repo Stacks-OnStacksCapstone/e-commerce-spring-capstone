@@ -4,14 +4,12 @@ package com.revature.controllers;
 import com.revature.ECommerceApplication;
 import com.revature.dtos.CreateOrderRequest;
 import com.revature.dtos.OrderResponse;
+import com.revature.dtos.Principal;
 import com.revature.models.Order;
 import com.revature.models.OrderDetail;
 import com.revature.models.User;
 import com.revature.repositories.OrderRepository;
-import com.revature.services.AuthService;
-import com.revature.services.OrderDetailService;
-import com.revature.services.OrderService;
-import com.revature.services.ProductService;
+import com.revature.services.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(OrderController.class)
+@SpringBootTest(classes = ECommerceApplication.class)
 public class OrderControllerTest {
     @MockBean(name="AuthService")
     private AuthService authService;
@@ -62,6 +60,21 @@ public class OrderControllerTest {
             "iaWF0IjoxNjcwNjA5NzM2LCJleHAiOjE2NzA2OTYxMzZ9" +
             ".NAHFDXIqZr98I19uYyWh2UM8YrCxYIAWRx6sW_APH9Y";
 
+    @Autowired
+
+    private UserService userService;
+
+    @Autowired
+
+    private TokenService tokenService;
+    public String getToken() throws Exception {
+        /*User user1 = new User(1,"testuser@gmail.com", "password", "Testerson", "Usertown",
+                true, true,null);*/
+        User user1 = userService.findUserById(1);
+        Principal payload = new Principal(user1);
+        String token = tokenService.generateToken(payload);
+        return token;
+    }
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -70,21 +83,20 @@ public class OrderControllerTest {
     @Test
     public void testapiorderget() throws Exception {
         mockMvc.perform(get("/api/order")
+                        .header("Authorization", getToken())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(""))
                         .andDo(print())
                         .andExpect(status().isOk());
 
-
-
     }
+    //One line not covered here!
 
-//.header("Authorization",auth )
+
     @Test
     public void testapiorderid() throws Exception {
-        int id = 1;
-        when(orderService.findById(id)).thenReturn(new Order());
         mockMvc.perform(get("/api/order/1")
+                        .header("Authorization", getToken())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                         .andDo(print())
@@ -92,12 +104,26 @@ public class OrderControllerTest {
 
         }
 
+    // Fake order id is not triggering line 51, why? It seems like the team handles
+    // a fake idea before it even
+    //reaches the if statement. (One line not covered here).
+    @Test
+    public void testfakeapiorderid() throws Exception {
 
+        mockMvc.perform(get("/api/order/6")
+                        .header("Authorization", getToken())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+
+    }
+
+    //All lines covered here
      @Test
     public void testapiorderhistory() throws Exception {
-        List<OrderResponse> orderResponses = new ArrayList<>();
-        when(orderService.findAllUserOrders(new User())).thenReturn(orderResponses);
         mockMvc.perform(get("/api/order/history")
+                        .header("Authorization", getToken())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                         .andDo(print())
@@ -108,13 +134,16 @@ public class OrderControllerTest {
     //Should return 200 but returns 400
     @Test
     public void testapiorderpost() throws Exception {
-        String token = "faketoken";
-        when(authService.getUserByAuthToken(token)).thenReturn(new User());
         mockMvc.perform(post("/api/order")
+                        .header("Authorization", getToken())
                          .contentType(MediaType.APPLICATION_JSON)
+                            .content("{\n" +
+                        "    \"paymentId\": \"safecard111\",\n" +
+                        "    \"shipmentAddress\": \"9999888877776666\"\n" +
+                        "}")
                          .accept(MediaType.APPLICATION_JSON))
                          .andDo(print())
-                         .andExpect(status().is4xxClientError());
+                         .andExpect(status().isOk());
 
     }
 
