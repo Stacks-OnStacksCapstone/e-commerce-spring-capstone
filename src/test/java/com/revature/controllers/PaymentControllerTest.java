@@ -73,10 +73,21 @@ public class PaymentControllerTest {
     public void deletepaymentnegative() throws Exception {
         mockMvc.perform(delete("/api/payment")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization",getToken(1))
-                        .param("paymentId", "notincard233"))
+                        .header("Authorization",getToken(2))
+                        .param("paymentId", "1"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
+
+    }
+
+    @Test
+    public void deletepaymentCorrectUser() throws Exception {
+        mockMvc.perform(delete("/api/payment")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization",getToken(1))
+                        .param("paymentId", "3"))
+                .andDo(print())
+                .andExpect(status().isOk());
 
     }
 
@@ -97,7 +108,6 @@ public class PaymentControllerTest {
     //200 in Postman 400 in MVC(HttpMessageNotReadableException)
     @Test
     public void postpayment() throws Exception {
-        //when(orderDetailService.createOrderDetail(new OrderDetailRequest())).thenReturn(new OrderDetailResponse());
         mockMvc.perform(post("/api/payment").header("Authorization",getToken(1))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("  \"ccv\": \"string\",\n" +
