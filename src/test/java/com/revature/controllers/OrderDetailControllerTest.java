@@ -71,7 +71,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ECommerceApplication.class)
- public class OrderDetailControllerTest {
+
+public class OrderDetailControllerTest {
+
+
     @MockBean(name="AuthService")
     private AuthService authService;
 
@@ -124,7 +127,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
     //Should be 200 but is 400 instead!
     @Test
+
     public void testapiorderdetail() throws Exception {
+
         mockMvc.perform(post("/api/orderdetail")
                         .header("Authorization",getToken())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -137,15 +142,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         }
 
 
-     @Test
+    @Test
     public void testdeleteapinonexistentorderdetailbyid() throws Exception {
         mockMvc.perform(delete("/api/orderdetail/987654321")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken())
                         .content(""))
                 .andDo(print())
+
                 .andExpect(status().is4xxClientError());
             }
+
 
     @Test
     public void testdeleteexistentorderdetailbyid() throws Exception {
@@ -164,6 +171,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                         .header("Authorization",getToken())
                         .content(""))
                 .andDo(print())
+
                 .andExpect(status().isOk());
             }
     @Test
@@ -175,6 +183,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
     @Test
     public void testgetapiorderdetailbyorder() throws Exception {
         mockMvc.perform(get("/api/orderdetail/order/1")

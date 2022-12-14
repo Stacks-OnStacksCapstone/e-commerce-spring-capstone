@@ -99,8 +99,8 @@ public class PaymentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",auth)
                         .param("paymentId", "notincard233"))
-                        .andDo(print())
-                        .andExpect(status().is4xxClientError());
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
 
     }
 
@@ -124,9 +124,9 @@ public class PaymentControllerTest {
         //when(orderDetailService.createOrderDetail(new OrderDetailRequest())).thenReturn(new OrderDetailResponse());
         mockMvc.perform(post("/api/payment").header("Authorization",auth)
                         .contentType(MediaType.APPLICATION_JSON)
-                .content("  \"ccv\": \"string\",\n" +
-                        "  \"expDate\": \"2022-12-05T19:51:32.665Z\",\n" +
-                        "  \"cardNumber\": \"string\""))
+                        .content("  \"ccv\": \"string\",\n" +
+                                "  \"expDate\": \"2022-12-05T19:51:32.665Z\",\n" +
+                                "  \"cardNumber\": \"string\""))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
 

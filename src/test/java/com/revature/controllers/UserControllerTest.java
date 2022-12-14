@@ -1,6 +1,5 @@
 package com.revature.controllers;
 
-
 import com.revature.ECommerceApplication;
 import com.revature.dtos.Principal;
 import com.revature.exceptions.UnauthorizedException;
@@ -36,7 +35,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 //Sets the base class needed to start the H2 and have other calls available
 @SpringBootTest(classes = ECommerceApplication.class)
-public class AuthControllerTest {
+
+public class UserControllerTest {
 
     @MockBean(name = "AuthService")
     private AuthService authService;
@@ -59,73 +59,15 @@ public class AuthControllerTest {
     }
 
     public String getToken() throws Exception {
-        /*User user1 = new User(1,"testuser@gmail.com", "password", "Testerson", "Usertown",
-                true, true,null);*/
         User user1 = userService.findUserById(1);
         Principal payload = new Principal(user1);
         String token = tokenService.generateToken(payload);
         return token;
     }
 
-    public String getResetPasswordToken() throws Exception {
-        String resetPasswordToken = UUID.randomUUID().toString();
-        userService.updateResetPasswordToken(resetPasswordToken, "testuser@gmail.com");
-        System.out.println(resetPasswordToken);
-        return resetPasswordToken;
-    }
-
     @Test
-    public void testPositiveLogin() throws Exception {
-
-        mockMvc.perform(post("/auth/login")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content("{\n" +
-                    "    \"email\": \"testuser@gmail.com\",\n" +
-                    "    \"password\": \"password\"\n" +
-                    "}")
-            .accept(MediaType.APPLICATION_JSON))
-            .andDo(print())
-            .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testNegativeBadUserName() throws Exception {
-
-        mockMvc.perform(post("/auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "    \"email\": \"fakeuser@gmail.com\",\n" +
-                                "    \"password\": \"password\"\n" +
-                                "}")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is4xxClientError());
-    }
-
-    @Test
-    public void testNegativeBadPassword() throws Exception {
-
-        mockMvc.perform(post("/auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "    \"email\": \"testuser@gmail.com\",\n" +
-                                "    \"password\": \"Bassword\"\n" +
-                                "}")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is4xxClientError());
-    }
-
-    @Test
-    public void testLogout() throws Exception {
-
-        mockMvc.perform(post("/auth/logout")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testPositiveRegister() throws Exception {
-        mockMvc.perform(post("/auth/register")
+    public void testUserRegister() throws Exception {
+        mockMvc.perform(post("/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
                                 "  \"email\": \"newuser1@gmail.com\",\n" +
@@ -135,7 +77,7 @@ public class AuthControllerTest {
                                 "}")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath(".userId").value(4))
                 .andExpect(MockMvcResultMatchers.jsonPath(".email").value("newuser1@gmail.com"))
                 .andExpect(MockMvcResultMatchers.jsonPath(".firstName").value("Jeffy"))
@@ -145,10 +87,27 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void testGetCurrentUser() throws Exception {
+    public void testUserUpdate() throws Exception {
         String token = getToken();
-        mockMvc.perform(get("/auth")
+        mockMvc.perform(put("/user")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "  \"email\": \"testuser@gmail.com\",\n" +
+                                "  \"password\": \"password\",\n" +
+                                "  \"firstName\": \"Testerson\",\n" +
+                                "  \"lastName\": \"Usertown\"\n" +
+                                "}")
+                        .header("Authorization", token)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("The user account is successfully updated!"));
+    }
+
+    @Test
+    public void testUserGetProfile() throws Exception {
+        String token = getToken();
+        mockMvc.perform(get("/user")
                         .header("Authorization", token)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -162,37 +121,38 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void testForgotPassword() throws Exception {
+    public void testDeactivate() throws Exception {
         String token = getToken();
-        mockMvc.perform(put("/auth/forgot-password")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\n" +
-                        "  \"email\": \"testuser@gmail.com\"\n" +
-                        "}")
-                .header("Authorization", token)
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testResetPasswordGet() throws Exception {
-        String resetPasswordToken = getResetPasswordToken();
-        mockMvc.perform(get("/auth/reset-password/{token}", resetPasswordToken)
-                ).andDo(print())
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testResetPasswordPut() throws Exception {
-        String resetPasswordToken = getResetPasswordToken();
-        mockMvc.perform(put("/auth/reset-password/{token}", resetPasswordToken)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "  \"email\": \"testuser@gmail.com\"\n" +
-                                "}")
+        mockMvc.perform(put("/user/deactivate")
+                        .header("Authorization", token)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("The user account is successfully deactivated!"));
+
     }
+
+    @Test
+    public void testDeactivateUser() throws Exception {
+        String token = getToken();
+        mockMvc.perform(put("/user/deactivateUser")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n" +
+                        "  \"userId\": 1,\n" +
+                        "  \"email\": \"testuser@gmail.com\",\n" +
+                        "  \"password\": \"password\",\n" +
+                        "  \"firstName\": \"Testerson\",\n" +
+                        "  \"lastName\": \"Usertown\"\n" +
+                        "  \"resetPasswordToken\": \"string\"\n" +
+                        "  \"active\": true,\n" +
+                        "  \"admin\": true\n" +
+                        "}")
+                        .header("Authorization", token)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("The user account is successfully deactivated!"));
+    }
+
+
 }
