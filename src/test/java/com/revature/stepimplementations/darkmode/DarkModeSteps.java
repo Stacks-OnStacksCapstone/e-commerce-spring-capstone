@@ -21,11 +21,23 @@ public class DarkModeSteps {
         actions.moveToElement(generalPage.darkModeSwitch).click().pause(1).click().build().perform();
     }
 
+    @Then("The switch slides towards the moon icon")
+    public void the_switch_slides_towards_the_moon_icon() {
+        wait.until(ExpectedConditions.visibilityOf(generalPage.switchOnDarkMode));
+    }
+
     @Then("The theme of the page changes to dark mode")
     public void the_theme_of_the_page_changes_to_dark_mode() {
         wait.until(ExpectedConditions.visibilityOf(generalPage.pageBody));
         String bgColor = generalPage.pageBody.getCssValue("background-color");
         Assert.assertEquals("rgba(18, 18, 18, 1)", bgColor);
+    }
+
+    @Then("The font color changes to white")
+    public void the_font_color_changes_to_white() {
+        wait.until(ExpectedConditions.visibilityOf(generalPage.pageText));
+        String fontColor = generalPage.pageText.getCssValue("color");
+        Assert.assertEquals("rgba(255, 255, 255, 1)", fontColor);
     }
 
     // REGISTER PAGE
@@ -124,6 +136,11 @@ public class DarkModeSteps {
         actions.moveToElement(generalPage.darkModeSwitch).click().build().perform();
     }
 
+    @Then("The switch slides towards the sun icon")
+    public void the_switch_slides_towards_the_sun_icon() {
+        wait.until(ExpectedConditions.visibilityOf(generalPage.switchOnLightMode));
+    }
+
     @Then("The theme of the page changes back to light mode")
     public void the_theme_of_the_page_changes_back_to_light_mode() {
         wait.until(ExpectedConditions.visibilityOf(generalPage.pageBody));
@@ -131,4 +148,10 @@ public class DarkModeSteps {
         Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
     }
 
+    @Then("The font color changes to black")
+    public void the_font_color_changes_to_black() {
+        wait.until(ExpectedConditions.visibilityOf(generalPage.pageText));
+        String fontColor = generalPage.pageText.getCssValue("color");
+        Assert.assertEquals("rgba(0, 0, 0, 0.87)", fontColor);
+    }
 }

@@ -10,6 +10,9 @@ public class GeneralPage {
     @FindBy(xpath = "//body")
     public static WebElement pageBody;
 
+    @FindBy(xpath = "//div[@id='root']//*[self::p or self::b or self::h1 or self::h5 or self::h6]")
+    public static WebElement pageText;
+
     // NAV BAR
     @FindBy(xpath = "//div[@id='root']//input[@class='jss4 MuiSwitch-input']")
     public static WebElement darkModeSwitch;
