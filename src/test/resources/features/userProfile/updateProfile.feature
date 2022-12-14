@@ -1,3 +1,4 @@
+@userprofile
 Feature: Update Profile
 
   Background:
