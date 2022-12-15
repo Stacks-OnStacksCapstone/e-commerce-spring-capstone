@@ -59,17 +59,16 @@ public class Payments {
         Hooks.profilePage.addPaymentButton.click();
     }
 
-    // TODO: fix naming conflict with login feature file
-//    @Then("the user should see alert message {string}")
-//    public void the_user_should_see_alert_message(String message) {
-//
-//
-//        String actualAlert =
-//                Hooks.wait.ignoring(StaleElementReferenceException.class)
-//                        .until(ExpectedConditions.visibilityOf(Hooks.profilePage.alert)).getText();
-//        Assertions.assertEquals(message, actualAlert);
-//
-//    }
+    @Then("the user should see alert message {string} on the profile page")
+    public void the_user_should_see_alert_message(String message) {
+
+
+        String actualAlert =
+                Hooks.wait.ignoring(StaleElementReferenceException.class)
+                        .until(ExpectedConditions.visibilityOf(Hooks.profilePage.alert)).getText();
+        Assertions.assertEquals(message, actualAlert);
+
+    }
 
     //Delete payment
     @When("the user clicks on the delete payment button")
