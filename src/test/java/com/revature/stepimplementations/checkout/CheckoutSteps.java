@@ -6,8 +6,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -59,7 +61,11 @@ public class CheckoutSteps {
     }
     @When("User selects a payment method and clicks submit")
     public void user_selects_a_payment_method_and_clicks_submit() {
-        wait.until(ExpectedConditions.visibilityOf(checkoutPage.paymentRadioButton));
+        try {
+            wait.until(ExpectedConditions.visibilityOf(checkoutPage.paymentRadioButton));
+        } catch (TimeoutException e) {
+            Assertions.fail("No payment methods available to select from.");
+        }
         actions.moveToElement(checkoutPage.paymentRadioButton).click().build().perform();
         wait.until(ExpectedConditions.elementToBeClickable(checkoutPage.submitPaymentButton));
         checkoutPage.submitPaymentButton.click();
@@ -138,7 +144,11 @@ public class CheckoutSteps {
     @Then("The invalid field turns red and displays {string}")
     public void the_invalid_field_turns_red_and_displays(String string) {
         actions.sendKeys(Keys.TAB).build().perform();
-        wait.until(ExpectedConditions.visibilityOf(checkoutPage.shipAddressErrorMessage));
+        try {
+            wait.until(ExpectedConditions.visibilityOf(checkoutPage.shipAddressErrorMessage));
+        } catch (TimeoutException e) {
+            Assertions.fail("An error message did not appear for this input field.");
+        }
         String actualText = checkoutPage.shipAddressErrorMessage.getText();
         String fontColor = checkoutPage.shipAddressErrorMessage.getCssValue("color");
         Assert.assertEquals(string, actualText);

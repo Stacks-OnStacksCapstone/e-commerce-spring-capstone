@@ -29,7 +29,6 @@ public class Hooks {
     public static NotificationsPage notificationsPage;
     public static CheckoutPage checkoutPage;
     public static boolean boolRes;
-
     public static String homeURL = "http://localhost:3000/";
     public static String loginURL = "http://localhost:3000/login";
     public static String registrationURL = "http://localhost:3000/register";
