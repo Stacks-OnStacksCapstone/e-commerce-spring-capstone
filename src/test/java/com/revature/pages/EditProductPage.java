@@ -34,14 +34,20 @@ public class EditProductPage {
     @FindBy(xpath = "//strong[contains(text(),'EDIT PRODUCTS')]")
     public WebElement Edit_Products_Displayed;
 
-    @FindBy(xpath = "//*[@id='root']/div[2]/div[1]/div[1]/div[2]/div[1]/input[1]")
+    @FindBy(xpath = "(//input[@id=\"outlined-required\"])[1]")
     public WebElement Create_Product_Name_Input;
 
-    @FindBy(xpath = "//*[@id='root']/div[2]/div[1]/div[1]/div[3]/div[1]/input[1]")
+    @FindBy(xpath = "(//input[@id=\"outlined-required\"])[2]")
     public WebElement Create_Description_Input;
 
-    @FindBy(xpath = "//*[@id='root']/div[2]/div[1]/div[1]/div[5]/div[1]/input[1]")
+    @FindBy(xpath = "(//input[@id=\"outlined-required\"])[4]")
     public WebElement Create_Price_Input;
+
+    @FindBy(xpath = "(//input)[4]")
+    public WebElement Product_Description_Input2;
+
+    @FindBy(xpath = "(//input)[5]")
+    public WebElement Product_Price_Input2;
 
     public EditProductPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
