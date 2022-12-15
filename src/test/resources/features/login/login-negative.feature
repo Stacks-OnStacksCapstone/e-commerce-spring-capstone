@@ -6,7 +6,7 @@ Feature: Login Negative
     When the user enters "<email>" as email
     And the user enters "<password>" as password
     And the user clicks on the login button
-    Then the user should see alert message "<message>"
+    Then the user should see alert message "<message>" on the "Login" page
 
     Examples:
       | email               | password          | message                      |
