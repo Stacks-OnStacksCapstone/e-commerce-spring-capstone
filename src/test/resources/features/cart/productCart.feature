@@ -1,11 +1,15 @@
 @productCart
 Feature: Product Cart
 
+  # Look at payment-negative.feature for general things
   Scenario: Add product to the cart
     Given the user is on the Home Page
     When the user clicks the cart icon on the product to add it to the cart
     Then one item from that product should be added to the cart page
 
+  # Update quantity should be a Scenario Outline with the quantity of items being changed
+  # being a positive or negative number (or 0), and the quantity update should be one step implementation
+  # which handles the cases by checking for positive or negative first and then doing the appropriate update
   Scenario: Update quantity of products in the cart
     Given the user is on the Cart Page
     When the user clicks on plus button in item that is in the cart

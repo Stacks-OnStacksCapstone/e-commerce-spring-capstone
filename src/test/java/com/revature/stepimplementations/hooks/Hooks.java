@@ -21,7 +21,6 @@ public class Hooks {
     public static PasswordResetPage passwordResetPage;
     public static FrontPage frontPage;
     public static OrdersPage ordersPage;
-    public static ProductDetailsPage productDetailsPage;
     public static ProfilePage profilePage;
     public static CartPage cartPage;
     public static Actions actions;
@@ -32,7 +31,6 @@ public class Hooks {
     public static ProductsDisplayPage ProductsDisplayPage;
     public static EditProductPage EditProductPage;
     public static boolean boolRes;
-
     public static String homeURL = "http://localhost:3000/";
     public static String loginURL = "http://localhost:3000/login";
     public static String registrationURL = "http://localhost:3000/register";
@@ -56,7 +54,6 @@ public class Hooks {
         passwordResetPage = new PasswordResetPage(driver);
         frontPage = new FrontPage(driver);
         ordersPage = new OrdersPage(driver);
-        productDetailsPage = new ProductDetailsPage(driver);
         profilePage = new ProfilePage(driver);
         cartPage= new CartPage(driver);
         userProfilePage = new UserProfilePage(driver);

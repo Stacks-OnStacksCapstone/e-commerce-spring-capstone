@@ -5,6 +5,7 @@ import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "classpath:features", glue = "com.revature.stepimplementations", tags = "@login")
-public class Runner {
-}
+@CucumberOptions(features = "classpath:features", glue = "com.revature.stepimplementations", tags = "@productreview")
+public class Runner {}
+
+
