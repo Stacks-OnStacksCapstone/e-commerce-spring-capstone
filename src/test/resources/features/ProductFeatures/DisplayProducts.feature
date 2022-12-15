@@ -3,6 +3,8 @@ Feature: Display Products
   Description: A Logged in User, a Guest (not logged in) and Admin should be able to see a list of available
   products and add one product to their shopping cart.
 
+  # The "I ..." statements should probably be rephrased as "the user ..." statements
+  # For the Given of logged in and on the home page, look at the comment in checkout.feature
   Scenario Outline: Users should see list of products and add a product to their cart
     Given I am a <usertype> on the home page
     Then I should see products displayed on page

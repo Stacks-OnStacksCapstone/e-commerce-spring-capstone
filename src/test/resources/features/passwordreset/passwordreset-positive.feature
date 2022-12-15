@@ -1,4 +1,4 @@
-@passwordreset
+@password-reset
 Feature: Password Reset
   Scenario Outline: Successful Password Reset
     # Ask for a password reset link

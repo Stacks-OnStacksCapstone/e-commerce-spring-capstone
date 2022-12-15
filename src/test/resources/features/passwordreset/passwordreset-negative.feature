@@ -1,4 +1,4 @@
-@passwordreset
+@password-reset
 Feature: Password Reset
   Scenario Outline: Invalid Email
     # Ask for a password reset link

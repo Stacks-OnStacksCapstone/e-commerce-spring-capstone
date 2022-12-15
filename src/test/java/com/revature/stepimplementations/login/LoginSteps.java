@@ -49,12 +49,18 @@ public class LoginSteps {
         Hooks.loginPage.loginButton.click();
     }
 
-    @Then("the user should see alert message {string}")
-    public void theUserShouldSee(String expectedMessage) {
+    @Then("the user should see alert message {string} on the {string} page")
+    public void theUserShouldSee(String expectedMessage, String page) {
+        String actualMessage = null;
+        switch (page) {
+            case "Login":
+                Hooks.wait.ignoring(NoSuchElementException.class).until(ExpectedConditions.visibilityOf(Hooks.loginPage.message));
+                actualMessage = Hooks.loginPage.message.getText();
+                break;
+        }
+
         // wait for the alert to be visible
-        Hooks.wait.ignoring(NoSuchElementException.class).until(ExpectedConditions.visibilityOf(Hooks.loginPage.message));
-        String message = Hooks.loginPage.message.getText();
-        Assertions.assertEquals(expectedMessage, message);
+        Assertions.assertEquals(expectedMessage, actualMessage);
     }
 
     @Then("the user should be redirected to the {string} page")
@@ -69,6 +75,9 @@ public class LoginSteps {
                 break;
             case "Registraion":
                 expectedURL = Hooks.registrationURL;
+                break;
+            case "Password Reset":
+                expectedURL = Hooks.passwordResetURL;
                 break;
         }
         Hooks.wait.until(ExpectedConditions.urlToBe(expectedURL));
