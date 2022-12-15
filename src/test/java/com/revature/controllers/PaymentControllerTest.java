@@ -1,6 +1,7 @@
 package com.revature.controllers;
 import com.revature.ECommerceApplication;
 import com.revature.dtos.*;
+import com.revature.exceptions.UnauthorizedException;
 import com.revature.models.Order;
 import com.revature.models.OrderDetail;
 import com.revature.models.User;
@@ -20,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -42,15 +45,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ECommerceApplication.class)
 public class PaymentControllerTest {
-    @MockBean(name="AuthService")
-    private AuthService authService;
-
     @Autowired
-    @InjectMocks
+    PaymentController paymentController;
+    @Autowired
     private UserService userService;
-
     @Autowired
-    @InjectMocks
     private TokenService tokenService;
 
     @Autowired
@@ -70,12 +69,13 @@ public class PaymentControllerTest {
     }
 
     //200postman 401 MVC(Must be logged in as payment owner to delete payment.)
+
     @Test
     public void deletepaymentNegative() throws Exception {
         mockMvc.perform(delete("/api/payment")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken(2))
-                        .param("paymentId", "3"))
+                        .param("paymentId", "5bc1bb79-6ef8-48e1-be83-8dfee8f981a7"))
                 .andDo(print())
                 .andExpect(content().string("Must be logged in as payment owner to delete payment."))
                 .andExpect(status().is4xxClientError());
@@ -101,6 +101,37 @@ public class PaymentControllerTest {
                 .andExpect(status().isUnauthorized());
 
     }
+
+    @Test
+    public void deletepaymentNullId() throws Exception {
+        mockMvc.perform(delete("/api/payment")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization",getToken(3))
+                        .param("paymentId", " " ))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void deletepaymentUnauthorizedException() throws Exception {
+        mockMvc.perform(delete("/api/payment")
+                        .header("Authorization", getToken(3)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void deletepaymentLargeNumber() throws Exception {
+        mockMvc.perform(delete("/api/payment")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization",getToken(3))
+                        .param("paymentId", "1000000" ))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+
+    }
+
     @Test
     public void deletepaymentNoParam() throws Exception {
         mockMvc.perform(delete("/api/payment")
@@ -129,18 +160,15 @@ public class PaymentControllerTest {
                 .andExpect(status().isOk());
 
     }
-
     @Test
     public void putPayment() throws Exception {
         mockMvc.perform(put("/api/payment").header("Authorization",getToken(1))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{ \"paymentId\": \"3\",\n" +
-                                "  \"cardType\": \"string\",\n" +
+                        .content("{ \"paymentId\": \"5bc1bb79-6ef8-48e1-be83-8dfee8f981a7\",\n" +
+                                "  \"cardType\": \"str222ing\",\n" +
                                 "  \"expDate\": \"2022-12-05\",\n" +
                                 "  \"cardNumber\": \"string\"}"))
                 .andDo(print())
                 .andExpect(status().isOk());
-
     }
-
 }
