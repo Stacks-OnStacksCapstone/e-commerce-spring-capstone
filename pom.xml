@@ -149,6 +149,14 @@
 			<scope>test</scope>
 		</dependency>
 
+<!--		for making soft assertions with JUnit  -->
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.23.1</version>
+			<scope>test</scope>
+		</dependency>
+
 <!--		JSON parsing dependency-->
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>

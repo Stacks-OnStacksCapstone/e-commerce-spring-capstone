@@ -5,6 +5,7 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,6 +17,8 @@ import static com.revature.pages.EditProductPage.*;
 import static com.revature.pages.ProductsDisplayPage.*;
 
 public class EditProductsSteps {
+
+    private static final SoftAssertions softAssertions = new SoftAssertions();
 
     // Background
 
@@ -104,10 +107,11 @@ public class EditProductsSteps {
         String pPrice = Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Product_Price_Input))).getText();
         boolean productPrice = pPrice.isEmpty();
 
-        Assertions.assertTrue(productName);
-        Assertions.assertTrue(productURL);
-        Assertions.assertTrue(productDesc);
-        Assertions.assertTrue(productPrice);
+        softAssertions.assertThat(productName).isEqualTo(false);
+        softAssertions.assertThat(productURL).isEqualTo(false);
+        softAssertions.assertThat(productDesc).isEqualTo(false);
+        softAssertions.assertThat(productPrice).isEqualTo(false);
+        softAssertions.assertAll();
 
     }
 
@@ -148,7 +152,7 @@ public class EditProductsSteps {
     }
 
 
-    // Delete a Product
+    // Scenario 3: Delete a Product
     @When("I select the newly created product")
     public void iSelectTheNewlyCreatedProduct() {
         Hooks.wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Last_Product_Displayed))).click();
