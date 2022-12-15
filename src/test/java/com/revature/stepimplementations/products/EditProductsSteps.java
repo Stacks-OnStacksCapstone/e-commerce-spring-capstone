@@ -1,4 +1,4 @@
-package com.revature.stepsImplementation.products;
+package com.revature.stepimplementations.products;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -83,8 +83,8 @@ public class EditProductsSteps {
         System.out.println("Expected: $99.00 :::  Actual: " +newProductPrice);
     }
 
-    // Scenario 2: Update Product
 
+    // Scenario 2: Update Product
 
     @When("I select the Headphones product")
     public void iSelectTheHeadphonesProduct() {
@@ -107,6 +107,7 @@ public class EditProductsSteps {
         Assertions.assertTrue(productURL);
         Assertions.assertTrue(productDesc);
         Assertions.assertTrue(productPrice);
+
     }
 
     @And("I change these details")
@@ -114,21 +115,21 @@ public class EditProductsSteps {
         List<Map<String, String>> createNewProduct = dataTable.asMaps();
         String updateProductDescription  = createNewProduct.get(0).get("Description");
         String updateProductPrice  = createNewProduct.get(0).get("Price");
-
-        Products.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Product_Description_Input))).sendKeys(updateProductDescription);
-        Products.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Product_Price_Input))).sendKeys(updateProductPrice);
+        Products.EditProductPage.Product_Description_Input2.sendKeys(updateProductDescription);
+        Products.EditProductPage.Product_Price_Input2.sendKeys(updateProductPrice);
     }
 
     @When("I update the product")
-    public void iUpdateTheProduct() {
+    public void iUpdateTheProduct() throws InterruptedException {
         Products.EditProductPage.Update_Product_Button.click();
+        Thread.sleep(150);
         System.out.println("update button clicked");
     }
 
     @Then("I should see product update")
     public void iShouldSeeProductUpdate() {
-        String newUpdatePrice = Products.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Updated_Price))).getText();
         String newUpdateDescription = Products.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Updated_Description))).getText();
+        String newUpdatePrice = Products.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Updated_Price))).getText();
         Assertions.assertEquals("$40.00", newUpdatePrice);
         Assertions.assertEquals("New amazing audio quality", newUpdateDescription);
         System.out.println("Expected: $40.00  ::: Actual:  " + newUpdatePrice);
