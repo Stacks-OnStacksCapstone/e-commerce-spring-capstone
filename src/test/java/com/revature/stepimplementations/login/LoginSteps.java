@@ -14,7 +14,7 @@ public class LoginSteps {
 
 
     @Given("the user is on the {string} page")
-    public void theUserIsOnTheLoginPage(String page) {
+    public void theUserIsOnThePage(String page) {
         String expectedURL = null;
         switch (page) {
             case "Login":
