@@ -5,7 +5,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import static com.revature.stepimplementations.hooks.Hooks.*;
 
@@ -22,11 +21,23 @@ public class DarkModeSteps {
         actions.moveToElement(generalPage.darkModeSwitch).click().pause(1).click().build().perform();
     }
 
+    @Then("The switch slides towards the moon icon")
+    public void the_switch_slides_towards_the_moon_icon() {
+        wait.until(ExpectedConditions.visibilityOf(generalPage.switchOnDarkMode));
+    }
+
     @Then("The theme of the page changes to dark mode")
     public void the_theme_of_the_page_changes_to_dark_mode() {
         wait.until(ExpectedConditions.visibilityOf(generalPage.pageBody));
         String bgColor = generalPage.pageBody.getCssValue("background-color");
         Assert.assertEquals("rgba(18, 18, 18, 1)", bgColor);
+    }
+
+    @Then("The font color changes to white")
+    public void the_font_color_changes_to_white() {
+        wait.until(ExpectedConditions.visibilityOf(generalPage.pageText));
+        String fontColor = generalPage.pageText.getCssValue("color");
+        Assert.assertEquals("rgba(255, 255, 255, 1)", fontColor);
     }
 
     // REGISTER PAGE
@@ -111,18 +122,39 @@ public class DarkModeSteps {
         Hooks.loginPage.loginButton.click();
         Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
         actions.moveToElement(frontPage.coatAddButton).click().pause(1).click().build().perform();
-        generalPage.cartButton.click();
+        Hooks.generalPage.cartButton.click();
         Hooks.cartPage.checkoutButton.click();
         Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/checkout"));
         String actualUrl = driver.getCurrentUrl();
         Assert.assertEquals("http://localhost:3000/checkout", actualUrl);
     }
 
-     // SWITCH BACK TO LIGHT MODE
+    // EDIT PRODUCTS PAGE
+
+    @Given("User navigates to the edit products page")
+    public void user_navigates_to_the_edit_products_page() {
+        driver.get("http://localhost:3000/login");
+        Hooks.loginPage.emailInput.sendKeys("testuser@gmail.com");
+        Hooks.loginPage.passwordInput.sendKeys("password");
+        Hooks.loginPage.loginButton.click();
+        wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
+        generalPage.editProductsLink.click();
+        wait.until(ExpectedConditions.urlToBe("http://localhost:3000/admin/products"));
+        String actualUrl = driver.getCurrentUrl();
+        Assert.assertEquals("http://localhost:3000/admin/products", actualUrl);
+    }
+
+
+    // SWITCH BACK TO LIGHT MODE
 
     @When("User clicks the theme switch again")
     public void user_clicks_the_theme_switch_again() {
         actions.moveToElement(generalPage.darkModeSwitch).click().build().perform();
+    }
+
+    @Then("The switch slides towards the sun icon")
+    public void the_switch_slides_towards_the_sun_icon() {
+        wait.until(ExpectedConditions.visibilityOf(generalPage.switchOnLightMode));
     }
 
     @Then("The theme of the page changes back to light mode")
@@ -132,4 +164,10 @@ public class DarkModeSteps {
         Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
     }
 
+    @Then("The font color changes to black")
+    public void the_font_color_changes_to_black() {
+        wait.until(ExpectedConditions.visibilityOf(generalPage.pageText));
+        String fontColor = generalPage.pageText.getCssValue("color");
+        Assert.assertEquals("rgba(0, 0, 0, 0.87)", fontColor);
+    }
 }

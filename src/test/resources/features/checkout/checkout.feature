@@ -40,7 +40,7 @@ Feature: Checkout
     And User enters "<zip>" to zip input
     And User enters "<country>" to country input
     And User clicks next
-    Then The empty field turns red and displays "<message>"
+    Then The invalid field turns red and displays "<message>"
     And User remains on the shipping address page
 
     Examples:
@@ -65,7 +65,7 @@ Feature: Checkout
     And Users enters TX to state input
     And User enters "<zip>" to zip input
     And User enters "<country>" to country input
-    And The empty field turns red and displays "<message>"
+    And The invalid field turns red and displays "<message>"
     Then User clicks next
     And User remains on the shipping address page
 
