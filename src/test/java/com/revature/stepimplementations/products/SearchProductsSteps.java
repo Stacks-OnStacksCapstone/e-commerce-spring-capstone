@@ -1,4 +1,4 @@
-package com.revature.stepsImplementation.products;
+package com.revature.stepimplementations.products;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

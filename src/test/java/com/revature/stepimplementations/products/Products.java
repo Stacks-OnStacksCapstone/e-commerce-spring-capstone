@@ -1,4 +1,4 @@
-package com.revature.stepsImplementation.products;
+package com.revature.stepimplementations.products;
 
 import com.revature.pages.EditProductPage;
 import com.revature.pages.ProductsDisplayPage;

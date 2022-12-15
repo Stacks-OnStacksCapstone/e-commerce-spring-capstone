@@ -1,4 +1,4 @@
-package com.revature.stepsImplementation.products;
+package com.revature.stepimplementations.products;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -7,11 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.util.Objects;
-
 import static com.revature.pages.ProductsDisplayPage.*;
-import static com.revature.stepsImplementation.products.Products.wait;
-
 
 public class DisplayProductsSteps {
 
@@ -83,11 +79,6 @@ public class DisplayProductsSteps {
     @When("The {string} goes to their shopping cart")
     public void the_goes_to_their_shopping_cart(String userType) {
         Products.ProductsDisplayPage.Menu_Cart_Link.click();
-//        if (Objects.equals(userType, "guest")) {
-//            Products.ProductsDisplayPage.Menu_Cart_Link_Guest.click();
-//        } else {
-//            Products.ProductsDisplayPage.Menu_Cart_Link.click();
-//        }
         System.out.println(userType + " goes to their shopping cart");
     }
 
