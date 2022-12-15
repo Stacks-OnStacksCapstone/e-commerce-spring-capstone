@@ -33,7 +33,7 @@ public class PasswordResetSteps {
     private static String messageNumber;
     private static String passwordResetLink;
 
-    @Before(order=2)
+    @Before(order=3)
     public static void setupLocalVariables() throws IOException {
         // Loading the YAML file from the /resources folder
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
