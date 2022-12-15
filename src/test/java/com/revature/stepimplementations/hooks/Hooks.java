@@ -28,6 +28,8 @@ public class Hooks {
     public static ProductDetailsViewPage productDetailsViewPage;
     public static NotificationsPage notificationsPage;
     public static CheckoutPage checkoutPage;
+    public static ProductsDisplayPage ProductsDisplayPage;
+    public static EditProductPage EditProductPage;
     public static boolean boolRes;
     public static String homeURL = "http://localhost:3000/";
     public static String loginURL = "http://localhost:3000/login";
@@ -35,12 +37,12 @@ public class Hooks {
     public static String passwordResetURL = "http://localhost:3000/forgot-password";
 
 
-    @BeforeAll
+    @BeforeAll(order = 1)
     public static void setupClass() {
         WebDriverManager.chromedriver().setup();
     }
 
-    @Before(order = 1)
+    @Before(order = 2)
     public void setUp() {
         driver = new ChromeDriver();
         actions = new Actions(driver);
@@ -58,6 +60,8 @@ public class Hooks {
         productDetailsViewPage = new ProductDetailsViewPage(driver);
         notificationsPage = new NotificationsPage(driver);
         checkoutPage = new CheckoutPage(driver);
+        ProductsDisplayPage = new ProductsDisplayPage(driver);
+        EditProductPage = new EditProductPage(driver);
 
     }
 
