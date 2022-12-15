@@ -103,53 +103,17 @@ public class OrderHistorySteps {
     }
     @Then("User navigates to the details page of the product")
     public void user_navigates_to_the_details_page_of_the_product() {
-        Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsPage.productDescription));
+        Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsViewPage.productDescription));
         String actualUrl = Hooks.driver.getCurrentUrl();
         Assert.assertTrue(actualUrl.contains("http://localhost:3000/products/"));
     }
     @Then("User can view product rating and reviews")
     public void user_can_view_product_rating_and_reviews() {
-        Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsPage.avgRating));
-        Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsPage.productReviews));
-        Assert.assertTrue(Hooks.productDetailsPage.avgRating.isDisplayed());
+        Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsViewPage.avgRating));
+        Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsViewPage.productReviews));
+        Assert.assertTrue(Hooks.productDetailsViewPage.avgRating.isDisplayed());
     }
 
-    // DELETE PRODUCT REVIEW FROM PREVIOUS ORDER
 
-    @When("User clicks the delete button for their previous review")
-    public void user_clicks_the_delete_button_for_their_previous_review() {
-        Hooks.wait.until(ExpectedConditions.elementToBeClickable(Hooks.productDetailsPage.reviewDeleteButton));
-        Hooks.productDetailsPage.reviewDeleteButton.click();
-    }
-    @Then("The review is removed from the product reviews")
-    public void the_review_is_removed_from_the_product_reviews() {
-        Hooks.wait.until(ExpectedConditions.textToBePresentInElement(Hooks.productDetailsPage.noReviewsMessage, "No reviews.."));
-        String actual = Hooks.productDetailsPage.noReviewsMessage.getText();
-        Assert.assertEquals("No reviews..", actual);
-    }
-
-    // ADD PRODUCT REVIEW TO PREVIOUS ORDER
-
-    @When("User selects a rating for the product")
-    public void user_selects_a_rating_for_the_product() {
-        Hooks.wait.until(ExpectedConditions.elementToBeClickable(Hooks.productDetailsPage.productFiveStarRating));
-        Hooks.productDetailsPage.productFiveStarRating.click();
-    }
-    @When("User enters a review for the product")
-    public void user_enters_a_review_for_the_product() {
-        Hooks.wait.until(ExpectedConditions.elementToBeClickable(Hooks.productDetailsPage.productReviewInput));
-        Hooks.productDetailsPage.productReviewInput.sendKeys("This product is high quality.");
-    }
-    @When("User clicks the submit button")
-    public void user_clicks_the_submit_button() {
-        Hooks.wait.until(ExpectedConditions.elementToBeClickable(Hooks.productDetailsPage.submitButton));
-        Hooks.productDetailsPage.submitButton.click();
-    }
-    @Then("User sees their rating and review added to the product reviews")
-    public void user_sees_their_rating_and_review_added_to_the_product_reviews() {
-        Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsPage.productReviews));
-        String actual = Hooks.productDetailsPage.productReviews.getText();
-        Assert.assertEquals("Jane" + "\n" + "This product is high quality.", actual);
-    }
 }
 

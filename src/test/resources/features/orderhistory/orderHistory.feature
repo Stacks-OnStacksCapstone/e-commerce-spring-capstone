@@ -25,20 +25,3 @@ Feature: Order History
     Then User navigates to the details page of the product
     And User can view product rating and reviews
 
-  Scenario: User can delete a product review from a previously ordered product
-    Given User is on the Orders page
-    When User clicks on the name of a product from a previous order
-    And User navigates to the details page of the product
-    And User can view product rating and reviews
-    And User clicks the delete button for their previous review
-    Then The review is removed from the product reviews
-
-  Scenario: User can add a product review to a previously ordered product
-    Given User is on the Orders page
-    When User clicks on the name of a product from a previous order
-    And User navigates to the details page of the product
-    And User selects a rating for the product
-    And User enters a review for the product
-    And User clicks the submit button
-    Then User sees their rating and review added to the product reviews
-
