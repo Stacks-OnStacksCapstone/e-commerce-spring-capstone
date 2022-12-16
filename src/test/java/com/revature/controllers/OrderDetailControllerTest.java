@@ -27,14 +27,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class OrderDetailControllerTest {
 
-
-    @MockBean(name="AuthService")
+    @Autowired
     private AuthService authService;
 
-    @MockBean(name="OrderService")
-    private OrderService orderService;
-    @MockBean(name="OrderDetailService")
-    private OrderDetailService orderDetailService;
     @Autowired
     private WebApplicationContext webApplicationContext;
 
@@ -45,8 +40,6 @@ public class OrderDetailControllerTest {
 
     @Autowired
     private TokenService tokenService;
-
-
 
     public String getToken() throws Exception {
         /*User user1 = new User(1,"testuser@gmail.com", "password", "Testerson", "Usertown",
@@ -60,20 +53,6 @@ public class OrderDetailControllerTest {
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
-
-    //FROM POSTMAN!
-    @Test
-    public void testPositiveLogin() throws Exception {
-        mockMvc.perform(post("/auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "    \"email\": \"testuser@gmail.com\",\n" +
-                                "    \"password\": \"password\"\n" +
-                                "}")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk());
     }
 
 
