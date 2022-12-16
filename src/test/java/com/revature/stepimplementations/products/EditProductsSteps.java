@@ -111,7 +111,7 @@ public class EditProductsSteps {
         softAssertions.assertThat(productURL).isEqualTo(false);
         softAssertions.assertThat(productDesc).isEqualTo(false);
         softAssertions.assertThat(productPrice).isEqualTo(false);
-        softAssertions.assertAll();
+
 
     }
 
@@ -149,6 +149,7 @@ public class EditProductsSteps {
         Assertions.assertEquals("$40.00", priceDisplay);
         Assertions.assertEquals("New amazing audio quality", descriptionDisplay);
         System.out.println("product seen in display of products");
+        softAssertions.assertAll();
     }
 
 
