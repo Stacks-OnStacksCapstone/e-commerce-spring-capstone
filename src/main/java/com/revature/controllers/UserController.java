@@ -69,7 +69,6 @@ public class UserController {
     @PutMapping("/deactivateUser")
     @Authorized(isAdmin = true)
     public String deactivateUser(User user) {
-        System.out.println(user);
         userService.deactivate(user);
         return "The user account is successfully deactivated!";
     }
