@@ -8,6 +8,7 @@ import com.revature.repositories.UserRepository;
 import com.revature.services.AuthService;
 import com.revature.services.TokenService;
 import com.revature.services.UserService;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,8 +49,13 @@ public class UserControllerTest {
     private TokenService tokenService;
 
     @Autowired
+    private UserController userController;
+
+    @Autowired
     private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
+
+
 
     @Before
     public void setUp() {
@@ -133,10 +139,10 @@ public class UserControllerTest {
     @Test
     public void testDeactivateUser() throws Exception {
         String token = getToken();
-        mockMvc.perform(put("/user/deactivateUser")
+        mockMvc.perform(put("/user/deactivateUser").characterEncoding("utf-8")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
-                        "  \"userId\": 1,\n" +
+                        "  \"userId\": 2,\n" +
                         "  \"email\": \"testuser@gmail.com\",\n" +
                         "  \"password\": \"password\",\n" +
                         "  \"firstName\": \"Testerson\",\n" +
@@ -151,6 +157,5 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("The user account is successfully deactivated!"));
     }
-
 
 }

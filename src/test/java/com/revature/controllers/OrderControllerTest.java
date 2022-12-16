@@ -2,34 +2,23 @@ package com.revature.controllers;
 
 
 import com.revature.ECommerceApplication;
-import com.revature.dtos.CreateOrderRequest;
-import com.revature.dtos.OrderResponse;
 import com.revature.dtos.Principal;
-import com.revature.models.Order;
-import com.revature.models.OrderDetail;
 import com.revature.models.User;
-import com.revature.repositories.OrderRepository;
-import com.revature.services.*;
+import com.revature.services.AuthService;
+import com.revature.services.TokenService;
+import com.revature.services.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
