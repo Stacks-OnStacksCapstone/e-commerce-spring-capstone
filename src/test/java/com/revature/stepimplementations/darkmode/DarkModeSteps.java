@@ -10,164 +10,142 @@ import static com.revature.stepimplementations.hooks.Hooks.*;
 
 public class DarkModeSteps {
 
-    // FRONT PAGE
-    @Given("User navigates to the front page")
-    public void user_navigates_to_the_front_page() {
-        driver.get("http://localhost:3000/");
-        Assert.assertEquals("http://localhost:3000/", driver.getCurrentUrl());
-    }
-    @When("User clicks the theme switch")
-    public void user_clicks_the_theme_switch() {
-        actions.moveToElement(generalPage.darkModeSwitch).click().pause(1).click().build().perform();
-    }
+    @Given("User navigates to the {string} page")
+    public void user_navigates_to_the_page(String type) {
+        switch (type) {
+            case "front":
+                driver.get("http://localhost:3000/");
+                Assert.assertEquals("http://localhost:3000/", driver.getCurrentUrl());
+                break;
 
-    @Then("The switch slides towards the moon icon")
-    public void the_switch_slides_towards_the_moon_icon() {
-        wait.until(ExpectedConditions.visibilityOf(generalPage.switchOnDarkMode));
-    }
+            case "register":
+                driver.get("http://localhost:3000/register");
+                Assert.assertEquals("http://localhost:3000/register", driver.getCurrentUrl());
+                break;
 
-    @Then("The theme of the page changes to dark mode")
-    public void the_theme_of_the_page_changes_to_dark_mode() {
-        wait.until(ExpectedConditions.visibilityOf(generalPage.pageBody));
-        String bgColor = generalPage.pageBody.getCssValue("background-color");
-        Assert.assertEquals("rgba(18, 18, 18, 1)", bgColor);
-    }
+            case "login":
+                driver.get("http://localhost:3000/login");
+                Assert.assertEquals("http://localhost:3000/login", driver.getCurrentUrl());
+                break;
 
-    @Then("The font color changes to white")
-    public void the_font_color_changes_to_white() {
-        wait.until(ExpectedConditions.visibilityOf(generalPage.pageText));
-        String fontColor = generalPage.pageText.getCssValue("color");
-        Assert.assertEquals("rgba(255, 255, 255, 1)", fontColor);
-    }
+            case "profile":
+                driver.get("http://localhost:3000/login");
+                Hooks.loginPage.emailInput.sendKeys("jane@gmail.com");
+                Hooks.loginPage.passwordInput.sendKeys("password");
+                Hooks.loginPage.loginButton.click();
+                wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
+                generalPage.profileLink.click();
+                wait.until(ExpectedConditions.urlToBe("http://localhost:3000/userProfile"));
+                Assert.assertEquals("http://localhost:3000/userProfile", driver.getCurrentUrl());
+                break;
 
-    // REGISTER PAGE
-    @Given("User navigates to the register page")
-    public void user_navigates_to_the_register_page() {
-        driver.get("http://localhost:3000/register");
-        Assert.assertEquals("http://localhost:3000/register", driver.getCurrentUrl());
-    }
+            case "orders":
+                driver.get("http://localhost:3000/login");
+                Hooks.loginPage.emailInput.sendKeys("jane@gmail.com");
+                Hooks.loginPage.passwordInput.sendKeys("password");
+                Hooks.loginPage.loginButton.click();
+                wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
+                generalPage.ordersLink.click();
+                wait.until(ExpectedConditions.urlToBe("http://localhost:3000/orders"));
+                Assert.assertEquals("http://localhost:3000/orders", driver.getCurrentUrl());
+                break;
 
-    // LOGIN PAGE
-    @Given("User navigates to the login page")
-    public void user_navigates_to_the_login_page() {
-        driver.get("http://localhost:3000/login");
-        Assert.assertEquals("http://localhost:3000/login", driver.getCurrentUrl());
-    }
+            case "product":
+                Hooks.driver.get("http://localhost:3000/login");
+                Hooks.loginPage.emailInput.sendKeys("jane@gmail.com");
+                Hooks.loginPage.passwordInput.sendKeys("password");
+                Hooks.loginPage.loginButton.click();
+                Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
+                generalPage.ordersLink.click();
+                Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/orders"));
+                wait.until(ExpectedConditions.visibilityOf(ordersPage.productLink));
+                Hooks.ordersPage.productLink.click();
+                Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/products/4"));
+                Assert.assertEquals("http://localhost:3000/products/4", driver.getCurrentUrl());
+                break;
 
-    // PROFILE PAGE
-    @Given("User navigates to the profile page")
-    public void user_navigates_to_the_profile_page() {
-        driver.get("http://localhost:3000/login");
-        Hooks.loginPage.emailInput.sendKeys("jane@gmail.com");
-        Hooks.loginPage.passwordInput.sendKeys("password");
-        Hooks.loginPage.loginButton.click();
-        wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
-        generalPage.profileLink.click();
-        wait.until(ExpectedConditions.urlToBe("http://localhost:3000/userProfile"));
-        String actualUrl = driver.getCurrentUrl();
-        Assert.assertEquals("http://localhost:3000/userProfile", actualUrl);
-    }
+            case "cart":
+                Hooks.driver.get("http://localhost:3000/login");
+                Hooks.loginPage.emailInput.sendKeys("jane@gmail.com");
+                Hooks.loginPage.passwordInput.sendKeys("password");
+                Hooks.loginPage.loginButton.click();
+                Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
+                generalPage.cartButton.click();
+                Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/cart"));
+                Assert.assertEquals("http://localhost:3000/cart", driver.getCurrentUrl());
+                break;
 
-    // ORDERS PAGE
-    @Given("User navigates to the orders page")
-    public void user_navigates_to_the_orders_page() {
-        driver.get("http://localhost:3000/login");
-        Hooks.loginPage.emailInput.sendKeys("jane@gmail.com");
-        Hooks.loginPage.passwordInput.sendKeys("password");
-        Hooks.loginPage.loginButton.click();
-        wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
-        generalPage.ordersLink.click();
-        wait.until(ExpectedConditions.urlToBe("http://localhost:3000/orders"));
-        String actualUrl = driver.getCurrentUrl();
-        Assert.assertEquals("http://localhost:3000/orders", actualUrl);
-    }
+            case "checkout":
+                Hooks.driver.get("http://localhost:3000/login");
+                Hooks.loginPage.emailInput.sendKeys("jane@gmail.com");
+                Hooks.loginPage.passwordInput.sendKeys("password");
+                Hooks.loginPage.loginButton.click();
+                Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
+                actions.moveToElement(frontPage.coatAddButton).click().pause(1).click().build().perform();
+                Hooks.generalPage.cartButton.click();
+                Hooks.cartPage.checkoutButton.click();
+                Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/checkout"));
+                Assert.assertEquals("http://localhost:3000/checkout", driver.getCurrentUrl());
 
-    // PRODUCT PAGE
-    @Given("User navigates to the product page")
-    public void user_navigates_to_the_product_page() {
-        Hooks.driver.get("http://localhost:3000/login");
-        Hooks.loginPage.emailInput.sendKeys("jane@gmail.com");
-        Hooks.loginPage.passwordInput.sendKeys("password");
-        Hooks.loginPage.loginButton.click();
-        Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
-        generalPage.ordersLink.click();
-        Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/orders"));
-        wait.until(ExpectedConditions.visibilityOf(ordersPage.productLink));
-        Hooks.ordersPage.productLink.click();
-        Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/products/4"));
-        String actualUrl = driver.getCurrentUrl();
-        Assert.assertEquals("http://localhost:3000/products/4", actualUrl);
-    }
-
-    // CART PAGE
-    @Given("User navigates to the cart page")
-    public void user_navigates_to_the_cart_page() {
-        Hooks.driver.get("http://localhost:3000/login");
-        Hooks.loginPage.emailInput.sendKeys("jane@gmail.com");
-        Hooks.loginPage.passwordInput.sendKeys("password");
-        Hooks.loginPage.loginButton.click();
-        Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
-        generalPage.cartButton.click();
-        Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/cart"));
-        String actualUrl = driver.getCurrentUrl();
-        Assert.assertEquals("http://localhost:3000/cart", actualUrl);
+            case "edit products":
+                driver.get("http://localhost:3000/login");
+                Hooks.loginPage.emailInput.sendKeys("testuser@gmail.com");
+                Hooks.loginPage.passwordInput.sendKeys("password");
+                Hooks.loginPage.loginButton.click();
+                wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
+                generalPage.editProductsLink.click();
+                wait.until(ExpectedConditions.urlToBe("http://localhost:3000/admin/products"));
+                Assert.assertEquals("http://localhost:3000/admin/products", driver.getCurrentUrl());
+        }
     }
 
-    // CHECKOUT PAGE
-    @Given("User navigates to the checkout page")
-    public void user_navigates_to_the_checkout_page() {
-        Hooks.driver.get("http://localhost:3000/login");
-        Hooks.loginPage.emailInput.sendKeys("jane@gmail.com");
-        Hooks.loginPage.passwordInput.sendKeys("password");
-        Hooks.loginPage.loginButton.click();
-        Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
-        actions.moveToElement(frontPage.coatAddButton).click().pause(1).click().build().perform();
-        Hooks.generalPage.cartButton.click();
-        Hooks.cartPage.checkoutButton.click();
-        Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/checkout"));
-        String actualUrl = driver.getCurrentUrl();
-        Assert.assertEquals("http://localhost:3000/checkout", actualUrl);
-    }
-
-    // EDIT PRODUCTS PAGE
-
-    @Given("User navigates to the edit products page")
-    public void user_navigates_to_the_edit_products_page() {
-        driver.get("http://localhost:3000/login");
-        Hooks.loginPage.emailInput.sendKeys("testuser@gmail.com");
-        Hooks.loginPage.passwordInput.sendKeys("password");
-        Hooks.loginPage.loginButton.click();
-        wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
-        generalPage.editProductsLink.click();
-        wait.until(ExpectedConditions.urlToBe("http://localhost:3000/admin/products"));
-        String actualUrl = driver.getCurrentUrl();
-        Assert.assertEquals("http://localhost:3000/admin/products", actualUrl);
-    }
-
-
-    // SWITCH BACK TO LIGHT MODE
-
-    @When("User clicks the theme switch again")
-    public void user_clicks_the_theme_switch_again() {
+    @When("The theme switch is set towards the sun")
+    public void the_theme_switch_is_set_towards_the_sun() {
         actions.moveToElement(generalPage.darkModeSwitch).click().build().perform();
+        Assert.assertTrue(generalPage.switchOnLightMode.isDisplayed());
     }
 
-    @Then("The switch slides towards the sun icon")
-    public void the_switch_slides_towards_the_sun_icon() {
-        wait.until(ExpectedConditions.visibilityOf(generalPage.switchOnLightMode));
+    @When("User clicks the theme switch {string}")
+    public void user_clicks_the_theme_switch(String clicks) {
+        if (clicks.equals("once")) {
+            actions.moveToElement(generalPage.darkModeSwitch).click().build().perform();
+        } else {
+            actions.moveToElement(generalPage.darkModeSwitch).click().pause(1).click().build().perform();
+        }
     }
 
-    @Then("The theme of the page changes back to light mode")
-    public void the_theme_of_the_page_changes_back_to_light_mode() {
-        wait.until(ExpectedConditions.visibilityOf(generalPage.pageBody));
-        String bgColor = generalPage.pageBody.getCssValue("background-color");
-        Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
+    @Then("The switch slides towards the {string} icon")
+    public void the_switch_slides_towards_the_icon(String icon) {
+        if (icon.equals("moon")) {
+            wait.until(ExpectedConditions.visibilityOf(generalPage.switchOnDarkMode)).isDisplayed();
+        } else {
+            wait.until(ExpectedConditions.visibilityOf(generalPage.switchOnLightMode)).isDisplayed();
+        }
     }
 
-    @Then("The font color changes to black")
-    public void the_font_color_changes_to_black() {
-        wait.until(ExpectedConditions.visibilityOf(generalPage.pageText));
-        String fontColor = generalPage.pageText.getCssValue("color");
-        Assert.assertEquals("rgba(0, 0, 0, 0.87)", fontColor);
+    @Then("The theme of the page changes to {string} mode")
+    public void the_theme_of_the_page_changes_to_mode(String theme) {
+        if (theme.equals("dark")) {
+            wait.until(ExpectedConditions.visibilityOf(generalPage.pageBody));
+            String bgColor = generalPage.pageBody.getCssValue("background-color");
+            Assert.assertEquals("rgba(18, 18, 18, 1)", bgColor);
+        } else {
+            wait.until(ExpectedConditions.visibilityOf(generalPage.pageBody));
+            String bgColor = generalPage.pageBody.getCssValue("background-color");
+            Assert.assertEquals("rgba(255, 255, 255, 1)", bgColor);
+        }
+    }
+
+    @Then("The font color changes to {string}")
+    public void the_font_color_changes_to(String color) {
+        if (color.equals("white")) {
+            wait.until(ExpectedConditions.visibilityOf(generalPage.pageText));
+            String fontColor = generalPage.pageText.getCssValue("color");
+            Assert.assertEquals("rgba(255, 255, 255, 1)", fontColor);
+        } else {
+            wait.until(ExpectedConditions.visibilityOf(generalPage.pageText));
+            String fontColor = generalPage.pageText.getCssValue("color");
+            Assert.assertEquals("rgba(0, 0, 0, 0.87)", fontColor);
+        }
     }
 }
