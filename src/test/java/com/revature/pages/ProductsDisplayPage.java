@@ -55,7 +55,7 @@ public class ProductsDisplayPage {
     @FindBy(xpath="(//span[@class='MuiBadge-root'])[1]")
     public WebElement Menu_Cart_Link;
 
-    @FindBy(xpath="//*[@id=\"root\"]/div[2]/div/div[2]/div[1]/div/div[1]/div/span[1]")
+    @FindBy(xpath="//div[@class=\"sc-ksZaOG jRBEfX\"]/span[1]")
     public WebElement Product_Title_in_Cart;
 
     @FindBy(xpath = "(//h5)[1]")
@@ -67,13 +67,13 @@ public class ProductsDisplayPage {
     @FindBy(xpath = "(//h6)[1]")
     public WebElement Product_Price_in_Display;
 
-    @FindBy(xpath = "//*[@id=\"root\"]/div[2]/div/button[1]")
+    @FindBy(xpath = "//div/button[1]")
     public WebElement Search_Button;
 
-    @FindBy(xpath = "//*[@id=\"root\"]/div[2]/div/button[2]")
+    @FindBy(xpath = "//div/button[2]")
     public WebElement Cancel_Search_Button;
 
-    @FindBy(xpath = "//*[@id=\"root\"]/div[2]/div/div/input")
+    @FindBy(xpath = "//div/input")
     public WebElement Search_Products_Input;
 
     public ProductsDisplayPage(WebDriver driver) {

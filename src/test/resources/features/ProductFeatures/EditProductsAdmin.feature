@@ -1,33 +1,33 @@
 Feature: An Admin should be able to create, update and delete products
 
   Background: Admin log in and access to edit products
-    Given I am a admin on the home page
-    And I have access to edit products
+    Given admin on the home page
+    And admin has access to edit products
 
   Scenario: Admin can create a new product
-    When I go to create a product
-    And I enter new information
+    When admin creates a new product
+    And admin enters new information
       | Name                     | Description       | Price |
       | Fitness Tracker          | Stress Management | 99    |
-    When I create the product
-    Then I should see the new product update
-    When I go to check all products
-    Then I should see the new product displayed
+    When admin creates the product
+    Then admin should see the new product update
+    When admin checks all products available
+    Then admin should see the new product displayed
 
   Scenario: Admin can update an existing product
-    When I select the Headphones product
-    Then  I should see pre-populated data
-    And I change these details
+    When admin selects the Headphones
+    Then  admin should see pre-populated data
+    And admin makes changes with the following details
       | Description                  | Price |
       | New amazing audio quality    | 40    |
-    When I update the product
-    Then I should see product update
-    When I go to check all products
-    Then I should see the new update displayed
+    When admin updates the product
+    Then admin should see product update
+    When admin checks all products available
+    Then admin should see the new update displayed
 
   Scenario: Admin can delete an existing product
-    When I select the newly created product
-    And I delete it
+    When admin selects an existing product
+    And admin deletes it
     Then It should no longer be displayed with products
 
 
