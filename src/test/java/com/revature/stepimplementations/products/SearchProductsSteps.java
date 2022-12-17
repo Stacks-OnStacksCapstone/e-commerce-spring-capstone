@@ -7,25 +7,24 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import static com.revature.pages.EditProductPage.Edit_Products_Button;
 import static com.revature.pages.ProductsDisplayPage.Display_Products;
 
 public class SearchProductsSteps {
 
-    @When("I search for {string}")
+    @When("user searches for {string}")
     public void i_search_for(String product) {
         Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Display_Products)));
         Hooks.ProductsDisplayPage.Search_Products_Input.sendKeys(product);
         Hooks.ProductsDisplayPage.Search_Button.click();
         System.out.println("I search for " + product);
     }
-    @Then("I should see an empty results page")
+    @Then("user should see an empty results page")
     public void i_should_see_an_empty_results_page() {
         boolean isInvisible = Hooks.wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(Display_Products)));
         Assertions.assertTrue(isInvisible);
         System.out.println("I see empty results page");
     }
-    @When("I cancel the search")
+    @When("user closes the search")
     public void i_cancel_the_search() {
         Hooks.ProductsDisplayPage.Cancel_Search_Button.click();
         System.out.println("I cancel the search");
