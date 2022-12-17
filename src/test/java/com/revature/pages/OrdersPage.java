@@ -14,7 +14,7 @@ public class OrdersPage {
     public static WebElement ordersBackNav;
 
     @FindBy(xpath = "//div[@id='root']//div[@class='MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column']")
-    public static WebElement previousOrders;
+    public static WebElement previousOrder;
 
     @FindBy(xpath = "//div[@id='root']//div[4]/div[1]//span[2]//p[1]")
     public static WebElement orderDate;

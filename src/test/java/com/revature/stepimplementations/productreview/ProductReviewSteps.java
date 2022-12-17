@@ -31,7 +31,7 @@ public class ProductReviewSteps {
             Assert.assertEquals("TeeShirt", actualTitle);
             Assert.assertEquals("A nice TeeShirt", actualDescription);
         } else {
-            System.out.println("An error occurred");
+            System.out.println("A modal was not displayed");
         }
     }
 

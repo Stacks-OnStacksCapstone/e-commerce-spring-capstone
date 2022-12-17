@@ -30,24 +30,3 @@ Feature: Dark Mode
       |checkout     |twice  |sun |light|black|
       |edit products|once   |moon|dark |white|
       |edit products|twice  |sun |light|black|
-
-#    Examples:
-#      |type         |clicks |icon|theme|color|
-#      |front        |once   |moon|dark |white|
-#      |register     |once   |moon|dark |white|
-#      |login        |once   |moon|dark |white|
-#      |profile      |once   |moon|dark |white|
-#      |orders       |once   |moon|dark |white|
-#      |product      |once   |moon|dark |white|
-#      |cart         |once   |moon|dark |white|
-#      |checkout     |once   |moon|dark |white|
-#      |edit products|once   |moon|dark |white|
-#      |front        |twice  |sun |light|black|
-#      |register     |twice  |sun |light|black|
-#      |login        |twice  |sun |light|black|
-#      |profile      |twice  |sun |light|black|
-#      |orders       |twice  |sun |light|black|
-#      |product      |twice  |sun |light|black|
-#      |cart         |twice  |sun |light|black|
-#      |checkout     |twice  |sun |light|black|
-#      |edit products|twice  |sun |light|black|
