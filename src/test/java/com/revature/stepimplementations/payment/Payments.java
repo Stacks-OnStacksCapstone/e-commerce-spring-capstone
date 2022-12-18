@@ -12,9 +12,9 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class Payments {
-    @Given("the user is logged in")
-    public void the_user_is_logged_in() {
-        Hooks.driver.get("http://localhost:3000/");
+
+    @When("the user log in")
+    public void the_user_log_in() {
         Hooks.profilePage.signInLink.click();
         Hooks.profilePage.loginEmailInput.sendKeys("jane@gmail.com");
         Hooks.profilePage.loginPasswordInput.sendKeys("password");
@@ -54,38 +54,46 @@ public class Payments {
         Hooks.profilePage.ccvInput.sendKeys(ccv);
     }
 
-    @When("the user clicks on the add payment button")
-    public void the_user_clicks_on_the_add_payment_button() {
-        Hooks.profilePage.addPaymentButton.click();
-    }
+//    @When("the user clicks on the add payment button")
+//    public void the_user_clicks_on_the_add_payment_button() {
+//        Hooks.profilePage.addPaymentButton.click();
+//    }
 
     @Then("the user should see alert message {string} on the profile page")
-    public void the_user_should_see_alert_message(String message) {
+    public void the_user_should_see_alert_message(String alert) {
 
 
         String actualAlert =
                 Hooks.wait.ignoring(StaleElementReferenceException.class)
                         .until(ExpectedConditions.visibilityOf(Hooks.profilePage.alert)).getText();
-        Assertions.assertEquals(message, actualAlert);
+        Assertions.assertEquals(alert, actualAlert);
 
     }
 
-    //Delete payment
-    @When("the user clicks on the delete payment button")
-    public void the_user_clicks_on_the_delete_payment_button() {
-        Hooks.profilePage.deletePaymentButton.click();
+    @When("the user clicks on the {string} payment button")
+    public void the_user_clicks_on_the_payment_button(String button) {
+        switch (button) {
+            case "add":
+                Hooks.profilePage.addPaymentButton.click();
+                break;
+            case "delete":
+                Hooks.profilePage.deletePaymentButton.click();
+                break;
+            case "update":
+                try{
+                    Hooks.profilePage.updatePaymentButton.click();
+
+                }catch (NoSuchElementException e){
+                    Assertions.fail("Update payment method not available");
+                }
+                break;}
     }
 
-    //Update payment
-    @When("the user clicks on the update payment button")
-    public void the_user_clicks_on_the_update_payment_button() {
-
-         try{
-        Hooks.profilePage.updatePaymentButton.click();
-
-         }catch (NoSuchElementException e){
-             Assertions.fail("Update payment method not available");
-         }
-
+    @Then("the user should see an alert message saying {string}")
+    public void the_user_should_see_an_alert_message_saying(String alert) {
+        String actualAlert =
+                Hooks.wait.ignoring(StaleElementReferenceException.class)
+                        .until(ExpectedConditions.visibilityOf(Hooks.profilePage.alert)).getText();
+        Assertions.assertEquals(alert, actualAlert);
     }
 }
