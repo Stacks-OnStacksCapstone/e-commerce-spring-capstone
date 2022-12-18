@@ -1,4 +1,4 @@
-package com.revature.stepimplementations.payment;
+package com.revature.stepimplementations.cart;
 
 import com.revature.stepimplementations.hooks.Hooks;
 import io.cucumber.java.en.Given;
@@ -27,7 +27,10 @@ public class ProductCart {
     }
 
     //update
-
+    @Given("the user clicks on the Cart link")
+    public void the_user_clicks_on_the_cart_link() {
+        Hooks.actions.moveToElement(Hooks.cartPage.cartLink).click().build().perform();
+    }
     @Given("the user is on the Cart Page")
     public void the_user_is_on_the_cart_page(){
         Hooks.driver.get("http://localhost:3000/");
