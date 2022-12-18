@@ -2,48 +2,31 @@
 
 Feature: Dark Mode
 
-  Scenario Outline: User can change theme to dark mode
-    # Should be "<type>" so the same method works for all the examples
-    Given User navigates to the <type> page
-    When User clicks the theme switch
-    # the icon should also be an example template so that sliding to dark mode and to light mode
-    # can use the same method. You might need to add a "Given the "<page>" page is in "<mode>" mode"
-    # so you don't try to switch from light to light or dark to dark
-    Then The switch slides towards the moon icon
-    # This also gets generalized
-    And The theme of the page changes to dark mode
-    # This also gets generalized
-    And The font color changes to white
+  Scenario Outline: User can change theme to dark mode or light mode
+    Given User navigates to the "<type>" page
+    When The theme switch is set towards the sun
+    And User clicks the theme switch "<clicks>"
+    Then The switch slides towards the "<icon>" icon
+    And The theme of the page changes to "<theme>" mode
+    And The font color changes to "<color>"
 
     Examples:
-      |type         |
-      |front        |
-      |register     |
-      |login        |
-      |profile      |
-      |orders       |
-      |product      |
-      |cart         |
-      |checkout     |
-      |edit products|
-
-  Scenario Outline: User can change theme back to light mode
-    Given User navigates to the <type> page
-    When User clicks the theme switch
-    And The theme of the page changes to dark mode
-    And User clicks the theme switch again
-    Then The switch slides towards the sun icon
-    And The theme of the page changes back to light mode
-    And The font color changes to black
-
-    Examples:
-      |type         |
-      |front        |
-      |register     |
-      |login        |
-      |profile      |
-      |orders       |
-      |product      |
-      |cart         |
-      |checkout     |
-      |edit products|
+      |type         |clicks |icon|theme|color|
+      |front        |once   |moon|dark |white|
+      |front        |twice  |sun |light|black|
+      |register     |once   |moon|dark |white|
+      |register     |twice  |sun |light|black|
+      |login        |once   |moon|dark |white|
+      |login        |twice  |sun |light|black|
+      |profile      |once   |moon|dark |white|
+      |profile      |twice  |sun |light|black|
+      |orders       |once   |moon|dark |white|
+      |orders       |twice  |sun |light|black|
+      |product      |once   |moon|dark |white|
+      |product      |twice  |sun |light|black|
+      |cart         |once   |moon|dark |white|
+      |cart         |twice  |sun |light|black|
+      |checkout     |once   |moon|dark |white|
+      |checkout     |twice  |sun |light|black|
+      |edit products|once   |moon|dark |white|
+      |edit products|twice  |sun |light|black|

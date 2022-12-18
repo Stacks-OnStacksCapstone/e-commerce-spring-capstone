@@ -2,7 +2,7 @@
 
 Feature: Product Review
 
-  # FRONT PAGE
+   # FRONT PAGE
   Scenario: Add product review on the front page
     Given User is logged in on the front page
     When User clicks the magnifying glass icon for shopping bag
@@ -36,8 +36,7 @@ Feature: Product Review
     And User clicks the submit button
     Then The review is added to the product reviews
 
-
-  # NEGATIVE
+  # GUEST REVIEWS
   Scenario: Guests cannot review a product
     Given User is not logged in on the front page
     When User clicks the magnifying glass icon for shopping bag
@@ -46,6 +45,7 @@ Feature: Product Review
     And User clicks the submit button
     Then The review is not added to the product reviews
 
+  # MORE THAN ONE REVIEW
   Scenario: Users cannot submit more than one review for the same product
     Given User is logged in on the front page
     When User clicks the magnifying glass icon for shopping bag
@@ -55,6 +55,7 @@ Feature: Product Review
     And User submits another review for the same product
     Then The second review is not added to the product reviews
 
+  # WITHOUT RATING OR REVIEW
   Scenario Outline: User cannot submit a product review without a rating or review
     Given User is logged in on the front page
     When User clicks the magnifying glass icon for tee shirt

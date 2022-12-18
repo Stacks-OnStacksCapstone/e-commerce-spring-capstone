@@ -31,10 +31,12 @@ public class CheckoutSteps {
         String actualUrl = driver.getCurrentUrl();
         Assert.assertEquals("http://localhost:3000/", actualUrl);
     }
+
     @When("User adds an item to the cart and clicks the cart icon")
     public void user_adds_an_item_to_the_cart_and_clicks_the_cart_icon() {
         actions.moveToElement(frontPage.headphonesAddButton).click().build().perform();
     }
+
     @When("User navigates to the cart")
     public void user_navigates_to_the_cart() {
         wait.until(ExpectedConditions.elementToBeClickable(generalPage.cartButton));
@@ -43,11 +45,13 @@ public class CheckoutSteps {
         String actualUrl = driver.getCurrentUrl();
         Assert.assertEquals("http://localhost:3000/cart", actualUrl);
     }
+
     @When("User clicks the checkout button")
     public void user_clicks_the_checkout_button() {
         wait.until(ExpectedConditions.elementToBeClickable(cartPage.checkoutButton));
         cartPage.checkoutButton.click();
     }
+
     @When("User enters a valid shipping address and clicks next")
     public void user_enters_a_valid_shipping_address_and_clicks_next() {
         Hooks.checkoutPage.firstNameInput.sendKeys("Mark");
@@ -59,6 +63,7 @@ public class CheckoutSteps {
         Hooks.checkoutPage.countryInput.sendKeys("USA");
         Hooks.checkoutPage.nextButton.click();
     }
+
     @When("User selects a payment method and clicks submit")
     public void user_selects_a_payment_method_and_clicks_submit() {
         try {
@@ -70,11 +75,13 @@ public class CheckoutSteps {
         wait.until(ExpectedConditions.elementToBeClickable(checkoutPage.submitPaymentButton));
         checkoutPage.submitPaymentButton.click();
     }
+
     @When("User clicks place order")
     public void user_clicks_place_order() {
         wait.until(ExpectedConditions.elementToBeClickable(checkoutPage.placeOrderButton));
         checkoutPage.placeOrderButton.click();
     }
+
     @Then("A checkout message is displayed")
     public void a_checkout_message_is_displayed() {
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.thankYouMessage));
@@ -100,6 +107,7 @@ public class CheckoutSteps {
         wait.until(ExpectedConditions.elementToBeClickable(checkoutPage.submitPaymentButton));
         checkoutPage.submitPaymentButton.click();
     }
+
     @Then("User remains on the payment method page")
     public void user_remains_on_the_payment_method_page() {
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.checkoutStepTitle));
@@ -113,34 +121,37 @@ public class CheckoutSteps {
     public void user_enters_to_first_name_input(String firstname) {
         Hooks.checkoutPage.firstNameInput.sendKeys(firstname);
     }
+
     @When("User enters {string} to last name input")
     public void user_enters_to_last_name_input(String string) {
         Hooks.checkoutPage.lastNameInput.sendKeys(string);
     }
+
     @When("User enters {string} to address input")
     public void user_enters_to_address_input(String string) {
         Hooks.checkoutPage.addressInput.sendKeys(string);
     }
+
     @When("User enters {string} to city input")
     public void user_enters_to_city_input(String string) {
         Hooks.checkoutPage.cityInput.sendKeys(string);
     }
+
     @When("Users enters TX to state input")
     public void users_enters_tx_to_state_input() {
         Hooks.checkoutPage.stateInput.sendKeys("TX");
     }
+
     @When("User enters {string} to zip input")
     public void user_enters_to_zip_input(String string) {
         Hooks.checkoutPage.zipInput.sendKeys(string);
     }
+
     @When("User enters {string} to country input")
     public void user_enters_to_country_input(String string) {
         Hooks.checkoutPage.countryInput.sendKeys(string);
     }
-    @And("User clicks next")
-    public void user_clicks_next() {
-        Hooks.checkoutPage.nextButton.click();
-    }
+
     @Then("The invalid field turns red and displays {string}")
     public void the_invalid_field_turns_red_and_displays(String string) {
         actions.sendKeys(Keys.TAB).build().perform();
@@ -154,6 +165,12 @@ public class CheckoutSteps {
         Assert.assertEquals(string, actualText);
         Assert.assertEquals("rgba(211, 47, 47, 1)", fontColor);
     }
+
+    @And("User clicks next")
+    public void user_clicks_next() {
+        Hooks.checkoutPage.nextButton.click();
+    }
+
     @Then("User remains on the shipping address page")
     public void user_remains_on_the_shipping_address_page() {
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.checkoutStepTitle));

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.revature.pages.EditProductPage.*;
+import static com.revature.pages.EditProductPage.Delete_Product_Button;
 import static com.revature.pages.ProductsDisplayPage.*;
 
 public class EditProductsSteps {
@@ -22,7 +23,7 @@ public class EditProductsSteps {
 
     // Background
 
-    @And("I have access to edit products")
+    @And("admin has access to edit products")
     public void iHaveAccessToEditProducts() {
         Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Edit_Products_Button))).click();
         System.out.println("i have access to edit products");
@@ -30,13 +31,13 @@ public class EditProductsSteps {
 
     // Scenario 1 : Create Product
 
-    @When("I go to create a product")
+    @When("admin creates a new product")
     public void iGoToCreateAProduct() {
         Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Create_New_Product_Button))).click();
         System.out.println("create new product");
     }
 
-    @And("I enter new information")
+    @And("admin enters new information")
     public void iEnterNewInformation(DataTable table) {
         List<Map<String, String>> createNewProduct = table.asMaps();
         String productName = createNewProduct.get(0).get("Name");
@@ -48,13 +49,13 @@ public class EditProductsSteps {
         Hooks.EditProductPage.Create_Price_Input.sendKeys(productPrice);
     }
 
-    @When("I create the product")
+    @When("admin creates the product")
     public void iCreateTheProduct() {
         Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Create_Product_Button))).click();
         System.out.println("create product");
     }
 
-    @Then("I should see the new product update")
+    @Then("admin should see the new product update")
     public void iShouldSeeTheNewProductUpdate() {
         Hooks.wait.until(ExpectedConditions.not(ExpectedConditions.urlToBe("http://localhost:3000/admin/product")));
         String newUpdateName = Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Updated_Name))).getText();
@@ -67,13 +68,13 @@ public class EditProductsSteps {
 
     }
 
-    @When("I go to check all products")
+    @When("admin checks all products available")
     public void iGoToCheckAllProducts() {
         Hooks.wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Back_To_Products_Button))).click();
         System.out.println("back to products button clicked");
     }
 
-    @Then("I should see the new product displayed")
+    @Then("admin should see the new product displayed")
     public void iShouldSeeTheNewProductDisplayed() {
         Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/admin/products"));
         String newProductTitle = Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(New_Product_Title_in_Display))).getText();
@@ -90,13 +91,13 @@ public class EditProductsSteps {
 
     // Scenario 2: Update Product
 
-    @When("I select the Headphones product")
+    @When("admin selects the Headphones")
     public void iSelectTheHeadphonesProduct() {
         Hooks.wait.until(ExpectedConditions.elementToBeClickable(By.xpath(First_Product_Displayed))).click();
         System.out.println("selected the headphones product");
     }
 
-    @Then("I should see pre-populated data")
+    @Then("admin should see pre-populated data")
     public void iShouldSeePrePopulatedData() {
         String pN = Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Product_Name_Input))).getText();
         boolean productName = pN.isEmpty();
@@ -111,11 +112,11 @@ public class EditProductsSteps {
         softAssertions.assertThat(productURL).isEqualTo(false);
         softAssertions.assertThat(productDesc).isEqualTo(false);
         softAssertions.assertThat(productPrice).isEqualTo(false);
-        softAssertions.assertAll();
+
 
     }
 
-    @And("I change these details")
+    @And("admin makes changes with the following details")
     public void iChangeTheseDetails(DataTable dataTable) {
         List<Map<String, String>> createNewProduct = dataTable.asMaps();
         String updateProductDescription  = createNewProduct.get(0).get("Description");
@@ -124,14 +125,14 @@ public class EditProductsSteps {
         Hooks.EditProductPage.Product_Price_Input2.sendKeys(updateProductPrice);
     }
 
-    @When("I update the product")
+    @When("admin updates the product")
     public void iUpdateTheProduct() throws InterruptedException {
         Hooks.EditProductPage.Update_Product_Button.click();
         Thread.sleep(150);
         System.out.println("update button clicked");
     }
 
-    @Then("I should see product update")
+    @Then("admin should see product update")
     public void iShouldSeeProductUpdate() {
         String newUpdateDescription = Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Updated_Description))).getText();
         String newUpdatePrice = Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Updated_Price))).getText();
@@ -141,7 +142,7 @@ public class EditProductsSteps {
         System.out.println("Expected: \"New amazing audio quality\"  ::: Actual:  " + newUpdateDescription);
     }
 
-    @Then("I should see the new update displayed")
+    @Then("admin should see the new update displayed")
     public void iShouldSeeTheNewUpdateDisplayed() {
         Hooks.wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Display_Products_Admin)));
         String priceDisplay = Hooks.ProductsDisplayPage.Product_Price_in_Display.getText();
@@ -149,19 +150,21 @@ public class EditProductsSteps {
         Assertions.assertEquals("$40.00", priceDisplay);
         Assertions.assertEquals("New amazing audio quality", descriptionDisplay);
         System.out.println("product seen in display of products");
+        softAssertions.assertAll();
     }
 
 
     // Scenario 3: Delete a Product
-    @When("I select the newly created product")
+    @When("admin selects an existing product")
     public void iSelectTheNewlyCreatedProduct() {
         Hooks.wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Last_Product_Displayed))).click();
         System.out.println("selected newly created product");
     }
 
-    @And("I delete it")
+    @And("admin deletes it")
     public void iDeleteIt() {
-        Hooks.EditProductPage.Delete_Product_Button.click();
+        Hooks.wait.until(ExpectedConditions.elementToBeClickable(By.xpath(Delete_Product_Button))).click();
+        System.out.println("clicked the delete button");
     }
 
 
@@ -174,7 +177,7 @@ public class EditProductsSteps {
 
     // Users and Guests can not edit products
 
-    @Then("I see no where to edit products")
+    @Then("user should not be able to edit products")
     public void iSeeNoWhereToEditProducts() {
         boolean isInvisible = Hooks.wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(Edit_Products_Button)));
         Assertions.assertTrue(isInvisible);

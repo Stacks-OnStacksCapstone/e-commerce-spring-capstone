@@ -5,14 +5,20 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.util.List;
+import static com.revature.stepimplementations.hooks.Hooks.driver;
+import static com.revature.stepimplementations.hooks.Hooks.ordersPage;
+
 
 public class OrderHistorySteps {
 
     // BACKGROUND
     @Given("User logs in with valid credentials")
     public void user_logs_in_with_valid_credentials() {
-        Hooks.driver.get("http://localhost:3000/login");
+        driver.get("http://localhost:3000/login");
         Hooks.loginPage.emailInput.sendKeys("jane@gmail.com");
         Hooks.loginPage.passwordInput.sendKeys("password");
         Hooks.loginPage.loginButton.click();
@@ -29,14 +35,19 @@ public class OrderHistorySteps {
     @Given("User is on the Orders page")
     public void user_is_on_the_orders_page() {
         Hooks.wait.until(ExpectedConditions.urlToBe("http://localhost:3000/orders"));
-        String actual = Hooks.driver.getCurrentUrl();
+        String actual = driver.getCurrentUrl();
         Assert.assertEquals("http://localhost:3000/orders", actual);
     }
 
     @Then("User sees a list of their previous orders")
     public void user_sees_a_list_of_their_previous_orders() {
-        Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.ordersPage.previousOrders));
-        Assert.assertTrue(Hooks.ordersPage.previousOrders.isDisplayed());
+        Assert.assertTrue(Hooks.ordersPage.previousOrder.isDisplayed());
+        List<WebElement> previousOrders = driver.findElements(By.xpath("//div[@id='root']//div[@class='MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column']"));
+        System.out.println("Number of previous orders: " + previousOrders.size());
+        for (int i = 0; i < previousOrders.size(); i++) {
+            String actualText = previousOrders.get(i).getText();
+            System.out.println(actualText);
+        }
     }
 
     @Then("User can see the order date and total of each order")
@@ -104,7 +115,7 @@ public class OrderHistorySteps {
     @Then("User navigates to the details page of the product")
     public void user_navigates_to_the_details_page_of_the_product() {
         Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsViewPage.productDescription));
-        String actualUrl = Hooks.driver.getCurrentUrl();
+        String actualUrl = driver.getCurrentUrl();
         Assert.assertTrue(actualUrl.contains("http://localhost:3000/products/"));
     }
     @Then("User can view product rating and reviews")
