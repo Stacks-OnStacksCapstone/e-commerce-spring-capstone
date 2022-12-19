@@ -166,3 +166,11 @@ INSERT INTO order_details (id, quantity, order_id, product_id) VALUES (
     1,
     3
 );
+
+INSERT INTO PRODUCT_REVIEW (id,comment,rating,product_id,user_id) VALUES (
+    1,
+    'Liked the bag at first. Unfortunately, I found that every time I put something into the bag - whether my phone, or candy, or my Pomeranian - the items ended up teleporting to a parallel world. Will not be recommending friends!',
+    3,
+    3,
+    2
+)
