@@ -32,15 +32,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = ECommerceApplication.class)
 public class AuthControllerTest {
 
-    @MockBean(name = "AuthService")
+    @Autowired
     private AuthService authService;
 
     @Autowired
-    @InjectMocks
     private UserService userService;
 
     @Autowired
-    @InjectMocks
     private TokenService tokenService;
 
     @Autowired
@@ -97,7 +95,6 @@ public class AuthControllerTest {
 
     @Test
     public void testNegativeBadPassword() throws Exception {
-
         mockMvc.perform(post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
@@ -110,7 +107,6 @@ public class AuthControllerTest {
 
     @Test
     public void testLogout() throws Exception {
-
         mockMvc.perform(post("/auth/logout")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
