@@ -35,6 +35,7 @@ public class Hooks {
     public static String loginURL = "http://localhost:3000/login";
     public static String registrationURL = "http://localhost:3000/register";
     public static String passwordResetURL = "http://localhost:3000/forgot-password";
+    public static  String profileURL = "http://localhost:3000/userProfile";
 
 
     @BeforeAll(order = 1)
