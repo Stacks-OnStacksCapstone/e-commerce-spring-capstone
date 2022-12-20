@@ -30,14 +30,14 @@ public class UpdateProfileSteps {
         Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.userProfilePage.profileLink));
         Hooks.userProfilePage.profileLink.click();
     }
-    @Then("User is navigated to the Profile page")
-    public void user_is_navigated_to_the_profile_page() {
+    @Then("The user should be navigated to the Profile page")
+    public void the_user_should_be_navigated_to_the_profile_page() {
         String expectedUrl = "http://localhost:3000/userProfile";
         String actualUrl = Hooks.driver.getCurrentUrl();
         Assertions.assertEquals(expectedUrl, actualUrl);
     }
-    @Then("User is able to see two MUI boxes {string} and {string}")
-    public void user_is_able_to_see_two_mui_boxes_and(String updateMUIHeader, String deactivateMUIHeader) {
+    @Then("The user should be able to see two MUI boxes {string} and {string}")
+    public void the_user_should_be_able_to_see_two_mui_boxes_and(String updateMUIHeader, String deactivateMUIHeader) {
         String expectedHeaders = updateMUIHeader + " " + deactivateMUIHeader;
         String aHone = Hooks.userProfilePage.updateProfileMUIBoxHeader.getText();
         String aHtwo = Hooks.userProfilePage.deactivateAccountMUIBoxHeader.getText();

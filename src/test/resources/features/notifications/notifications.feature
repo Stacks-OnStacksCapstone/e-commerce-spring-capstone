@@ -1,7 +1,5 @@
 Feature: Notifications
 
-  # This has heavy overlaps with checkout.feature
-  # Those steps should be reused here
   Scenario Outline: Notifications when transactions occurred
     Given A user is logged in with "<email>" and "<password>"
     When User hovers over a product and clicked on the cart icon to add the product to cart
