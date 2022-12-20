@@ -1,10 +1,10 @@
 # Getting Started
 There are a few steps you'll need to take prior to running 
-the application as a whole. The front-end and back-end were
+the entire application. The front-end and back-end were
 developed separate from each other and are contained in individual
 repositories.  
 
-## Get the Front-end Running
+## Run the Front-end
 Docker is required in order to run the front-end of the application.
 Starting with the e-commerce-react-capstone-copy repository:
 
@@ -15,4 +15,7 @@ Starting with the e-commerce-react-capstone-copy repository:
 4. 
 
 
-## Get the Back-end Running
+## Run the Back-end
+To get the back-end up and running, 
+
+1.
