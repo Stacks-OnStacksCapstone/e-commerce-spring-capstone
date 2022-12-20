@@ -12,23 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDetailsViewSteps {
-    @Given("A Guesses is at the home page")
-    public void a_guesses_is_at_the_home_page() {
+    @Given("A Guests is at the home page")
+    public void a_guests_is_at_the_home_page() {
         Hooks.driver.get("http://localhost:3000");
     }
-    @When("they browse the page")
-    public void they_browse_the_page() {
-        List<WebElement> products = new ArrayList<>(Hooks.productDetailsViewPage.products);
-        for (WebElement p : products) {
-            try {
-                Assertions.assertTrue(p.isDisplayed());
-            } catch (Exception e) {
-                Assertions.fail("Exception occurred");
-            }
-        }
-    }
-    @Then("they are able to see products' titles, descriptions, and prices")
-    public void they_are_able_to_see_products_titles_descriptions_and_prices() {
+    @Then("they browse the page and are able to see products' titles, descriptions, and prices")
+    public void they_browse_the_page_and_are_able_to_see_products_titles_descriptions_and_prices() {
         Assertions.assertTrue(Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsViewPage.productImageH)).isDisplayed());
         Assertions.assertTrue(Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsViewPage.productTileH)).isDisplayed());
         Assertions.assertTrue(Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsViewPage.productPriceH)).isDisplayed());
@@ -38,13 +27,11 @@ public class ProductDetailsViewSteps {
     public void they_hover_over_the_images_of_the_products_for_the_plus_icons_to_be_displayed_and_clicked_on_the_icons() {
         Hooks.productDetailsViewPage.productPlusIcon.click();
     }
-    @When("modals pop up")
-    public void modals_pop_up() {
+    @Then("A modal pop up, and once again, they are able to see products' titles, descriptions, and prices")
+    public void a_modal_pop_up_and_once_again_they_are_able_to_see_products_titles_descriptions_and_prices() {
         Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsViewPage.productModal));
         Assertions.assertTrue(Hooks.productDetailsViewPage.productModal.isDisplayed());
-    }
-    @Then("once again, they are able to see products' titles, descriptions, and prices")
-    public void once_again_they_are_able_to_see_products_titles_descriptions_and_prices() {
+
         Assertions.assertTrue(Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsViewPage.productTitleM)).isDisplayed());
         Assertions.assertTrue(Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsViewPage.productImageM)).isDisplayed());
         Assertions.assertTrue(Hooks.wait.until(ExpectedConditions.visibilityOf(Hooks.productDetailsViewPage.productPriceM)).isDisplayed());

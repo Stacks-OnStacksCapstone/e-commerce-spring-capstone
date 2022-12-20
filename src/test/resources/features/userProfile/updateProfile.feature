@@ -4,8 +4,8 @@ Feature: Update Profile
   Background:
     Given User is logged in
     When User clicks on the Profile link
-    Then User is navigated to the Profile page
-    Then User is able to see two MUI boxes "Update Your Profile" and "Deactivate Your Account"
+    Then The user should be navigated to the Profile page
+    Then The user should be able to see two MUI boxes "Update Your Profile" and "Deactivate Your Account"
 
   Scenario: Update a Profile
     When User types in "Jane123" in the first name input field

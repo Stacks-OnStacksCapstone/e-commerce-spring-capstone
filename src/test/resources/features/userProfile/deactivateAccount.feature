@@ -4,9 +4,8 @@ Feature: Deactivate User Account
   Background:
     Given User is logged in using "mark@gmail.com" and "password"
     When User clicks on the Profile link
-    # navigated here should use the same method as the redirect I think
-    Then User is navigated to the Profile page
-    Then User is able to see two MUI boxes "Update Your Profile" and "Deactivate Your Account"
+    Then The user should be navigated to the Profile page
+    Then The user should be able to see two MUI boxes "Update Your Profile" and "Deactivate Your Account"
 
   Scenario: Deactivate a user's account  (negative)
     When User types nothing in the input field
