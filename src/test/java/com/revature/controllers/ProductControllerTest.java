@@ -70,7 +70,7 @@ public class ProductControllerTest {
                                 "    }\n" +
                                 "  ]")
                         .header("Authorization", getToken()))
-                .andDo(print())
+                
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath(".id").value(3))
                 .andExpect(MockMvcResultMatchers.jsonPath(".quantity").value(16));
@@ -88,7 +88,7 @@ public class ProductControllerTest {
                                 "    }\n" +
                                 "  ]")
                         .header("Authorization", getToken()))
-                .andDo(print())
+                
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
@@ -104,7 +104,7 @@ public class ProductControllerTest {
                                 "    }\n" +
                                 "  ]")
                         .header("Authorization", getToken()))
-                .andDo(print())
+                
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
@@ -123,7 +123,7 @@ public class ProductControllerTest {
                                 "    \"active\": false\n" +
                                 "}")
                         .header("Authorization", getToken()))
-                .andDo(print())
+                
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath(".id").value(10))
                 .andExpect(MockMvcResultMatchers.jsonPath(".quantity").value(1))
@@ -149,7 +149,7 @@ public class ProductControllerTest {
                                 "    \"active\": false\n" +
                                 "}")
                         .header("Authorization", getToken()))
-                .andDo(print())
+                
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
@@ -167,7 +167,7 @@ public class ProductControllerTest {
         for(String[] product : products) {
             this.mockMvc
                     .perform(get("/api/product/search/{keyword}", product[0]))
-                    .andDo(print())
+                    
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath("[0].name").value(product[1]))
                     .andExpect(MockMvcResultMatchers.jsonPath("[0].description").value(product[2]));
@@ -179,7 +179,7 @@ public class ProductControllerTest {
         this.mockMvc
                 .perform(delete("/api/product/{id}", 9)
                         .header("Authorization", getToken()))
-                .andDo(print())
+                
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath(".id").value(9))
                 .andExpect(MockMvcResultMatchers.jsonPath(".quantity").value(1))
@@ -195,7 +195,7 @@ public class ProductControllerTest {
         this.mockMvc
                 .perform(delete("/api/product/{id}", 9999)
                         .header("Authorization", getToken()))
-                .andDo(print())
+                
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
@@ -239,7 +239,7 @@ public class ProductControllerTest {
         for(int order : orders) {
             this.mockMvc
                     .perform(get("/api/product"))
-                    .andDo(print())
+                    
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     // Check For Names of Products
                     .andExpect(MockMvcResultMatchers.jsonPath("[" + order + "].id").value(productIDs[order]))
@@ -279,7 +279,7 @@ public class ProductControllerTest {
         for(int order : orders) {
             this.mockMvc
                     .perform(get("/api/product/{id}", order + 1))
-                    .andDo(print())
+                    
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath(".name").value(names[order]))
                     .andExpect(MockMvcResultMatchers.jsonPath(".description").value(descriptions[order]));
@@ -290,7 +290,7 @@ public class ProductControllerTest {
     public void testProductByIdNegative() throws Exception {
         this.mockMvc
                 .perform(get("/api/product/{id}", 100))
-                .andDo(print())
+                
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }

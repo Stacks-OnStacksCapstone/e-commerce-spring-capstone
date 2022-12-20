@@ -80,7 +80,7 @@ public class UserControllerTest {
                                 "  \"lastName\": \"Jefferson\"\n" +
                                 "}")
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath(".userId").value(4))
                 .andExpect(MockMvcResultMatchers.jsonPath(".email").value("newuser1@gmail.com"))
@@ -103,7 +103,7 @@ public class UserControllerTest {
                                 "}")
                         .header("Authorization", token)
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("The user account is successfully updated!"));
     }
@@ -114,7 +114,7 @@ public class UserControllerTest {
         mockMvc.perform(get("/user")
                         .header("Authorization", token)
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath(".userId").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath(".email").value("testuser@gmail.com"))
@@ -130,7 +130,7 @@ public class UserControllerTest {
         mockMvc.perform(put("/user/deactivate")
                         .header("Authorization", token)
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("The user account is successfully deactivated!"));
 
@@ -153,7 +153,7 @@ public class UserControllerTest {
                         "}")
                         .header("Authorization", token)
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("The user account is successfully deactivated!"));
     }

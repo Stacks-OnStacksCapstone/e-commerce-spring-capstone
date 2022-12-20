@@ -68,7 +68,7 @@ public class OrderDetailControllerTest {
                                  "  \"orderId\": 1,\n" +
                                  "  \"quantity\": 1 }")
                         .accept(MediaType.APPLICATION_JSON))
-                        .andDo(print())
+                        
                         .andExpect(status().isOk());
         }
 
@@ -79,7 +79,7 @@ public class OrderDetailControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken())
                         .content(""))
-                .andDo(print())
+                
 
                 .andExpect(status().is4xxClientError());
             }
@@ -91,7 +91,7 @@ public class OrderDetailControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken())
                         .content(""))
-                .andDo(print())
+                
                 .andExpect(status().isOk());
     }
 
@@ -101,7 +101,7 @@ public class OrderDetailControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken())
                         .content(""))
-                .andDo(print())
+                
 
                 .andExpect(status().isOk());
             }
@@ -111,7 +111,7 @@ public class OrderDetailControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken())
                         .content(""))
-                .andDo(print())
+                
                 .andExpect(status().is4xxClientError());
     }
 
@@ -121,7 +121,7 @@ public class OrderDetailControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken())
                         .content(""))
-                .andDo(print())
+                
                 .andExpect(status().isOk());
     }
 
@@ -133,7 +133,7 @@ public class OrderDetailControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken())
                         .content(""))
-                .andDo(print())
+                
                 .andExpect(status().isNotFound());
     }
 
@@ -143,7 +143,7 @@ public class OrderDetailControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken())
                         .content(""))
-                .andDo(print())
+                
                 .andExpect(status().isNotFound());
     }
 
@@ -154,7 +154,7 @@ public class OrderDetailControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken())
                         .content(""))
-                .andDo(print())
+                
                 .andExpect(status().is4xxClientError());
     }
 
@@ -164,7 +164,7 @@ public class OrderDetailControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken())
                         .content(""))
-                .andDo(print())
+                
                 .andExpect(status().isNotFound());
     }
 
@@ -174,7 +174,7 @@ public class OrderDetailControllerTest {
         mockMvc.perform(get("/api/orderdetail/order/0")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(""))
-                .andDo(print())
+                
                 .andExpect(status().isNotFound());
     }
 }

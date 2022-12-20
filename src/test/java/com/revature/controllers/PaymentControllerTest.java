@@ -55,7 +55,7 @@ public class PaymentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken(2))
                         .param("paymentId", "5bc1bb79-6ef8-48e1-be83-8dfee8f981a7"))
-                .andDo(print())
+                
                 .andExpect(content().string("Must be logged in as payment owner to delete payment."))
                 .andExpect(status().is4xxClientError());
     }
@@ -66,7 +66,7 @@ public class PaymentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken(1))
                         .param("paymentId", "3"))
-                .andDo(print())
+                
                 .andExpect(status().isOk());
 
     }
@@ -76,7 +76,7 @@ public class PaymentControllerTest {
         mockMvc.perform(delete("/api/payment")
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("paymentId", "3"))
-                .andDo(print())
+                
                 .andExpect(status().isUnauthorized());
 
     }
@@ -87,7 +87,7 @@ public class PaymentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken(3))
                         .param("paymentId", " " ))
-                .andDo(print())
+                
                 .andExpect(status().isNotFound());
     }
 
@@ -95,7 +95,7 @@ public class PaymentControllerTest {
     public void deletepaymentUnauthorizedException() throws Exception {
         mockMvc.perform(delete("/api/payment")
                         .header("Authorization", getToken(3)))
-                .andDo(print())
+                
                 .andExpect(status().isBadRequest());
 
     }
@@ -106,7 +106,7 @@ public class PaymentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",getToken(3))
                         .param("paymentId", "1000000" ))
-                .andDo(print())
+                
                 .andExpect(status().isNotFound());
 
     }
@@ -115,7 +115,7 @@ public class PaymentControllerTest {
     public void deletepaymentNoParam() throws Exception {
         mockMvc.perform(delete("/api/payment")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isBadRequest());
 
     }
@@ -124,7 +124,7 @@ public class PaymentControllerTest {
     public void getpayment() throws Exception {
         mockMvc.perform(get("/api/payment").header("Authorization",getToken(1))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isOk());
     }
 
@@ -135,7 +135,7 @@ public class PaymentControllerTest {
                         .content("{ \"ccv\": \"string\",\n" +
                                 "  \"expDate\": \"2022-12-05\",\n" +
                                 "  \"cardNumber\": \"string\"}"))
-                .andDo(print())
+                
                 .andExpect(status().isOk());
 
     }
@@ -147,7 +147,7 @@ public class PaymentControllerTest {
                                 "  \"cardType\": \"str222ing\",\n" +
                                 "  \"expDate\": \"2022-12-05\",\n" +
                                 "  \"cardNumber\": \"string\"}"))
-                .andDo(print())
+                
                 .andExpect(status().isOk());
     }
 }

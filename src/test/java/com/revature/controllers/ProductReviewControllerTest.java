@@ -68,7 +68,7 @@ public class ProductReviewControllerTest {
                     .perform(get("/api/productreview/avr/{id}", doublesAverage[0]))
                     .andExpect(status().isOk())
                     .andExpect(content().string(String.valueOf(doublesAverage[1])))
-                    .andDo(print());
+                    ;
         }
     }
 
@@ -78,7 +78,7 @@ public class ProductReviewControllerTest {
                 .perform(delete("/api/productreview/{id}", 2)
                         .header("Authorization", getToken()))
                 .andExpect(status().isOk())
-                .andDo(print());
+                ;
     }
 
     @Test
@@ -92,13 +92,13 @@ public class ProductReviewControllerTest {
                         .perform(get("/api/productreview/post/{post_id}/{user_id}", canPostID[0], canPostID[1])
                                 .header("Authorization", getToken()))
                         .andExpect(status().isOk())
-                        .andDo(print());
+                        ;
             } else if (canPostID[1] == 2) { // is user
                 this.mockMvc
                         .perform(get("/api/productreview/post/{post_id}/{user_id}", canPostID[0], canPostID[1])
                                 .header("Authorization", getToken()))
                         .andExpect(status().isOk())
-                        .andDo(print());
+                        ;
             }
         }
     }
@@ -120,7 +120,7 @@ public class ProductReviewControllerTest {
                 .andExpect(jsonPath(".rating").value(5))
                 .andExpect(jsonPath(".comment").value("There like clouds on my ears!"))
                 .andExpect(jsonPath(".postId").value(1))
-                .andDo(print());
+                ;
     }
 
     @Test
@@ -150,7 +150,7 @@ public class ProductReviewControllerTest {
                     .andExpect(jsonPath("[" + order + "].rating").value(ratings[order]))
                     .andExpect(jsonPath("[" + order + "].comment").value(comments[order]))
                     .andExpect(jsonPath("[" + order + "].postId").value(postIDs[order]))
-                    .andDo(print());
+                    ;
         }
     }
 
@@ -165,7 +165,7 @@ public class ProductReviewControllerTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("[0].id").value(doubleID[0]))
                     .andExpect(jsonPath("[0].postId").value(doubleID[1]))
-                    .andDo(print());
+                    ;
             }
         }
 
@@ -180,7 +180,7 @@ public class ProductReviewControllerTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath(".rating").value(ratingID[0]))
                     .andExpect(jsonPath(".postId").value(ratingID[1]))
-                    .andDo(print());
+                    ;
         }
     }
 

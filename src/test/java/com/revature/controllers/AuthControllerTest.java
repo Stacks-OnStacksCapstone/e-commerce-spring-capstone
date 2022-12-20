@@ -62,7 +62,6 @@ public class AuthControllerTest {
     public String getResetPasswordToken() throws Exception {
         String resetPasswordToken = UUID.randomUUID().toString();
         userService.updateResetPasswordToken(resetPasswordToken, "testuser@gmail.com");
-        System.out.println(resetPasswordToken);
         return resetPasswordToken;
     }
 
@@ -76,7 +75,7 @@ public class AuthControllerTest {
                     "    \"password\": \"password\"\n" +
                     "}")
             .accept(MediaType.APPLICATION_JSON))
-            .andDo(print())
+            
             .andExpect(status().isOk());
     }
 
@@ -124,7 +123,7 @@ public class AuthControllerTest {
                                 "  \"lastName\": \"Jefferson\"\n" +
                                 "}")
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath(".userId").value(4))
                 .andExpect(MockMvcResultMatchers.jsonPath(".email").value("newuser1@gmail.com"))
@@ -141,7 +140,7 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", token)
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath(".userId").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath(".email").value("testuser@gmail.com"))
@@ -161,7 +160,7 @@ public class AuthControllerTest {
                         "}")
                 .header("Authorization", token)
                 .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isOk());
     }
 
@@ -169,7 +168,7 @@ public class AuthControllerTest {
     public void testResetPasswordGet() throws Exception {
         String resetPasswordToken = getResetPasswordToken();
         mockMvc.perform(get("/auth/reset-password/{token}", resetPasswordToken)
-                ).andDo(print())
+                )
                 .andExpect(status().isOk());
     }
 
@@ -182,7 +181,7 @@ public class AuthControllerTest {
                                 "  \"email\": \"testuser@gmail.com\"\n" +
                                 "}")
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().isOk());
     }
 }

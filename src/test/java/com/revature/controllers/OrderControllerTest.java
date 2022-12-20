@@ -56,7 +56,7 @@ public class OrderControllerTest {
                         .header("Authorization", getToken())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(""))
-                        .andDo(print())
+                        
                         .andExpect(status().isOk());
 
     }
@@ -68,7 +68,7 @@ public class OrderControllerTest {
                         .header("Authorization", getToken())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                        .andDo(print())
+                        
                         .andExpect(status().isOk());
 
         }
@@ -83,7 +83,7 @@ public class OrderControllerTest {
                         .header("Authorization", getToken())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+                
                 .andExpect(status().is4xxClientError());
 
     }
@@ -95,7 +95,7 @@ public class OrderControllerTest {
                         .header("Authorization", getToken())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                        .andDo(print())
+                        
                         .andExpect(status().isOk());
     }
 
@@ -111,7 +111,7 @@ public class OrderControllerTest {
                         "    \"shipmentAddress\": \"9999888877776666\"\n" +
                         "}")
                          .accept(MediaType.APPLICATION_JSON))
-                         .andDo(print())
+                         
                          .andExpect(status().isOk());
     }
 }
