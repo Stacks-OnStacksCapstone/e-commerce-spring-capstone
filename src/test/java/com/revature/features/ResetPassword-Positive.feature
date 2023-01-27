@@ -6,7 +6,7 @@ Feature: Reset Password
     Then The user clicks the update button
     Then The user should see a notification that says you've successfully updated your profile
 
-    #The  password must uppercase letters, lowercase letters,
+    # The password must have uppercase letters, lowercase letters,
     # numbers and special characters with a length of at least 8 characters
 
   Examples:
