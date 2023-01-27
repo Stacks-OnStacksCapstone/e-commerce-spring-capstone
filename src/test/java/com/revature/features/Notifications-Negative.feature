@@ -1,6 +1,5 @@
 Feature: Notifications
 
-  Background: User has items in their cart and proceeds to purchase them
   # The notification is supposed to occur after you complete a purchase
   # not sure if you'll have to simulate going through that process
   # within the step implementation
