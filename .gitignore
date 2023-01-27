@@ -19,6 +19,7 @@ src/main/resources/application.yaml
 *.iws
 *.iml
 *.ipr
+*.yaml
 
 ### NetBeans ###
 /nbproject/private/
