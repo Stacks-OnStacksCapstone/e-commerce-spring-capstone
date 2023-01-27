@@ -56,7 +56,7 @@ public class AuthService {
         String token = UUID.randomUUID().toString();
 
         userService.updateResetPasswordToken(token, updateUserRequest.getEmail());
-        String resetPasswordLink = "http://e-commerce-congo-react-lb-919946656.us-east-1.elb.amazonaws.com/reset-password/" + token;
+        String resetPasswordLink = "http://localhost:3000/reset-password/" + token;
 
         String to = updateUserRequest.getEmail();
         String subject = "Reset your Congo Password";
