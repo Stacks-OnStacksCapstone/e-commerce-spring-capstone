@@ -10,7 +10,9 @@ values (1000000, 'tets@gmail.com', 'test', true, false, 'users', '!test123', 'to
 	(1000001, 'mickeymouse@example.com', 'Mickey', true, false, 'Mouse', 'pass123', 'token'),
 	(1000002, 'tonythetiger@example.com', 'Tony', false, false, 'Tiger', 'pass123', 'token'),
 	(1000003, 'wirtualtm@example.com', 'Wirtual', false, true, 'TM', 'pass123', 'token'),
-	(1000004, 'nameynamenson@example.com', 'Namey', true, true, 'Namenson', 'pass123', 'token');
+	(1000004, 'nameynamenson@example.com', 'Namey', true, true, 'Namenson', 'pass123', 'token'),
+	(1000005, 'profile@test.com', 'Profile', true, false, 'Test', 'ProfileTest!', 'token'),
+	(1000006, 'testymctesterson@gmail.com', 'Testy', true, false, 'McTesterson', 'Abcdef1!', 'token');
 
 insert into user_payments
 values ('CC1', '1111-2222-3333-4444', '123', '1-1-2030', 1000000),
