@@ -13,10 +13,11 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+    
+permissions: read-all|write-all
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
